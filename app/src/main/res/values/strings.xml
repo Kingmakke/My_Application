@@ -24,6 +24,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="homescreen_button">Scan</string>
+    <string name="homescreen_kein_Beacon">Es wurde kein Beacon gefunden</string>
     <string name="startscreen_appname">App-Name</string>
     <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
 

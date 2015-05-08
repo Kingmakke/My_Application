@@ -7,12 +7,24 @@ public class BeaconSearch {
 
     private BluetoothAdapter.LeScanCallback leScanCallback;
     //private BluetoothGattCallback btleGattCallback = null;
-
+    private BleScanner scanner;
     private Beacon beacon;
 
     public BeaconSearch(){
 
-        leScanCallback = null;
+        leScanCallback = new BluetoothAdapter.LeScanCallback() {
+            @Override
+            public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
+
+                if( (beacon != null) && (rssi < beacon.getRssi()) ){
+                    beacon = new Beacon(device.getName(), device.getAddress(), rssi);
+                }else{
+                    beacon = new Beacon(device.getName(), device.getAddress(), rssi);
+                }
+
+
+            }
+        };
         beacon = new Beacon("","",0);
 /*
         btleGattCallback = new BluetoothGattCallback() {
@@ -37,19 +49,7 @@ public class BeaconSearch {
     }
 
     public BluetoothAdapter.LeScanCallback getLeScanCallback() {
-        return new BluetoothAdapter.LeScanCallback() {
-            @Override
-            public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-
-                if( (beacon != null) && (rssi < beacon.getRssi()) ){
-                    beacon = new Beacon(device.getName(),device.getUuids()[0].getUuid().toString() , rssi);
-                }else{
-                    beacon = new Beacon(device.getName(),device.getUuids()[0].getUuid().toString() , rssi);
-                }
-
-
-            }
-        };
+        return leScanCallback;
     }
 
     public Beacon getBeacon() {
