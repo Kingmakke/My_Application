@@ -25,7 +25,13 @@
 
     <string name="homescreen_button">Scan</string>
     <string name="homescreen_kein_Beacon">Es wurde kein Beacon gefunden</string>
-    <string name="startscreen_appname">App-Name</string>
-    <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
 
+    <string name="kartescreen_GPS_deaktiviert">GPS ist deaktiviert.\nMöchten Sie GPS aktivieren?</string>
+    <string name="kartescreen_GPS_aktivieren_ja">GPS aktivieren</string>
+    <string name="kartescreen_GPS_aktivieren_nein">Abbrechen</string>
+
+    <string name="startscreen_appname">App-Name</string>
+
+    <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
+    <string name="einkaufswagenscreen_info">Informationen über Beacons</string>
 </resources>

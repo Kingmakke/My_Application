@@ -1,28 +1,27 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import java.util.Vector;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Vector<Beacon> beacons = new Vector<Beacon>();
+    private Vector<Veranstaltung> veranstaltungsliste = new Vector<Veranstaltung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.normal)));
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -31,71 +30,97 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        veranstaltungsliste.add(new Veranstaltung("2015-5-20", "Test Veranstaltung", "testtesttesttesttesttesttesttesttesttest"));
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (position+1) {
-            /*case 1:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                        .commit();
-                break;*/
-            case 1:
+        switch (position) {
+            case 0:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new HomeFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section1));
                 break;
-            case 2:
+            case 1:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new KarteFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section2));
                 break;
-            case 3:
+            case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new VeranstaltungenFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section3));
                 break;
-            case 4:
+            case 3:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new EinkaufswagenFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section4));
                 break;
-            case 5:
+            case 4:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new SpielstatistikFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section5));
                 break;
-            case 6:
+            case 5:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new AchievementFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section6));
                 break;
-            case 7:
+            case 6:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new WasIstEinBeaconFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section7));
                 break;
-            case 8:
+            case 7:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new EinstellungenFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section8));
                 break;
         }
-
     }
 
-/*    public void onSectionAttached(int number) {
+    public void restoreActionBar(String mTitle) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+    public Vector<Beacon> getBeacons() {
+        return beacons;
+    }
+
+    public void addBeacon(Beacon beacon) {
+        beacons.addElement(beacon);
+    }
+
+    public void setBeacons(Vector<Beacon> beacons) {
+        this.beacons = beacons;
+    }
+
+    public Vector<Veranstaltung> getVeranstaltungsliste() {
+        return veranstaltungsliste;
+    }
+
+    public void addVeranstaltung(Veranstaltung veranstaltung) {
+        veranstaltungsliste.addElement(veranstaltung);
+    }
+
+    public void setVeranstaltungsliste(Vector<Veranstaltung> veranstaltungsliste) {
+        this.veranstaltungsliste = veranstaltungsliste;
+    }
+
+    /*    public void onSectionAttached(int number) {
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
@@ -124,14 +149,6 @@ public class MainActivity extends ActionBarActivity
         }
     }*/
 
-    public void restoreActionBar(String mTitle) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
-
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -159,46 +176,5 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }*/
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-       /* @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }*/
-    }
 
 }

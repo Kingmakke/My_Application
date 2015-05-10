@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:clickable="true">
+	<TextView
+		android:id="@+id/veranstaltungsliste_veranstaltung1"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textColor="@color/grey_dark"
+		android:background="@color/weiß"
+		android:paddingLeft="5dp"
+		android:paddingTop="3dp"
+		android:paddingRight="5dp"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:clickable="true" />
+	<TextView
+		android:id="@+id/veranstaltungsliste_veranstaltung2"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textColor="@color/grey_light"
+		android:background="@color/weiß"
+		android:paddingLeft="5dp"
+		android:paddingRight="5dp"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:clickable="true" />
+
+</LinearLayout>

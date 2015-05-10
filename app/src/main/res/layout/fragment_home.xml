@@ -15,7 +15,8 @@
         android:layout_below="@+id/homescreen_beaconinfo"
         android:layout_marginTop="20dp"
         android:background="@color/grey_light"
-        android:textColor="@color/weiß" />
+        android:textColor="@color/weiß"
+        android:layout_marginBottom="30dp" />
 
 
 
@@ -39,7 +40,8 @@
         android:layout_toRightOf="@+id/homescreen_dummy1"
         android:layout_toLeftOf="@+id/homescreen_dummy2"
         android:background="@color/grey_light"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:textColor="@color/grey_dark" />
 
     <TextView
         android:id="@+id/homescreen_dummy2"
@@ -62,7 +64,8 @@
         android:layout_toRightOf="@+id/homescreen_dummy2"
         android:layout_toLeftOf="@+id/homescreen_dummy3"
         android:background="@color/grey_light"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:textColor="@color/grey_dark" />
 
     <TextView
         android:id="@+id/homescreen_dummy3"
@@ -76,49 +79,25 @@
         android:layout_alignTop="@+id/homescreen_score"
         android:width="2dp" />
 
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/homescreen_beaconinfo"
         android:layout_below="@+id/homescreen_score"
-        android:layout_alignParentStart="true"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:textColor="@color/grey_dark" />
 
-    <ScrollView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:id="@+id/homescreen_scrollView"
-        android:layout_below="@+id/homescreen_scan_button">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/homescreen_veranstaltung1" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/homescreen_veranstaltung2" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/homescreen_veranstaltung3" />
-        </LinearLayout>
-    </ScrollView>
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/homescreen_veranstaltungsliste"
+        android:choiceMode="singleChoice"
+        android:divider="@color/grey_dark"
+        android:dividerHeight="2dp"
+        android:layout_below="@+id/homescreen_scan_button"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

@@ -1,10 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context="com.hs_osnabrueck.swe_app.myapplication.AchievementFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
-</LinearLayout>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:scrollbars="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:layout_height="match_parent"
+    android:id="@+id/veranstaltungsscreen_veranstaltungsliste"
+    android:choiceMode="singleChoice"
+    android:divider="@color/grey_dark"
+    android:dividerHeight="2dp"
+    android:background="@color/weiß"
+    android:clickable="true">
+</ListView>
