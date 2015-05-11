@@ -1,5 +1,6 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class EinkaufswagenFragment extends Fragment {
 
     private BluetoothAdapter btAdapter = null;
     private Boolean btActive = true;
+    private BleScanner scanner;
 
     public EinkaufswagenFragment() {}
 
@@ -107,6 +109,9 @@ public class EinkaufswagenFragment extends Fragment {
                     btActive = false;
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
+                }else{
+                    btActive = true;
+                    findBeacon(btActive);
                 }
                 /* alt
                 bs = new BeaconSearch();
@@ -117,6 +122,33 @@ public class EinkaufswagenFragment extends Fragment {
                 //findBeacon(btActive);
             }
         });
+    }
+
+    public void findBeacon(Boolean btActive){
+        if(btActive){
+            scanner.start();
+            if(beacon.getName().compareTo("SensorTag")==0) {
+                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
+                beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+            }else if(beacon.getName().compareTo("Estimote")==0){
+                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+                beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+            }else{
+                beaconinfo.setText(getString(R.string.homescreen_kein_Beacon));
+                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_ENABLE_BT_SCAN && resultCode == Activity.RESULT_OK) {
+            btActive = true;
+            findBeacon(btActive);
+        }else if(requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_OK) {
+            btActive = true;
+        }
     }
 
     @Override

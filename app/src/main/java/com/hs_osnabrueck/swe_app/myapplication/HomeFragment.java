@@ -167,6 +167,9 @@ public class HomeFragment extends Fragment {
                     btActive = false;
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
+                } else {
+                    btActive = true;
+                    findBeacon(btActive);
                 }
                 /* alt
                 bs = new BeaconSearch();
@@ -174,7 +177,7 @@ public class HomeFragment extends Fragment {
                 btAdapter.startLeScan(bs.getLeScanCallback());
                 beacon = new Beacon(bs.getBeacon());
                 */
-                //findBeacon(btActive);
+
             }
         });
     }
