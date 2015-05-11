@@ -10,7 +10,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +27,14 @@ public class KarteFragment extends Fragment implements LocationListener{
 
     private final int REQUEST_ENABLE_GPS = 0;
 
+    private LayoutInflater inflater;
+    private ViewGroup container;
+    private Bundle savedInstanceState;
+
     private GoogleMap googleMap;
     private MapView mMapView;
+    private View rootView;
+
     private LocationManager locationManager;
     private double latitude = 52.283127;
     private double longitude = 8.023978;
@@ -37,14 +42,9 @@ public class KarteFragment extends Fragment implements LocationListener{
 
     public KarteFragment() {}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // inflate and return the layout
-        View rootView = inflater.inflate(R.layout.fragment_karte, container,
-                false);
+    public void initMap(){
 
-
+        rootView = inflater.inflate(R.layout.fragment_karte, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.kartescreen_map);
         mMapView.onCreate(savedInstanceState);
@@ -58,7 +58,9 @@ public class KarteFragment extends Fragment implements LocationListener{
         }
 
         googleMap = mMapView.getMap();
+    }
 
+    public void initLocation(){
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
@@ -83,7 +85,19 @@ public class KarteFragment extends Fragment implements LocationListener{
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
         }
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // inflate and return the layout
+
+        this.inflater = inflater;
+        this.container = container;
+        this.savedInstanceState = savedInstanceState;
+
+        initMap();
+        initLocation();
         updateStandort(false);
 
         return rootView;
@@ -106,9 +120,15 @@ public class KarteFragment extends Fragment implements LocationListener{
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+
     }
 
     @Override
@@ -133,7 +153,6 @@ public class KarteFragment extends Fragment implements LocationListener{
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        Log.e("debug", String.valueOf(latitude) + String.valueOf(longitude));
         updateStandort(true);
     }
 
@@ -169,5 +188,10 @@ public class KarteFragment extends Fragment implements LocationListener{
             gps = true;
             //updateStandort();
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

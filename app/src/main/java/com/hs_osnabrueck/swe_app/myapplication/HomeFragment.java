@@ -33,10 +33,8 @@ public class HomeFragment extends Fragment {
 
     private Beacon beacon = new Beacon("", "", -120);
     private BleScanner scanner;
-
     private BluetoothAdapter btAdapter = null;
     private Boolean btActive = true;
-    //private BeaconSearch bs;
 
     public HomeFragment() {}
 
@@ -115,16 +113,6 @@ public class HomeFragment extends Fragment {
         }
         //-----bis-----
 
-        /*  alt
-        btManager = (BluetoothManager)getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
-        btAdapter = btManager.getAdapter();
-
-        if (btAdapter != null && !btAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent,REQUEST_ENABLE_BT);
-        }
-        */
-
         beaconinfo = (TextView)rootView.findViewById(R.id.homescreen_beaconinfo);
         beaconinfo.setBackgroundResource(R.drawable.cell_shape_beaconinfo);
         beaconinfo.setGravity(Gravity.CENTER_VERTICAL);
@@ -172,12 +160,6 @@ public class HomeFragment extends Fragment {
                     btActive = true;
                     findBeacon(btActive);
                 }
-                /* alt
-                bs = new BeaconSearch();
-                new Timer().execute();
-                btAdapter.startLeScan(bs.getLeScanCallback());
-                beacon = new Beacon(bs.getBeacon());
-                */
 
             }
         });
@@ -189,7 +171,6 @@ public class HomeFragment extends Fragment {
 
         this.inflater = inflater;
         this.container = container;
-
 
         init();
         initBeacon();
@@ -212,6 +193,11 @@ public class HomeFragment extends Fragment {
     public void findBeacon(Boolean btActive){
         if(btActive){
             scanner.start();
+            try {
+                Thread.sleep(SCAN_PERIOD);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if(beacon.getName().compareTo("SensorTag")==0) {
                 beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
                 beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
@@ -230,24 +216,4 @@ public class HomeFragment extends Fragment {
         super.onAttach(activity);
         main = (MainActivity)activity;
     }
-
-    /* alt
-    public class Timer extends AsyncTask<Integer, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Integer... time) {
-            try {
-                Thread.sleep(1000);
-                btAdapter.stopLeScan(bs.getLeScanCallback());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
-    */
-
-
-
 }
