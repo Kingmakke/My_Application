@@ -2,6 +2,7 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ public class EinkaufswagenFragment extends Fragment {
     private LayoutInflater inflater;
     private ViewGroup container;
 
-    private Beacon beacon = new Beacon("", "", -100);
+    private Beacon beacon = new Beacon("", "", -120);
 
     private BluetoothAdapter btAdapter = null;
     private Boolean btActive = true;
@@ -45,8 +46,6 @@ public class EinkaufswagenFragment extends Fragment {
 
             }
         });
-
-
     }
 
     public void initBeacon(){
@@ -54,7 +53,7 @@ public class EinkaufswagenFragment extends Fragment {
 
         //TODO  zum Testen auf dem Emulator auskommentieren
         //-----von-----
-        /*final int bleStatus = BleUtils.getBleStatus(getActivity().getBaseContext());
+        final int bleStatus = BleUtils.getBleStatus(getActivity().getBaseContext());
         switch (bleStatus) {
             case BleUtils.STATUS_BLE_NOT_AVAILABLE:
                 btActive = false;
@@ -70,7 +69,7 @@ public class EinkaufswagenFragment extends Fragment {
                 // return;
             default:
                 btAdapter = BleUtils.getBluetoothAdapter(rootView.getContext());
-        }*/
+        }
         //-----bis-----
 
         /*  alt
@@ -90,7 +89,7 @@ public class EinkaufswagenFragment extends Fragment {
         if(beacon.getName().compareTo("SensorTag")==0) {
             beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
             beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
-        }else if(beacon.getName().compareTo("Estimote")==0){
+        }else if(beacon.getName().compareTo("estimote")==0){
             beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
             beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
         }else{
@@ -108,7 +107,7 @@ public class EinkaufswagenFragment extends Fragment {
 
         //TODO  zum Testen auf dem Emulator auskommentieren
         //-----von-----
-        /*scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
+        scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
                 if(rssi > beacon.getRssi() ){
@@ -116,7 +115,7 @@ public class EinkaufswagenFragment extends Fragment {
                 }
             }
         });
-        scanner.setScanPeriod(SCAN_PERIOD);*/
+        scanner.setScanPeriod(SCAN_PERIOD);
         //-----bis-----
         scan = (Button)rootView.findViewById(R.id.einkaufswagenscreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +146,7 @@ public class EinkaufswagenFragment extends Fragment {
             if(beacon.getName().compareTo("SensorTag")==0) {
                 beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
                 beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
-            }else if(beacon.getName().compareTo("Estimote")==0){
+            }else if(beacon.getName().compareTo("estimote")==0){
                 beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
                 beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
             }else{
