@@ -3,6 +3,7 @@ package com.hs_osnabrueck.swe_app.myapplication;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -19,7 +20,7 @@ public class EinkaufswagenFragment extends Fragment {
     private static final long SCAN_PERIOD = 1000;
 
     private View rootView;
-    private Button scan;
+    private Button scan, download;
     private TextView beaconinfo;
     private LayoutInflater inflater;
     private ViewGroup container;
@@ -32,8 +33,24 @@ public class EinkaufswagenFragment extends Fragment {
 
     public EinkaufswagenFragment() {}
 
-    public void initBeacon(){
+    public void init(){
         rootView = inflater.inflate(R.layout.fragment_einkaufswagen, container, false);
+
+        download = (Button)rootView.findViewById(R.id.einkaufswagenscreen_download_button);
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=osnabrueck.greencity"));
+                startActivity(intent);
+
+            }
+        });
+
+
+    }
+
+    public void initBeacon(){
+
 
         //TODO  zum Testen auf dem Emulator auskommentieren
         //-----von-----
@@ -157,6 +174,8 @@ public class EinkaufswagenFragment extends Fragment {
 
         this.inflater = inflater;
         this.container = container;
+
+        init();
 
         initBeacon();
 
