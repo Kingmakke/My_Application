@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class KarteFragment extends Fragment implements LocationListener{
@@ -34,6 +35,9 @@ public class KarteFragment extends Fragment implements LocationListener{
     private GoogleMap googleMap;
     private MapView mMapView;
     private View rootView;
+    private MainActivity main;
+    private MarkerOptions marker;
+    private Marker ownPosMarker;
 
     private LocationManager locationManager;
     private double latitude = 52.283127;
@@ -58,6 +62,19 @@ public class KarteFragment extends Fragment implements LocationListener{
         }
 
         googleMap = mMapView.getMap();
+
+        for(int i = 0; i < main.getPoiliste().size(); i++) {
+            marker = new MarkerOptions().position(new LatLng(main.getPoiliste().elementAt(i).getGps_latitude(),
+                    main.getPoiliste().elementAt(i).getGps_longitude())).title(main.getPoiliste().elementAt(i).getName());
+            googleMap.addMarker(marker);
+        }
+        //TODO Navigation
+        /*
+        Intent navigation = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr=START_LAT,START_LON&daddr=END_LAT,END_LON"));
+        startActivity(navigation);
+        */
     }
 
     public void initLocation(){
@@ -104,14 +121,19 @@ public class KarteFragment extends Fragment implements LocationListener{
     }
 
     public void updateStandort(Boolean mark){
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Aktueller Standort");
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-        // adding marker
-        googleMap.clear();
+
         if(mark){
-            googleMap.addMarker(marker);
+            if(ownPosMarker != null){
+                ownPosMarker.remove();
+            }
+
+            // create marker
+            ownPosMarker = googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Aktueller Standort").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+            // Changing marker icon
+            //ownPosMarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+            // adding marker
+            //googleMap.addMarker(ownPosMarker);
+
         }
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(18).build();
@@ -193,5 +215,11 @@ public class KarteFragment extends Fragment implements LocationListener{
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onAttach( Activity activity ) {
+        super.onAttach(activity);
+        main = (MainActivity)activity;
     }
 }

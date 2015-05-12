@@ -15,11 +15,9 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     private static final int TYPE_VERANSTALTUNG = 0;
     private static final int TYPE_DATE = 1;
 
-    private View v;
-    private Boolean date;
     private LayoutInflater inflater;
-    private ArrayList<DoubleString> mData = new ArrayList<DoubleString>();
-    final List<Integer> datePos = new ArrayList<Integer>();
+    private ArrayList<DoubleString> mData = new ArrayList<>();
+    final List<Integer> datePos = new ArrayList<>();
 
     public MyArrayAdapter(Context context, int resource) {
         super(context, resource);

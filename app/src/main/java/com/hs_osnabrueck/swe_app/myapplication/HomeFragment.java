@@ -59,20 +59,20 @@ public class HomeFragment extends Fragment {
                 listAdapter.addDate(main.getVeranstaltungsliste().elementAt(i).getDate());
                 dateitems.add(listAdapter.getCount()-1);
             }
-            listAdapter.addVeranstaltung(main.getVeranstaltungsliste().elementAt(i).getName(),
-                    main.getVeranstaltungsliste().elementAt(i).getDescription());
+            listAdapter.addVeranstaltung(main.getVeranstaltungsliste().elementAt(i).getName(), main.getVeranstaltungsliste().elementAt(i).getDescription());
             veranstaltungsitems.add(listAdapter.getCount()-1);
 
         }
         ListView veranstaltungsListView = (ListView)rootView.findViewById(R.id.homescreen_veranstaltungsliste);
         veranstaltungsListView.setAdapter(listAdapter);
-        veranstaltungsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+        veranstaltungsListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View view, int pos,
                                     long arg3) {
 
-                if (veranstaltungsitems.contains(pos)) {
-                    //TODO
-                    //zu Veranstaltungsdeteils wechseln?
+                if(veranstaltungsitems.contains(pos)){
+                    view.setBackgroundColor(getResources().getColor(R.color.grey_light));
+                    beaconinfo.setText(getString(R.string.homescreen_kein_Beacon));
+                    beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
                 }
             }
 
@@ -147,6 +147,13 @@ public class HomeFragment extends Fragment {
             }
         });
         scanner.setScanPeriod(SCAN_PERIOD);
+        scanner.start();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        scanner.stop();
         //-----bis-----
         scan = (Button)rootView.findViewById(R.id.homescreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +205,7 @@ public class HomeFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            scanner.stop();
             if(beacon.getName().compareTo("SensorTag")==0) {
                 beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
                 beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());

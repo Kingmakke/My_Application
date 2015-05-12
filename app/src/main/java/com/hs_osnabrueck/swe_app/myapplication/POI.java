@@ -1,5 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
+import android.util.Log;
+
 import java.util.Vector;
 
 public class POI {
@@ -12,8 +14,41 @@ public class POI {
     private Vector<String> imageLinks;
     private Vector<String> webLinks;
     private Vector<String> image;
-    private Vector<Beacon> beacon;
+    private Beacon beacon;
     private Vector<Course> course;
+
+    public POI(String json){
+        json = json.substring(1,json.length()-1);
+        String[] result = json.split(",");
+        String temp = "";
+        for(int i = 0; i < result.length; i++){
+            result[i] = result[i].substring(result[i].indexOf(":")+1);
+            Log.e("debug result " + i, result[i]);
+            result[i] = result[i].replaceAll("\"", "");
+            Log.e("debug result fertig " + i, result[i]);
+        }
+        this.id = Integer.parseInt(result[0]);
+        this.beacon = new Beacon("SensorTag", result[1], -120);
+        this.name = result[2];
+        this.description = result[3];
+        this.gps_latitude = Double.parseDouble(result[4]);
+        this.gps_longitude = Double.parseDouble(result[5]);
+
+
+    }
+
+    public POI(Beacon beacon, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> image, Vector<String> imageLinks, String name, Vector<String> webLinks) {
+        this.beacon = beacon;
+        this.course = course;
+        this.description = description;
+        this.gps_latitude = gps_latitude;
+        this.gps_longitude = gps_longitude;
+        this.id = id;
+        this.image = image;
+        this.imageLinks = imageLinks;
+        this.name = name;
+        this.webLinks = webLinks;
+    }
 
     public int getId() {
         return id;
@@ -71,11 +106,11 @@ public class POI {
         this.webLinks = webLinks;
     }
 
-    public Vector<Beacon> getBeacon() {
+    public Beacon getBeacon() {
         return beacon;
     }
 
-    public void setBeacon(Vector<Beacon> beacon) {
+    public void setBeacon(Beacon beacon) {
         this.beacon = beacon;
     }
 

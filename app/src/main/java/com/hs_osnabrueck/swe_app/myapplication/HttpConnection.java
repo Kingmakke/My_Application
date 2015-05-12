@@ -2,9 +2,6 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.os.AsyncTask;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,32 +12,39 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class HttpConnection extends AsyncTask<String, Void, String> {
+public class HttpConnection extends AsyncTask<String, Void, Void> {
 
     static private final int CONNECTION_TIMEOUT = 10000;
 
-    private String resultHttpConnection;
+    private String resultHttpConnection = "";
+    private Boolean executed = false;
 
     @Override
-    protected String doInBackground(String... urls) {
-
-        return requestServer(urls[0], urls[1]);
+    protected Void doInBackground(String... urls) {
+        requestServer(urls[0], urls[1]);
+        return null;
     }
 
     // onPostExecute displays the results of the AsyncTask.
-    @Override
+    /*@Override
     protected void onPostExecute(String result) {
-        result.replace("\\\\","");
-        resultHttpConnection = result;
+        Log.e("debug post", result);
 
-    }
+        if(result != null){
+            result.replace("\\\\","");
+            resultHttpConnection = result;
+        }else{
+            resultHttpConnection = "";
+        }
+        executed = true;
+    }*/
 
     private static String getResponseText(InputStream inStream) {
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 
 
-    public static String requestServer(String url, String put){
+    public void requestServer(String url, String put){
 
         HttpURLConnection urlConnection = null;
 
@@ -61,7 +65,7 @@ public class HttpConnection extends AsyncTask<String, Void, String> {
                 // handle any other errors, like 404, 500,..
             }
 
-            if(put.compareTo("") != 0){
+            if(put.compareTo("put") != 0){
                 urlConnection.setRequestMethod("PUT");
                 OutputStreamWriter out = new OutputStreamWriter(
                         urlConnection.getOutputStream());
@@ -69,29 +73,36 @@ public class HttpConnection extends AsyncTask<String, Void, String> {
                 out.close();
                 InputStream in = new BufferedInputStream(
                         urlConnection.getInputStream());
-                return new JSONObject(getResponseText(in)).toString();
+                String tmp = getResponseText(in);
+                resultHttpConnection = tmp;
+                executed = true;
+                //return new JSONObject(getResponseText(in)).toString();
             }else{
-                InputStream in = new BufferedInputStream(
-                        urlConnection.getInputStream());
-                return new JSONObject(getResponseText(in)).toString();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                String tmp = getResponseText(in);
+                resultHttpConnection = tmp;
+                executed = true;
+                //return tmp;
             }
 
         } catch (MalformedURLException e) {
             // URL is invalid
+            executed = true;
         } catch (SocketTimeoutException e) {
             // data retrieval or connection timed out
+            executed = true;
         } catch (IOException e) {
             // could not read response body
             // (could not create input stream)
-        } catch (JSONException e) {
-            // response body is no valid JSON string
+            executed = true;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
+            executed = true;
         }
 
-        return null;
+        //return null;
 
     }
 
@@ -99,8 +110,7 @@ public class HttpConnection extends AsyncTask<String, Void, String> {
         return resultHttpConnection;
     }
 
-    public void setResultHttpConnection(String resultHttpConnection) {
-        this.resultHttpConnection = resultHttpConnection;
+    public Boolean isExecuted() {
+        return executed;
     }
-
 }

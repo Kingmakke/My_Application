@@ -33,5 +33,5 @@
     <string name="startscreen_appname">App-Name</string>
 
     <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
-    <string name="einkaufswagenscreen_info">Informationen über Beacons</string>
+    <string name="einkaufswagenscreen_info">Informationen zu den Einkaufswagen</string>
 </resources>

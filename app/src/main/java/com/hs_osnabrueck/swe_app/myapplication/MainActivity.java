@@ -13,8 +13,12 @@ public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Vector<Beacon> beacons = new Vector<Beacon>();
-    private Vector<Veranstaltung> veranstaltungsliste = new Vector<Veranstaltung>();
+    private Vector<Beacon> beacons = new Vector<>();
+    private Vector<Veranstaltung> veranstaltungsliste = new Vector<>();
+    private Vector<POI> poiliste = new Vector<>();
+    private String urlServer = "http://131.173.110.133:443/api/";
+    private String urlAllPOI = "http://131.173.110.133:443/api/all/POIs";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,15 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         veranstaltungsliste.add(new Veranstaltung("2015-5-20", "Test Veranstaltung", "testtesttesttesttesttesttesttesttesttest"));
+
+        HttpConnection connection = new HttpConnection();
+        connection.execute(urlAllPOI, "put");
+        while(!connection.isExecuted()){
+            //Log.e("debug executed", String.valueOf(connection.isExecuted()));
+        }
+        addPOIs(connection.getResultHttpConnection());
+
+
     }
 
     @Override
@@ -120,61 +133,25 @@ public class MainActivity extends ActionBarActivity
         this.veranstaltungsliste = veranstaltungsliste;
     }
 
-    /*    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-            case 4:
-                mTitle = getString(R.string.title_section4);
-                break;
-            case 5:
-                mTitle = getString(R.string.title_section5);
-                break;
-            case 6:
-                mTitle = getString(R.string.title_section6);
-                break;
-            case 7:
-                mTitle = getString(R.string.title_section7);
-                break;
-            case 8:
-                mTitle = getString(R.string.title_section8);
-                break;
-        }
-    }*/
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+    public Vector<POI> getPoiliste() {
+        return poiliste;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void setPoiliste(Vector<POI> poiliste) {
+        this.poiliste = poiliste;
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void addPOIs(String json){
+        if(!json.isEmpty()){
+            json = json.substring(1,json.length()-1);
+            json = json.replaceAll("\\},\\{", "\\};\\{");
+            String[] temp = json.split(";");
+            for(int i = 0; i < temp.length; i++){
+                poiliste.add(new POI(temp[i]));
+            }
         }
 
-        return super.onOptionsItemSelected(item);
-    }*/
+
+    }
 
 }
