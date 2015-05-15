@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
                 if(veranstaltungsitems.contains(pos)){
                     view.setBackgroundColor(getResources().getColor(R.color.grey_light));
                     beaconinfo.setText(getString(R.string.homescreen_kein_Beacon));
-                    beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+                    beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
                 }
             }
 

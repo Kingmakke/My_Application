@@ -29,6 +29,7 @@
     <string name="kartescreen_GPS_deaktiviert">GPS ist deaktiviert.\nMöchten Sie GPS aktivieren?</string>
     <string name="kartescreen_GPS_aktivieren_ja">GPS aktivieren</string>
     <string name="kartescreen_GPS_aktivieren_nein">Abbrechen</string>
+    <string name="kartescreen_campus">Campus</string>
 
     <string name="startscreen_appname">App-Name</string>
 

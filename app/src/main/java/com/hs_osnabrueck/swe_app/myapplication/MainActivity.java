@@ -146,6 +146,7 @@ public class MainActivity extends ActionBarActivity
             json = json.substring(1,json.length()-1);
             json = json.replaceAll("\\},\\{", "\\};\\{");
             String[] temp = json.split(";");
+            poiliste.removeAllElements();
             for(int i = 0; i < temp.length; i++){
                 poiliste.add(new POI(temp[i]));
             }
