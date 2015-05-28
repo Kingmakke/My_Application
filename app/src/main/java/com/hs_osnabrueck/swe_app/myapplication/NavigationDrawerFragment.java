@@ -18,6 +18,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.hs_osnabrueck.swe_app.myapplication.adapter.MyDrawerAdapter;
+import com.hs_osnabrueck.swe_app.myapplication.common.NavItem;
+
 import java.util.ArrayList;
 
 public class NavigationDrawerFragment extends Fragment {
@@ -92,32 +96,17 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         //TODO andere Icons
-        mNavItems.add(new NavItem(getString(R.string.title_section1), R.drawable.ic_drawer));//ic_menu_home));
-        mNavItems.add(new NavItem(getString(R.string.title_section2), R.drawable.ic_drawer));//ic_action_map));
-        mNavItems.add(new NavItem(getString(R.string.title_section3), R.drawable.ic_drawer));//ic_action_go_to_today));
-        mNavItems.add(new NavItem(getString(R.string.title_section4), R.drawable.ic_drawer));//ic_cart));
-        mNavItems.add(new NavItem(getString(R.string.title_section5), R.drawable.ic_drawer));//ic_action_data_usage));
-        mNavItems.add(new NavItem(getString(R.string.title_section6), R.drawable.ic_drawer));//ic_action_not_important));
-        mNavItems.add(new NavItem(getString(R.string.title_section7), R.drawable.ic_drawer));//ic_action_about));
-        mNavItems.add(new NavItem(getString(R.string.title_section8), R.drawable.ic_drawer));//ic_action_settings));
+        mNavItems.add(new NavItem(getString(R.string.title_section1), R.drawable.ic_menu_home));
+        mNavItems.add(new NavItem(getString(R.string.title_section2), R.drawable.ic_action_map));
+        mNavItems.add(new NavItem(getString(R.string.title_section3), R.drawable.ic_action_go_to_today));
+        mNavItems.add(new NavItem(getString(R.string.title_section4), R.drawable.ic_cart));
+        mNavItems.add(new NavItem(getString(R.string.title_section5), R.drawable.ic_action_data_usage));
+        mNavItems.add(new NavItem(getString(R.string.title_section6), R.drawable.ic_action_not_important));
+        mNavItems.add(new NavItem(getString(R.string.title_section7), R.drawable.ic_action_about));
+        mNavItems.add(new NavItem(getString(R.string.title_section8), R.drawable.ic_action_settings));
 
         MyDrawerAdapter myAdapter = new MyDrawerAdapter(getActionBar().getThemedContext(), mNavItems );
         mDrawerListView.setAdapter(myAdapter);
-        /*mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                    getActionBar().getThemedContext(),
-                    android.R.layout.simple_list_item_activated_1,
-                    android.R.id.text1,
-                    new String[]{
-                            getString(R.string.title_section1),
-                            getString(R.string.title_section2),
-                            getString(R.string.title_section3),
-                            getString(R.string.title_section4),
-                            getString(R.string.title_section5),
-                            getString(R.string.title_section6),
-                            getString(R.string.title_section7),
-                            getString(R.string.title_section8),
-                    }
-        ));*/
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }

@@ -2,10 +2,16 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+
+import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.common.Event;
+import com.hs_osnabrueck.swe_app.myapplication.common.POI;
+import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
 
 import java.util.Vector;
 
@@ -14,11 +20,14 @@ public class MainActivity extends ActionBarActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Vector<Beacon> beacons = new Vector<>();
-    private Vector<Veranstaltung> veranstaltungsliste = new Vector<>();
+    private Vector<Event> eventliste = new Vector<>();
     private Vector<POI> poiliste = new Vector<>();
-    private String urlServer = "http://131.173.110.133:443/api/";
+    private String urlServer = "http://131.173.110.133:443/api";
     private String urlAllPOI = "http://131.173.110.133:443/api/all/POIs";
+    private String urlEvents = "http://131.173.110.133:443/api/events";
 
+    private int pos;
+    private int pos_old;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +44,17 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        veranstaltungsliste.add(new Veranstaltung("2015-5-20", "Test Veranstaltung", "testtesttesttesttesttesttesttesttesttest"));
+        HttpConnection connectionPOI = new HttpConnection();
+        connectionPOI.execute(urlAllPOI, "put");
+        while(!connectionPOI.isExecuted()) {
 
-        HttpConnection connection = new HttpConnection();
-        connection.execute(urlAllPOI, "put");
-        while(!connection.isExecuted()){
-            //Log.e("debug executed", String.valueOf(connection.isExecuted()));
         }
-        addPOIs(connection.getResultHttpConnection());
+        addPOIs(connectionPOI.getResultHttpConnection());
+        HttpConnection connectionEvents = new HttpConnection();
+        connectionEvents.execute(urlEvents, "put");
+        while(!connectionEvents.isExecuted()){
+        }
+        addEvents(connectionEvents.getResultHttpConnection());
 
 
     }
@@ -65,7 +77,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 2:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new VeranstaltungenFragment())
+                        .replace(R.id.container, new EventFragment())
                         .commit();
                 restoreActionBar(getString(R.string.title_section3));
                 break;
@@ -121,16 +133,16 @@ public class MainActivity extends ActionBarActivity
         this.beacons = beacons;
     }
 
-    public Vector<Veranstaltung> getVeranstaltungsliste() {
-        return veranstaltungsliste;
+    public Vector<Event> getEventliste() {
+        return eventliste;
     }
 
-    public void addVeranstaltung(Veranstaltung veranstaltung) {
-        veranstaltungsliste.addElement(veranstaltung);
+    public void addEvent(Event veranstaltung) {
+        eventliste.addElement(veranstaltung);
     }
 
-    public void setVeranstaltungsliste(Vector<Veranstaltung> veranstaltungsliste) {
-        this.veranstaltungsliste = veranstaltungsliste;
+    public void setEventliste(Vector<Event> veranstaltungsliste) {
+        this.eventliste = veranstaltungsliste;
     }
 
     public Vector<POI> getPoiliste() {
@@ -144,15 +156,54 @@ public class MainActivity extends ActionBarActivity
     public void addPOIs(String json){
         if(!json.isEmpty()){
             json = json.substring(1,json.length()-1);
-            json = json.replaceAll("\\},\\{", "\\};\\{");
-            String[] temp = json.split(";");
+            //json = json.replaceAll("\\},\\{", "\\};\\{");
+            String[] temp = json.split("\\},\\{");
             poiliste.removeAllElements();
             for(int i = 0; i < temp.length; i++){
                 poiliste.add(new POI(temp[i]));
             }
         }
-
-
     }
 
+    public void addEvents(String json){
+        if(!json.isEmpty()){
+            json = json.substring(json.indexOf('[') + 1, json.indexOf(']') - 1);
+            String[] temp = json.split("\\},\\{");
+            eventliste.removeAllElements();
+            for(int i = 0; i < temp.length; i++){
+                eventliste.add(new Event(temp[i]));
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(pos == 0){
+            finish();
+        }else if(pos == 8 && pos_old == 2){
+            Fragment fragment = new EventFragment();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.commit();
+        }else{
+            Fragment fragment = new HomeFragment();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.commit();
+        }
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
+    public int getPos_old() {return pos_old;}
+
+    public void setPos_old(int pos_old) {this.pos_old = pos_old;}
 }

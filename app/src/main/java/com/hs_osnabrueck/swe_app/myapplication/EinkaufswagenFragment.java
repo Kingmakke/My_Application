@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
+import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+
 public class EinkaufswagenFragment extends Fragment {
 
     private final static int REQUEST_ENABLE_BT = 1;
@@ -25,6 +29,7 @@ public class EinkaufswagenFragment extends Fragment {
     private TextView beaconinfo;
     private LayoutInflater inflater;
     private ViewGroup container;
+    private MainActivity main;
 
     private Beacon beacon = new Beacon("", "", -120);
 
@@ -174,10 +179,18 @@ public class EinkaufswagenFragment extends Fragment {
         this.inflater = inflater;
         this.container = container;
 
+        main.setPos(3);
+
         init();
 
         initBeacon();
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach( Activity activity ) {
+        super.onAttach(activity);
+        main = (MainActivity)activity;
     }
 }

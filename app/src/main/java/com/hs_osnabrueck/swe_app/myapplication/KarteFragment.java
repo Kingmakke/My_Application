@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.hs_osnabrueck.swe_app.myapplication.adapter.MyInfoWindowAdapter;
 
 public class KarteFragment extends Fragment{//} implements LocationListener{
 
@@ -143,6 +144,8 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         this.inflater = inflater;
         this.container = container;
         this.savedInstanceState = savedInstanceState;
+
+        main.setPos(1);
 
         initMap();
 

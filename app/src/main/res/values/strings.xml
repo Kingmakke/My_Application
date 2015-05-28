@@ -21,7 +21,8 @@
     <string name="action_settings">Settings</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="firstscreen_button">Start</string>
 
     <string name="homescreen_button">Scan</string>
     <string name="homescreen_kein_Beacon">Es wurde kein Beacon gefunden</string>
@@ -35,4 +36,13 @@
 
     <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
     <string name="einkaufswagenscreen_info">Informationen zu den Einkaufswagen</string>
+
+    <string name="event_details_date">Datum und Uhrzeit:</string>
+    <string name="event_details_location">Veranstaltungsort:</string>
+    <string name="event_details_description">Weitere Informationen:</string>
+    <string name="title_activity_start">StartActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_first">FirstActivity</string>
+
 </resources>
