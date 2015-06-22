@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
         for(int i = 0; i < veranstaltungsanzahl; i++){
 
             if(!listAdapter.isEmpty()){
-                if(listAdapter.getItem(dateitems.size() - 1).compareTo(main.getEventliste().elementAt(i).getDate()) != 0){
+                if(listAdapter.getItem(dateitems.get(dateitems.size() - 1)).compareTo(main.getEventliste().elementAt(i).getDate()) != 0){
                     listAdapter.addDate(main.getEventliste().elementAt(i).getDate());
                 }
             }else{
@@ -76,16 +76,17 @@ public class HomeFragment extends Fragment {
 
                 if(eventitems.contains(pos)){
                     Bundle bundle = new Bundle();
-                    bundle.putString("title", main.getEventliste().elementAt(pos).getTitle());
-                    bundle.putString("date", main.getEventliste().elementAt(pos).getDate());
-                    bundle.putString("location",main.getEventliste().elementAt(pos).getDescription());
-                    bundle.putString("description", main.getEventliste().elementAt(pos).getContent());
+                    bundle.putString("title", main.getEventliste().elementAt(eventitems.indexOf(pos)).getTitle());
+                    bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
+                    bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
+                    bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
                     bundle.putInt("pos", 0);
                     Fragment fragment = new EventDetailsFragment();
                     fragment.setArguments(bundle);
                     android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.container, fragment);
+                    main.restoreActionBar(getString(R.string.title_section10));
                     fragmentTransaction.commit();
                 }
             }
@@ -128,7 +129,6 @@ public class HomeFragment extends Fragment {
         //-----bis-----
 
         beaconinfo = (TextView)rootView.findViewById(R.id.homescreen_beaconinfo);
-        beaconinfo.setBackgroundResource(R.drawable.cell_shape_beaconinfo);
         beaconinfo.setGravity(Gravity.CENTER_VERTICAL);
         beaconinfo.setCompoundDrawablePadding(50);
         if(beacon.getName().compareTo("SensorTag")==0) {

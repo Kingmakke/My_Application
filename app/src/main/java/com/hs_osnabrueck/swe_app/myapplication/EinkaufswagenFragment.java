@@ -88,7 +88,6 @@ public class EinkaufswagenFragment extends Fragment {
         */
 
         beaconinfo = (TextView)rootView.findViewById(R.id.einkaufswagenscreen_beaconinfo);
-        beaconinfo.setBackgroundResource(R.drawable.cell_shape_beaconinfo);
         beaconinfo.setGravity(Gravity.CENTER_VERTICAL);
         beaconinfo.setCompoundDrawablePadding(50);
         if(beacon.getName().compareTo("SensorTag")==0) {
@@ -134,13 +133,6 @@ public class EinkaufswagenFragment extends Fragment {
                     btActive = true;
                     findBeacon(btActive);
                 }
-                /* alt
-                bs = new BeaconSearch();
-                new Timer().execute();
-                btAdapter.startLeScan(bs.getLeScanCallback());
-                beacon = new Beacon(bs.getBeacon());
-                */
-                //findBeacon(btActive);
             }
         });
     }

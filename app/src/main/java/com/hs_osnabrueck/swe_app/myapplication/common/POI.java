@@ -11,7 +11,6 @@ public class POI {
     private double gps_longitude;
     private Vector<String> imageLinks;
     private Vector<String> webLinks;
-    private Vector<String> image;
     private Beacon beacon;
     private Vector<Course> course;
 
@@ -32,15 +31,22 @@ public class POI {
 
 
     }
+    public POI(Beacon beacon, String description, double gps_latitude, double gps_longitude, int id, String name) {
+        this.beacon = beacon;
+        this.description = description;
+        this.gps_latitude = gps_latitude;
+        this.gps_longitude = gps_longitude;
+        this.id = id;
+        this.name = name;
+    }
 
-    public POI(Beacon beacon, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> image, Vector<String> imageLinks, String name, Vector<String> webLinks) {
+    public POI(Beacon beacon, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks) {
         this.beacon = beacon;
         this.course = course;
         this.description = description;
         this.gps_latitude = gps_latitude;
         this.gps_longitude = gps_longitude;
         this.id = id;
-        this.image = image;
         this.imageLinks = imageLinks;
         this.name = name;
         this.webLinks = webLinks;
@@ -108,14 +114,6 @@ public class POI {
 
     public void setBeacon(Beacon beacon) {
         this.beacon = beacon;
-    }
-
-    public Vector<String> getImage() {
-        return image;
-    }
-
-    public void setImage(Vector<String> image) {
-        this.image = image;
     }
 
     public Vector<Course> getCourse() {

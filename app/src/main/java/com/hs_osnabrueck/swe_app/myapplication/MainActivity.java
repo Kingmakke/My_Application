@@ -1,5 +1,6 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,10 @@ import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Vector;
 
@@ -26,12 +31,25 @@ public class MainActivity extends ActionBarActivity
     private String urlAllPOI = "http://131.173.110.133:443/api/all/POIs";
     private String urlEvents = "http://131.173.110.133:443/api/events";
 
+    private static final String TITLE = "title";
+    private static final String LINK = "link";
+    private static final String DESRCIPTION = "description";
+    private static final String CONTENT = "content";
+    private static final String CATEGORY = "category";
+    private static final String DATE = "date";
+    private static final String LATITUDE = "latitude";
+    private static final String LONGITUDE = "longitude";
+    private static final String BEACONID = "beaconID";
+    private static final String POIID = "poiID";
+    private static final String NAME = "name";
+
     private int pos;
     private int pos_old;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.normal)));
@@ -44,18 +62,18 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        /*
         HttpConnection connectionPOI = new HttpConnection();
         connectionPOI.execute(urlAllPOI, "put");
         while(!connectionPOI.isExecuted()) {
-
         }
         addPOIs(connectionPOI.getResultHttpConnection());
+        */
         HttpConnection connectionEvents = new HttpConnection();
         connectionEvents.execute(urlEvents, "put");
         while(!connectionEvents.isExecuted()){
         }
         addEvents(connectionEvents.getResultHttpConnection());
-
 
     }
 
@@ -153,44 +171,72 @@ public class MainActivity extends ActionBarActivity
         this.poiliste = poiliste;
     }
 
-    public void addPOIs(String json){
-        if(!json.isEmpty()){
-            json = json.substring(1,json.length()-1);
-            //json = json.replaceAll("\\},\\{", "\\};\\{");
-            String[] temp = json.split("\\},\\{");
-            poiliste.removeAllElements();
-            for(int i = 0; i < temp.length; i++){
-                poiliste.add(new POI(temp[i]));
+    public void addPOIs(JSONObject json){
+        poiliste.removeAllElements();
+        try {
+            JSONArray jsonArray = json.getJSONArray("pois");
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                poiliste.add(new POI(
+                        new Beacon("SensorTag", jsonObject.getString(BEACONID), -120),
+                        jsonObject.getString(DESRCIPTION),
+                        Double.valueOf(jsonObject.getString(LATITUDE)),
+                        Double.valueOf(jsonObject.getString(LONGITUDE)),
+                        Integer.valueOf(jsonObject.getString(POIID)),
+                        jsonObject.getString(NAME)
+                        )
+                );
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
     }
 
-    public void addEvents(String json){
-        if(!json.isEmpty()){
-            json = json.substring(json.indexOf('[') + 1, json.indexOf(']') - 1);
-            String[] temp = json.split("\\},\\{");
-            eventliste.removeAllElements();
-            for(int i = 0; i < temp.length; i++){
-                eventliste.add(new Event(temp[i]));
+    public void addEvents(JSONObject json){
+        eventliste.removeAllElements();
+        try {
+            JSONArray jsonArray = json.getJSONArray("feeds");
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                eventliste.add(new Event(
+                                jsonObject.getString(CATEGORY),
+                                jsonObject.getString(CONTENT),
+                                //jsonObject.getString(DATE),
+                                (i+10) + ".6.2015",
+                                jsonObject.getString(DESRCIPTION),
+                                jsonObject.getString(LINK),
+                                jsonObject.getString(TITLE)
+                        )
+                );
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
     public void onBackPressed() {
-        if(pos == 0){
+        if(mNavigationDrawerFragment.isVisible()){
+            DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerLayout.closeDrawers();
+        }else if(pos == 0){
             finish();
         }else if(pos == 8 && pos_old == 2){
             Fragment fragment = new EventFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, fragment);
+            restoreActionBar(getString(R.string.title_section3));
             fragmentTransaction.commit();
         }else{
             Fragment fragment = new HomeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, fragment);
+            restoreActionBar(getString(R.string.title_section1));
             fragmentTransaction.commit();
         }
     }

@@ -10,7 +10,7 @@
     <string name="title_section7">Was ist ein Beacon?</string>
     <string name="title_section8">Einstellungen</string>
     <string name="title_section9">Achievement 1</string>
-
+    <string name="title_section10">Veranstaltungsdetails</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -44,5 +44,13 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_first">FirstActivity</string>
+
+    <string name="institut_prompt">Institution</string>
+
+    <string-array name="intitut_array">
+        <item>Hochschule</item>
+        <item>Universität</item>
+        <item>Studieninteressierte</item>
+    </string-array>
 
 </resources>

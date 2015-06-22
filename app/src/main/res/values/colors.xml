@@ -3,6 +3,7 @@
     <color name="normal">#33B5E5</color>
     <color name="schwarz">#222222</color>
     <color name="weiß">#FFFFFF</color>
-    <color name="grey_dark">#696969</color>
-    <color name="grey_light">#BFBFBF</color>
+    <color name="grey_dark41">#696969</color>
+    <color name="grey_dark">#BFBFBF</color>
+    <color name="grey_light">#E5E5E5</color>
 </resources>

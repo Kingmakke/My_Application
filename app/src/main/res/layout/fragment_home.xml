@@ -14,22 +14,32 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/homescreen_beaconinfo"
         android:layout_marginTop="20dp"
-        android:background="@color/grey_light"
+        android:background="@color/normal"
         android:textColor="@color/weiß"
         android:layout_marginBottom="30dp" />
-
-
-
+    <!--
     <TextView
         android:id="@+id/homescreen_dummy1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/grey_dark"
+        android:background="@color/weiß"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignBottom="@+id/homescreen_score"
         android:layout_alignTop="@+id/homescreen_score"
         android:width="2dp" />
+    -->
+
+    <TextView
+        android:id="@+id/homescreen_dummy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/weiß"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/homescreen_score"
+        android:layout_alignTop="@+id/homescreen_score"
+        android:width="1dp" />
 
     <TextView
         android:id="@+id/homescreen_score"
@@ -37,22 +47,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/homescreen_dummy1"
-        android:layout_toLeftOf="@+id/homescreen_dummy2"
-        android:background="@color/grey_light"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/homescreen_dummy"
+        android:background="@color/normal"
         android:padding="5dp"
-        android:textColor="@color/grey_dark" />
-
-    <TextView
-        android:id="@+id/homescreen_dummy2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/grey_dark"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/homescreen_score"
-        android:layout_alignTop="@+id/homescreen_score"
-        android:width="2dp" />
+        android:textColor="@color/weiß"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,24 +59,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/homescreen_rank"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="false"
-        android:layout_toRightOf="@+id/homescreen_dummy2"
-        android:layout_toLeftOf="@+id/homescreen_dummy3"
-        android:background="@color/grey_light"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/homescreen_dummy"
+        android:background="@color/normal"
         android:padding="5dp"
-        android:textColor="@color/grey_dark" />
-
-    <TextView
-        android:id="@+id/homescreen_dummy3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/grey_dark"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/homescreen_score"
-        android:layout_alignTop="@+id/homescreen_score"
-        android:width="2dp" />
+        android:textColor="@color/weiß" />
 
     <TextView
         android:layout_width="match_parent"
@@ -86,9 +72,8 @@
         android:id="@+id/homescreen_beaconinfo"
         android:layout_below="@+id/homescreen_score"
         android:padding="5dp"
-        android:clickable="true"
-        android:background="@drawable/beaconinfo_listener"
-        android:textColor="@color/grey_dark" />
+        android:background="@drawable/cell_shape_beaconinfo"
+        android:textColor="@color/schwarz" />
 
     <ListView
         android:layout_width="match_parent"
@@ -97,8 +82,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/homescreen_veranstaltungsliste"
         android:choiceMode="singleChoice"
-        android:divider="@color/grey_dark"
-        android:dividerHeight="2dp"
+        android:divider="@color/schwarz"
+        android:dividerHeight="1px"
         android:layout_below="@+id/homescreen_scan_button"
         android:layout_alignParentBottom="true" />
 

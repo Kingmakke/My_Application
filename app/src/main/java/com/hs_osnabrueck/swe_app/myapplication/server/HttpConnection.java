@@ -1,6 +1,10 @@
 package com.hs_osnabrueck.swe_app.myapplication.server;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -16,7 +20,7 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
 
     static private final int CONNECTION_TIMEOUT = 10000;
 
-    private String resultHttpConnection = "";
+    private JSONObject resultHttpConnection;
     private Boolean executed = false;
 
     @Override
@@ -73,16 +77,16 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
                 out.close();
                 InputStream in = new BufferedInputStream(
                         urlConnection.getInputStream());
-                String tmp = getResponseText(in);
-                resultHttpConnection = tmp;
+                resultHttpConnection = new JSONObject(getResponseText(in));
                 executed = true;
-                //return new JSONObject(getResponseText(in)).toString();
+
+                //return new JSONObject(getResponseText(in));
             }else{
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                String tmp = getResponseText(in);
-                resultHttpConnection = tmp;
+                resultHttpConnection = new JSONObject(getResponseText(in));
                 executed = true;
-                //return tmp;
+                Log.e("http", resultHttpConnection.toString());
+                //return new JSONObject(getResponseText(in));
             }
 
         } catch (MalformedURLException e) {
@@ -95,6 +99,8 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
             // could not read response body
             // (could not create input stream)
             executed = true;
+        } catch (JSONException e) {
+            e.printStackTrace();
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -106,8 +112,9 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
 
     }
 
-    public String getResultHttpConnection() {
+    public JSONObject getResultHttpConnection() {
         return resultHttpConnection;
+
     }
 
     public Boolean isExecuted() {

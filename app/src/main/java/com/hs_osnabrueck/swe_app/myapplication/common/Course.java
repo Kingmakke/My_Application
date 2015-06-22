@@ -1,8 +1,5 @@
 package com.hs_osnabrueck.swe_app.myapplication.common;
 
-/**
- * Created by mgrothues on 07.05.2015.
- */
 public class Course {
     private int id;
     private String name;

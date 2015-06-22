@@ -27,6 +27,15 @@ public class Event {
 
     }
 
+    public Event(String category, String content, String date, String description, String link, String title) {
+        this.category = category;
+        this.content = content;
+        this.date = date;
+        this.description = description;
+        this.link = link;
+        this.title = title;
+    }
+
     public String getName() {return title;}
 
     public void setName(String name) {this.title = name;}

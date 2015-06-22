@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/veranstaltungsscreen_veranstaltungsliste"
     android:choiceMode="singleChoice"
-    android:divider="@color/grey_dark"
-    android:dividerHeight="2dp"
+    android:divider="@color/schwarz"
+    android:dividerHeight="1px"
     android:background="@color/weiß">
 </ListView>
