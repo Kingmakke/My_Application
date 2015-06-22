@@ -1,7 +1,6 @@
 package com.hs_osnabrueck.swe_app.myapplication.server;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +47,7 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
     }
 
 
-    public void requestServer(String url, String put){
+    public void requestServer(String url, String task){
 
         HttpURLConnection urlConnection = null;
 
@@ -69,11 +68,11 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
                 // handle any other errors, like 404, 500,..
             }
 
-            if(put.compareTo("put") != 0){
+            if(task.compareTo("GET") != 0){
                 urlConnection.setRequestMethod("PUT");
                 OutputStreamWriter out = new OutputStreamWriter(
                         urlConnection.getOutputStream());
-                out.write(put);
+                out.write(task);
                 out.close();
                 InputStream in = new BufferedInputStream(
                         urlConnection.getInputStream());
@@ -81,11 +80,10 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
                 executed = true;
 
                 //return new JSONObject(getResponseText(in));
-            }else{
+            }else if(task.compareTo("GET") == 0){
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 resultHttpConnection = new JSONObject(getResponseText(in));
                 executed = true;
-                Log.e("http", resultHttpConnection.toString());
                 //return new JSONObject(getResponseText(in));
             }
 

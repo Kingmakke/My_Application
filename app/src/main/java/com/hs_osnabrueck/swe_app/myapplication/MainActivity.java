@@ -62,19 +62,17 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        /*
         HttpConnection connectionPOI = new HttpConnection();
-        connectionPOI.execute(urlAllPOI, "put");
+        connectionPOI.execute(urlAllPOI, "GET");
         while(!connectionPOI.isExecuted()) {
         }
         addPOIs(connectionPOI.getResultHttpConnection());
-        */
+
         HttpConnection connectionEvents = new HttpConnection();
-        connectionEvents.execute(urlEvents, "put");
+        connectionEvents.execute(urlEvents, "GET");
         while(!connectionEvents.isExecuted()){
         }
         addEvents(connectionEvents.getResultHttpConnection());
-
     }
 
     @Override

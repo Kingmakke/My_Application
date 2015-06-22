@@ -1,10 +1,10 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -77,11 +77,9 @@ public class FirstActivity extends Activity {
                 editor.putString("course", course.getSelectedItem().toString());
                 editor.apply();
 
-                Log.e("debug 1", institut.getSelectedItem().toString());
-                Log.e("debug 1", course.getSelectedItem().toString());
-                //Intent intent = new Intent(FirstActivity.this, MainActivity.class);
-                //startActivity(intent);
-                //finish();
+                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
