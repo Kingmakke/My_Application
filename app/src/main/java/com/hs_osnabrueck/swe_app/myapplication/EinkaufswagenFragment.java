@@ -2,7 +2,6 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +30,7 @@ public class EinkaufswagenFragment extends Fragment {
     private ViewGroup container;
     private MainActivity main;
 
-    private Beacon beacon = new Beacon("", "", -120);
+    private Beacon beacon;
 
     private BluetoothAdapter btAdapter = null;
     private Boolean btActive = true;
@@ -111,6 +110,7 @@ public class EinkaufswagenFragment extends Fragment {
 
         //TODO  zum Testen auf dem Emulator auskommentieren
         //-----von-----
+        /*
         scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
@@ -119,7 +119,7 @@ public class EinkaufswagenFragment extends Fragment {
                 }
             }
         });
-        scanner.setScanPeriod(SCAN_PERIOD);
+        scanner.setScanPeriod(SCAN_PERIOD);*/
         //-----bis-----
         scan = (Button)rootView.findViewById(R.id.einkaufswagenscreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {

@@ -84,6 +84,7 @@ public class BleScanner implements Runnable, BluetoothAdapter.LeScanCallback {
     @Override
     public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
         synchronized (leScansPoster) {
+
             leScansPoster.set(device, rssi, scanRecord);
             mainThreadHandler.post(leScansPoster);
         }

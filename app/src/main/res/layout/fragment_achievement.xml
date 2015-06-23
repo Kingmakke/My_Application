@@ -1,17 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="com.hs_osnabrueck.swe_app.myapplication.AchievementFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
-        android:layout_width="match_parent"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/achievementscreen_listView"
-        tools:listitem="@android:layout/simple_list_item_1"
-        android:layout_gravity="center_horizontal"
-        android:choiceMode="singleChoice" />
-</LinearLayout>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/achievementscreen_temperature"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

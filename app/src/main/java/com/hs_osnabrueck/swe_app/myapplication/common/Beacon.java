@@ -1,44 +1,30 @@
 package com.hs_osnabrueck.swe_app.myapplication.common;
 
+import android.bluetooth.BluetoothDevice;
+
 public class Beacon {
 
-    private String name;
-    private String id;
+    private BluetoothDevice bluetoothDevice;
     private int rssi;
 
-    public Beacon(String name, String id, int rssi){
-        this.name = name;
-        this.id = id;
+    public Beacon(BluetoothDevice bluetoothDevice, int rssi){
+        this.bluetoothDevice = bluetoothDevice;
         this.rssi = rssi;
-    }
-
-    public Beacon(Beacon beacon){
-        this.name = beacon.name;
-        this.id = beacon.id;
-        this.rssi = beacon.rssi;
     }
 
     public int getRssi() {
         return rssi;
     }
 
-    public void setRssi(int rssi) {
-        this.rssi = rssi;
-    }
-
     public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        return bluetoothDevice.getAddress();
     }
 
     public String getName() {
-        return name;
+        return bluetoothDevice.getName();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public BluetoothDevice getBluetoothDevice() {
+        return bluetoothDevice;
     }
 }

@@ -176,7 +176,7 @@ public class MainActivity extends ActionBarActivity
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 poiliste.add(new POI(
-                        new Beacon("SensorTag", jsonObject.getString(BEACONID), -120),
+                        jsonObject.getString(BEACONID),
                         jsonObject.getString(DESRCIPTION),
                         Double.valueOf(jsonObject.getString(LATITUDE)),
                         Double.valueOf(jsonObject.getString(LONGITUDE)),

@@ -2,7 +2,6 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hs_osnabrueck.swe_app.myapplication.adapter.MyArrayAdapter;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner2;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
@@ -36,10 +37,12 @@ public class HomeFragment extends Fragment {
     private LayoutInflater inflater;
     private ViewGroup container;
 
-    private Beacon beacon = new Beacon("", "", -120);
+    private Beacon beacon;
     private BleScanner scanner;
+    private BleScanner2 scanner2;
     private BluetoothAdapter btAdapter = null;
     private Boolean btActive = true;
+    private BleConnect bleConnect;
 
     public HomeFragment() {}
 
@@ -131,12 +134,14 @@ public class HomeFragment extends Fragment {
         beaconinfo = (TextView)rootView.findViewById(R.id.homescreen_beaconinfo);
         beaconinfo.setGravity(Gravity.CENTER_VERTICAL);
         beaconinfo.setCompoundDrawablePadding(50);
-        if(beacon.getName().compareTo("SensorTag")==0) {
-            beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
-            beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
-        }else if(beacon.getName().compareTo("estimote")==0){
-            beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
-            beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+        if(beacon != null) {
+            if (beacon.getName().contains("SensorTag")) {
+                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
+                beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+            } else if (beacon.getName().contains("estimote")) {
+                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+                beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+            }
         }else{
             beaconinfo.setText(getString(R.string.homescreen_kein_Beacon));
             beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
@@ -145,6 +150,22 @@ public class HomeFragment extends Fragment {
         beaconinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (beacon != null) {
+                    bleConnect = new BleConnect(main.getBaseContext(), beacon);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("temperature", bleConnect.getTemperature());
+                    //bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
+                    //bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
+                    //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
+                    bundle.putInt("pos", 0);
+                    Fragment fragment = new AchievementFragment();
+                    fragment.setArguments(bundle);
+                    android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    main.restoreActionBar(getString(R.string.title_section9));
+                    fragmentTransaction.commit();
+                }
                 //TODO
                 // auf Karte wechseln
             }
@@ -152,7 +173,7 @@ public class HomeFragment extends Fragment {
 
         //TODO  zum Testen auf dem Emulator auskommentieren
         //-----von-----
-        scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
+        /*scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
                 if(rssi > beacon.getRssi() ){
@@ -167,7 +188,7 @@ public class HomeFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        scanner.stop();
+        scanner.stop();*/
         //-----bis-----
         scan = (Button)rootView.findViewById(R.id.homescreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +200,7 @@ public class HomeFragment extends Fragment {
                     startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
                 } else {
                     btActive = true;
+
                     findBeacon(btActive);
                 }
 
@@ -215,13 +237,15 @@ public class HomeFragment extends Fragment {
 
     public void findBeacon(Boolean btActive){
         if(btActive){
-            scanner.start();
+            /*scanner.start();
             try {
                 Thread.sleep(SCAN_PERIOD);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            scanner.stop();
+            scanner.stop();*/
+            scanner2 = new BleScanner2(btAdapter);
+            beacon = scanner2.getBeacon();
             if(beacon.getName().compareTo("SensorTag")==0) {
                 beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
                 beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());

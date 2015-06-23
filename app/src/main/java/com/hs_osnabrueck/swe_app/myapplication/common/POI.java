@@ -11,7 +11,7 @@ public class POI {
     private double gps_longitude;
     private Vector<String> imageLinks;
     private Vector<String> webLinks;
-    private Beacon beacon;
+    private String beaconId;
     private Vector<Course> course;
 
     public POI(String json){
@@ -23,7 +23,7 @@ public class POI {
             result[i] = result[i].replaceAll("\"", "");
         }
         this.id = Integer.parseInt(result[0]);
-        this.beacon = new Beacon("SensorTag", result[1], -120);
+        this.beaconId = result[1];
         this.name = result[2];
         this.description = result[3];
         this.gps_latitude = Double.parseDouble(result[4]);
@@ -31,8 +31,8 @@ public class POI {
 
 
     }
-    public POI(Beacon beacon, String description, double gps_latitude, double gps_longitude, int id, String name) {
-        this.beacon = beacon;
+    public POI(String beaconId, String description, double gps_latitude, double gps_longitude, int id, String name) {
+        this.beaconId = beaconId;
         this.description = description;
         this.gps_latitude = gps_latitude;
         this.gps_longitude = gps_longitude;
@@ -40,8 +40,8 @@ public class POI {
         this.name = name;
     }
 
-    public POI(Beacon beacon, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks) {
-        this.beacon = beacon;
+    public POI(String beaconId, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks) {
+        this.beaconId = beaconId;
         this.course = course;
         this.description = description;
         this.gps_latitude = gps_latitude;
@@ -108,12 +108,12 @@ public class POI {
         this.webLinks = webLinks;
     }
 
-    public Beacon getBeacon() {
-        return beacon;
+    public String getBeaconId() {
+        return beaconId;
     }
 
-    public void setBeacon(Beacon beacon) {
-        this.beacon = beacon;
+    public void setBeaconId(String beaconId) {
+        this.beaconId = beaconId;
     }
 
     public Vector<Course> getCourse() {
