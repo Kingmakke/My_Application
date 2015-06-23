@@ -6,6 +6,9 @@ public class TiTemperatureSensor {
     private final String UUID_DATA = "f000aa01-0451-4000-b000-000000000000";
     private final String UUID_CONFIG = "f000aa02-0451-4000-b000-000000000000";
 
+    public TiTemperatureSensor() {
+    }
+
     public String getUUID_CONFIG() {
         return UUID_CONFIG;
     }

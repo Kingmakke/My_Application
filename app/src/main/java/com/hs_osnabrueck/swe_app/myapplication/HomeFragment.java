@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 
 import com.hs_osnabrueck.swe_app.myapplication.adapter.MyArrayAdapter;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner2;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
@@ -28,7 +28,6 @@ public class HomeFragment extends Fragment {
 
     private final static int REQUEST_ENABLE_BT = 1;
     private final static int REQUEST_ENABLE_BT_SCAN = 1;
-    private static final long SCAN_PERIOD = 1000;
 
     private MainActivity main;
     private View rootView;
@@ -38,10 +37,8 @@ public class HomeFragment extends Fragment {
     private ViewGroup container;
 
     private Beacon beacon;
-    private BleScanner scanner;
     private BleScanner2 scanner2;
     private BluetoothAdapter btAdapter = null;
-    private Boolean btActive = true;
     private BleConnect bleConnect;
 
     public HomeFragment() {}
@@ -115,13 +112,11 @@ public class HomeFragment extends Fragment {
         final int bleStatus = BleUtils.getBleStatus(getActivity().getBaseContext());
         switch (bleStatus) {
             case BleUtils.STATUS_BLE_NOT_AVAILABLE:
-                btActive = false;
                 Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableIntent,REQUEST_ENABLE_BT);
                 //ErrorDialog.newInstance(R.string.dialog_error_no_ble).show(getFragmentManager(), ErrorDialog.TAG);
                 //return;
             case BleUtils.STATUS_BLUETOOTH_NOT_AVAILABLE:
-                btActive = false;
                 Intent enableIntent2 = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableIntent2,REQUEST_ENABLE_BT);
                 // ErrorDialog.newInstance(R.string.dialog_error_no_bluetooth).show(getFragmentManager(), ErrorDialog.TAG);
@@ -150,7 +145,13 @@ public class HomeFragment extends Fragment {
         beaconinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (beacon != null) {
+                beacon = scanner2.getBeacon();
+                if (beacon.getBluetoothDevice() != null) {
+                    Log.e("debug","nicht null");
+
+
+
+                    btAdapter.stopLeScan(scanner2.getLeScanCallback());
                     bleConnect = new BleConnect(main.getBaseContext(), beacon);
                     Bundle bundle = new Bundle();
                     bundle.putString("temperature", bleConnect.getTemperature());
@@ -165,43 +166,24 @@ public class HomeFragment extends Fragment {
                     fragmentTransaction.replace(R.id.container, fragment);
                     main.restoreActionBar(getString(R.string.title_section9));
                     fragmentTransaction.commit();
+                }else{
+                    Log.e("debug","null");
                 }
                 //TODO
                 // auf Karte wechseln
             }
         });
 
-        //TODO  zum Testen auf dem Emulator auskommentieren
-        //-----von-----
-        /*scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
-            @Override
-            public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
-                if(rssi > beacon.getRssi() ){
-                    beacon = new Beacon(device.getName(), device.getAddress(), rssi);
-                }
-            }
-        });
-        scanner.setScanPeriod(SCAN_PERIOD);
-        scanner.start();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        scanner.stop();*/
-        //-----bis-----
         scan = (Button)rootView.findViewById(R.id.homescreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                beacon = new Beacon(null, -120);
                 if (btAdapter != null && !btAdapter.isEnabled()) {
-                    btActive = false;
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
                 } else {
-                    btActive = true;
-
-                    findBeacon(btActive);
+                    findBeacon();
                 }
 
             }
@@ -228,35 +210,13 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_ENABLE_BT_SCAN && resultCode == Activity.RESULT_OK) {
-            btActive = true;
-            findBeacon(btActive);
-        }else if(requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_OK) {
-            btActive = true;
+            findBeacon();
         }
     }
 
-    public void findBeacon(Boolean btActive){
-        if(btActive){
-            /*scanner.start();
-            try {
-                Thread.sleep(SCAN_PERIOD);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            scanner.stop();*/
-            scanner2 = new BleScanner2(btAdapter);
-            beacon = scanner2.getBeacon();
-            if(beacon.getName().compareTo("SensorTag")==0) {
-                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
-                beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
-            }else if(beacon.getName().compareTo("estimote")==0){
-                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
-                beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
-            }else{
-                beaconinfo.setText(getString(R.string.homescreen_kein_Beacon));
-                beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
-            }
-        }
+    public void findBeacon(){
+        scanner2 = new BleScanner2(beaconinfo, beacon);
+        btAdapter.startLeScan(scanner2.getLeScanCallback());
     }
 
     @Override
@@ -264,4 +224,5 @@ public class HomeFragment extends Fragment {
         super.onAttach(activity);
         main = (MainActivity)activity;
     }
+
 }
