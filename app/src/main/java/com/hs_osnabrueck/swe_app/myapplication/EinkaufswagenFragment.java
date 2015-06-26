@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -13,7 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner2;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
@@ -31,9 +33,9 @@ public class EinkaufswagenFragment extends Fragment {
     private MainActivity main;
 
     private Beacon beacon;
-
     private BluetoothAdapter btAdapter = null;
-    private BleScanner2 scanner;
+    private BleScanner scanner;
+    private BleConnect bleConnect;
 
     public EinkaufswagenFragment() {}
 
@@ -92,42 +94,70 @@ public class EinkaufswagenFragment extends Fragment {
         beaconinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                beacon = scanner.getBeacon();
+                if (beacon.getBluetoothDevice() != null) {
+                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+                        //noinspection deprecation
+                        btAdapter.stopLeScan(scanner.getLeScanCallback());
+                    }else{
+                        btAdapter.getBluetoothLeScanner().stopScan(scanner.getScanCallback());
+                    }
+                    bleConnect = new BleConnect(main.getBaseContext(), beacon);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("temperature", bleConnect.getTemperature());
+                    //bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
+                    //bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
+                    //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
+                    bundle.putInt("pos", 3);
+                    Fragment fragment = new AchievementFragment();
+                    fragment.setArguments(bundle);
+                    android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    main.restoreActionBar(getString(R.string.title_section9));
+                    fragmentTransaction.commit();
+                }else{
+                    //TODO ?
+                }
                 //TODO
                 // auf Karte wechseln
             }
         });
 
-        //TODO  zum Testen auf dem Emulator auskommentieren
-        //-----von-----
-        /*
-        scanner = new BleScanner(btAdapter, new BluetoothAdapter.LeScanCallback() {
-            @Override
-            public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
-                if(rssi > beacon.getRssi() ){
-                    beacon = new Beacon(device.getName(), device.getAddress(), rssi);
-                }
-            }
-        });
-        scanner.setScanPeriod(SCAN_PERIOD);*/
-        //-----bis-----
         scan = (Button)rootView.findViewById(R.id.einkaufswagenscreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                beacon = new Beacon(null, -120);
-                if (btAdapter != null && !btAdapter.isEnabled()) {
-                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
-                }else{
-                   findBeacon();
+                if (scan.getText().toString().compareTo("Scan") == 0) {
+                    scan.setText("Stop");
+                    beacon = new Beacon(null, -120);
+                    if (btAdapter != null && !btAdapter.isEnabled()) {
+                        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
+                    } else {
+                        findBeacon();
+                    }
+                } else if (scan.getText().toString().compareTo("Stop") == 0) {
+                    scan.setText("Scan");
+                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+                        //noinspection deprecation
+                        btAdapter.stopLeScan(scanner.getLeScanCallback());
+                    }else{
+                        btAdapter.getBluetoothLeScanner().stopScan(scanner.getScanCallback());
+                    }
                 }
             }
         });
     }
 
     public void findBeacon(){
-        scanner = new BleScanner2(beaconinfo, beacon);
-        btAdapter.startLeScan(scanner.getLeScanCallback());
+        scanner = new BleScanner(beaconinfo, beacon);
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            //noinspection deprecation
+            btAdapter.startLeScan(scanner.getLeScanCallback());
+        }else{
+            btAdapter.getBluetoothLeScanner().startScan(scanner.getScanCallback());
+        }
     }
 
     @Override

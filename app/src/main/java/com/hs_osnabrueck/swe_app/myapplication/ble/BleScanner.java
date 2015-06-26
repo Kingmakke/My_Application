@@ -1,115 +1,101 @@
 package com.hs_osnabrueck.swe_app.myapplication.ble;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.os.Handler;
-import android.os.Looper;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+import android.util.Log;
+import android.widget.TextView;
 
-public class BleScanner implements Runnable, BluetoothAdapter.LeScanCallback {
-    private static final String TAG = BleScanner.class.getSimpleName();
+import com.hs_osnabrueck.swe_app.myapplication.R;
+import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
-    private static final long DEFAULT_SCAN_PERIOD = 500L;
-    public static final long PERIOD_SCAN_ONCE = -1;
+import java.util.List;
 
-    private final BluetoothAdapter bluetoothAdapter;
-    private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
-    private final LeScansPoster leScansPoster;
+public class BleScanner{
 
-    private long scanPeriod = DEFAULT_SCAN_PERIOD;
-    private Thread scanThread;
-    private volatile boolean isScanning = false;
+    private Beacon beacon;
+    private TextView beaconinfo;
 
-    public BleScanner(BluetoothAdapter adapter, BluetoothAdapter.LeScanCallback callback) {
-        if (adapter == null)
-            throw new IllegalArgumentException("Adapter should not be null");
-
-        bluetoothAdapter = adapter;
-
-        leScansPoster = new LeScansPoster(callback);
+    public BleScanner(final TextView beaconinfo, final Beacon beacon) {
+        this.beaconinfo = beaconinfo;
+        this.beacon = beacon;
     }
 
-    public synchronized void setScanPeriod(long scanPeriod) {
-        this.scanPeriod = scanPeriod < 0 ? PERIOD_SCAN_ONCE : scanPeriod;
-    }
+/*
+    if(beacon.getName().contains("SensorTag")) {
+        beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
+        beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+    }else if(beacon.getName().contains("estimote")){
 
-    public boolean isScanning() {
-        return scanThread != null && scanThread.isAlive();
-    }
+    }else{
 
-    public synchronized void start() {
-        if (isScanning())
-            return;
+    }*/
 
-        if (scanThread != null) {
-            scanThread.interrupt();
-        }
-        scanThread = new Thread(this);
-        scanThread.setName(TAG);
-        scanThread.start();
-    }
+    public BluetoothAdapter.LeScanCallback getLeScanCallback() {
+        return new BluetoothAdapter.LeScanCallback() {
+            @Override
+            public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
+                Log.e("debug", "scanApi20-");
+                if ((device.getName().contains("SensorTag") || device.getName().contains("estimote"))
+                        && (beacon.getRssi() < rssi || device.getAddress().compareTo(beacon.getId()) == 0) ) {
 
-    public synchronized void stop() {
-        isScanning = false;
-        if (scanThread != null) {
-            scanThread.interrupt();
-            scanThread = null;
-        }
-        bluetoothAdapter.stopLeScan(this);
-    }
+                        beacon = new Beacon(device, rssi);
+                        beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
 
-    @Override
-    public void run() {
-        try {
-            isScanning = true;
-            do {
-                synchronized (this) {
-                    bluetoothAdapter.startLeScan(this);
+                        if (device.getName().contains("SensorTag")) {
+                            beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
+                        } else if (device.getName().contains("estimote")) {
+                            beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+                        }
+
+                }else if(beacon.getBluetoothDevice() == null) {
+                    beaconinfo.setText("Es wurde kein Beacon gefunden");
+                    //beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
                 }
-
-                if (scanPeriod > 0)
-                    Thread.sleep(scanPeriod);
-
-                synchronized (this) {
-                    bluetoothAdapter.stopLeScan(this);
-                }
-            } while (isScanning && scanPeriod > 0);
-        } catch (InterruptedException ignore) {
-        } finally {
-            synchronized (this) {
-                bluetoothAdapter.stopLeScan(this);
             }
-        }
+        };
     }
 
-    @Override
-    public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-        synchronized (leScansPoster) {
+    @SuppressLint("NewApi")
+    public ScanCallback getScanCallback(){
+        return new ScanCallback() {
+            @Override
+            public void onScanResult(int callbackType, ScanResult result) {
+                super.onScanResult(callbackType, result);
+                Log.e("debug", "scanApi21+");
+                if ((result.getDevice().getName().contains("SensorTag") || result.getDevice().getName().contains("estimote"))
+                        && (beacon.getRssi() < result.getRssi() || result.getDevice().getAddress().compareTo(beacon.getId()) == 0) ) {
 
-            leScansPoster.set(device, rssi, scanRecord);
-            mainThreadHandler.post(leScansPoster);
-        }
+                    beacon = new Beacon(result.getDevice(), result.getRssi());
+                    beaconinfo.setText(beacon.getName() + "\n" + beacon.getId() + "\n" + beacon.getRssi());
+
+                    if (result.getDevice().getName().contains("SensorTag")) {
+                        beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sensortag, 0, 0, 0);
+                    } else if (result.getDevice().getName().contains("estimote")) {
+                        beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+                    }
+
+                }else if(beacon.getBluetoothDevice() == null) {
+                    beaconinfo.setText("Es wurde kein Beacon gefunden");
+                    //beaconinfo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.estimote, 0, 0, 0);
+                }
+            }
+
+            @Override
+            public void onBatchScanResults(List<ScanResult> results) {
+                super.onBatchScanResults(results);
+            }
+
+            @Override
+            public void onScanFailed(int errorCode) {
+                super.onScanFailed(errorCode);
+            }
+        };
     }
 
-    private static class LeScansPoster implements Runnable {
-        private final BluetoothAdapter.LeScanCallback leScanCallback;
-
-        private BluetoothDevice device;
-        private int rssi;
-        private byte[] scanRecord;
-
-        private LeScansPoster(BluetoothAdapter.LeScanCallback leScanCallback) {
-            this.leScanCallback = leScanCallback;
-        }
-
-        public void set(BluetoothDevice device, int rssi, byte[] scanRecord) {
-            this.device = device;
-            this.rssi = rssi;
-            this.scanRecord = scanRecord;
-        }
-
-        @Override
-        public void run() {
-            leScanCallback.onLeScan(device, rssi, scanRecord);
-        }
+    public Beacon getBeacon() {
+        return beacon;
     }
 }
