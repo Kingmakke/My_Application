@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingBottom="5dp">
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
 
     <ImageView
         android:layout_width="80dp"
@@ -12,7 +13,8 @@
         android:layout_gravity="left|center_vertical"
         android:focusable="false"
         android:paddingRight="5dp"
-        android:src="@drawable/sensortag" />
+        android:src="@drawable/sensortag"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/device_discription"
@@ -21,17 +23,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"
         android:focusable="false"
-        android:gravity="left" />
+        android:gravity="left"
+        android:layout_toRightOf="@+id/device_image" />
 
     <Button
         android:id="@+id/device_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0"
         android:clickable="false"
         android:focusable="false"
         android:gravity="center"
-        android:text="@string/connect" />
+        android:text="@string/connect"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp" />
 
-</LinearLayout>
+</RelativeLayout>

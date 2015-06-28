@@ -30,6 +30,10 @@ public class Beacon {
         this.counter++;
     }
 
+    public void resetCounter(){
+        this.counter = 0;
+    }
+
     public String getId() {
         return bluetoothDevice.getAddress();
     }

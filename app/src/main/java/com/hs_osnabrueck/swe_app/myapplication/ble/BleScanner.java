@@ -64,16 +64,19 @@ public class BleScanner{
         Boolean update = false;
         for(int i = 0; i < beaconList.size(); i++){
             beaconList.get(i).raiseCounter();
+
+            if(beaconList.get(i).getBluetoothDevice().getAddress().equals(device.getAddress())){
+                beaconList.get(i).setRssi(rssi);
+                beaconList.get(i).resetCounter();
+                update = true;
+                continue;
+            }
             if(beaconList.get(i).getCounter() > 10){
                 beaconList.remove(i);
                 i--;
                 continue;
             }
-            if(beaconList.get(i).getBluetoothDevice().getAddress().equals(device.getAddress())){
-                beaconList.get(i).setRssi(rssi);
-                update = true;
-                break;
-            }
+
         }
         if(!update){
             beaconList.add(new Beacon(device, rssi));
