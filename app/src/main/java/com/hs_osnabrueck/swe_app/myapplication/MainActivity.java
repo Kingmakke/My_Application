@@ -1,5 +1,6 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
@@ -46,6 +49,9 @@ public class MainActivity extends ActionBarActivity
     private int pos;
     private int pos_old;
 
+    private BluetoothAdapter btAdapter = null;
+    private BleScanner bleScanner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +59,8 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.normal)));
+
+        btAdapter = BleUtils.getBluetoothAdapter(getBaseContext());
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -250,4 +258,16 @@ public class MainActivity extends ActionBarActivity
     public int getPos_old() {return pos_old;}
 
     public void setPos_old(int pos_old) {this.pos_old = pos_old;}
+
+    public BluetoothAdapter getBtAdapter() {
+        return btAdapter;
+    }
+
+    public BleScanner getBleScanner() {
+        return bleScanner;
+    }
+
+    public void setBleScanner(BleScanner bleScanner) {
+        this.bleScanner = bleScanner;
+    }
 }

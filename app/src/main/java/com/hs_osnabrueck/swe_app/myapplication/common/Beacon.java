@@ -6,14 +6,28 @@ public class Beacon {
 
     private BluetoothDevice bluetoothDevice;
     private int rssi;
+    private int counter;
 
     public Beacon(BluetoothDevice bluetoothDevice, int rssi){
         this.bluetoothDevice = bluetoothDevice;
         this.rssi = rssi;
+        this.counter = 0;
     }
 
     public int getRssi() {
         return rssi;
+    }
+
+    public void setRssi(int rssi){
+        this.rssi = rssi;
+    }
+
+    public int getCounter(){
+        return counter;
+    }
+
+    public void raiseCounter(){
+        this.counter++;
     }
 
     public String getId() {

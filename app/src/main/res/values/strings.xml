@@ -46,6 +46,7 @@
     <string name="title_activity_first">FirstActivity</string>
 
     <string name="institut_prompt">Institution</string>
+    <string name="connect">connect</string>
 
     <string-array name="intitut_array">
         <item>Hochschule</item>
