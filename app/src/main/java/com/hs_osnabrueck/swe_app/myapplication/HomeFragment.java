@@ -13,12 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.adapter.DeviceListAdapter;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
-import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
-
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 

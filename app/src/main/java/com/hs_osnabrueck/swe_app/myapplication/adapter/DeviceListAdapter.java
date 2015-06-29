@@ -91,7 +91,7 @@ public class DeviceListAdapter extends BaseAdapter {
                         e.printStackTrace();
                     }
                     Bundle bundle = new Bundle();
-                    bundle.putString("temperature", bleConnect.getTemperature());
+                    //bundle.putString("temperature", bleConnect.getTemperature());
                     //bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
                     //bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
                     //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
