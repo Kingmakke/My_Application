@@ -47,12 +47,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
+        <!--<activity
             android:name=".StartActivity"
             android:label="@string/title_activity_start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -63,13 +62,13 @@
                 <action android:name="com.hs_osnabrueck.swe_app.myapplication.FIRSTACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>-->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="com.hs_osnabrueck.swe_app.myapplication.MAINACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>

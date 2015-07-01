@@ -18,7 +18,7 @@ public class FirstActivity extends Activity {
 
     private Button start;
     private Spinner institut, course;
-    ArrayList<String> courseList = new ArrayList<>();
+    private ArrayList<String> courseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

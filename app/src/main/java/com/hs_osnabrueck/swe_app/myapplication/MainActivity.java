@@ -15,7 +15,6 @@ import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
-import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +50,7 @@ public class MainActivity extends ActionBarActivity
 
     private BluetoothAdapter btAdapter = null;
     private BleScanner bleScanner;
+    private Beacon beacon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
+/*
         HttpConnection connectionPOI = new HttpConnection();
         connectionPOI.execute(urlAllPOI, "GET");
         while(!connectionPOI.isExecuted()) {
@@ -80,8 +80,9 @@ public class MainActivity extends ActionBarActivity
         connectionEvents.execute(urlEvents, "GET");
         while(!connectionEvents.isExecuted()){
         }
-        addEvents(connectionEvents.getResultHttpConnection());
+        addEvents(connectionEvents.getResultHttpConnection());*/
     }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -269,5 +270,13 @@ public class MainActivity extends ActionBarActivity
 
     public void setBleScanner(BleScanner bleScanner) {
         this.bleScanner = bleScanner;
+    }
+
+    public Beacon getBeacon() {
+        return beacon;
+    }
+
+    public void setBeacon(Beacon beacon) {
+        this.beacon = beacon;
     }
 }

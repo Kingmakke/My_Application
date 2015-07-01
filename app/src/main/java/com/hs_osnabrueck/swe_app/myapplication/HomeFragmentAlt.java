@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,7 +125,7 @@ public class HomeFragmentAlt extends Fragment {
                 btAdapter = BleUtils.getBluetoothAdapter(rootView.getContext());
         }
         //-----bis-----
-
+/*
         beaconinfo = (TextView)rootView.findViewById(R.id.homescreen_beaconinfo);
         beaconinfo.setGravity(Gravity.CENTER_VERTICAL);
         beaconinfo.setCompoundDrawablePadding(50);
@@ -175,7 +174,7 @@ public class HomeFragmentAlt extends Fragment {
                 // auf Karte wechseln
             }
         });
-
+*/
         scan = (Button)rootView.findViewById(R.id.homescreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override

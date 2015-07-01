@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.hs_osnabrueck.swe_app.myapplication.AchievementFragment;
 import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
 import com.hs_osnabrueck.swe_app.myapplication.R;
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
 import java.util.List;
@@ -62,7 +61,7 @@ public class DeviceListAdapter extends BaseAdapter {
 
         String descr = name + "\n" + device.getAddress() + "\nRssi: " + rssi + " dBm";
         ((TextView) vg.findViewById(R.id.device_discription)).setText(descr);
-
+        Button bv = (Button)vg.findViewById(R.id.device_connect);
         ImageView iv = (ImageView)vg.findViewById(R.id.device_image);
         if (name.contains("SensorTag")) {
             iv.setImageResource(R.drawable.sensortag);
@@ -70,9 +69,9 @@ public class DeviceListAdapter extends BaseAdapter {
             iv.setImageResource(R.drawable.estimote);
         }else {
             iv.setImageResource(R.drawable.unknown);
+            bv.setVisibility(View.INVISIBLE);
         }
 
-        Button bv = (Button)vg.findViewById(R.id.device_connect);
         bv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,15 +81,13 @@ public class DeviceListAdapter extends BaseAdapter {
                 }else{
                     main.getBtAdapter().getBluetoothLeScanner().stopScan(main.getBleScanner().getScanCallback());
                 }
+
                 Beacon beacon = devices.get(position);
                 if (beacon.getBluetoothDevice() != null) {
-                    BleConnect bleConnect = new BleConnect(main.getBaseContext(), beacon);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+                    main.setBeacon(beacon);
                     Bundle bundle = new Bundle();
+                    //bundle("temperature", bleConnect.getTemperature());
                     //bundle.putString("temperature", bleConnect.getTemperature());
                     //bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
                     //bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
