@@ -32,19 +32,6 @@ public class AchievementFragment extends Fragment {
         main.setPos(5);
         main.setPos_old(bundle.getInt("pos"));
 
-        bleConnect = new BleConnect(this, main.getBeacon());
-
-        /*temperature = (TextView)rootView.findViewById(R.id.achievementscreen_temperature);
-        temperature.setText("Temperatur: " + bleConnect.temperatur);
-        iR_Temperature = (TextView)rootView.findViewById(R.id.achievementscreen_IR_temperature);
-        iR_Temperature.setText("Temperatur: " + bleConnect.iR_Temperature);
-        humidity = (TextView)rootView.findViewById(R.id.achievementscreen_humidity);
-        pressure = (TextView)rootView.findViewById(R.id.achievementscreen_pressure);
-        accelerometer = (TextView)rootView.findViewById(R.id.achievementscreen_accelerometer);
-*/
-
-
-
         return rootView;
     }
 
@@ -57,6 +44,13 @@ public class AchievementFragment extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        bleConnect.bleDisconnect();
+        this.
+        bleConnect.bleDisconnect(main.getBeacon());
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bleConnect = new BleConnect(this, main.getBeacon());
     }
 }
