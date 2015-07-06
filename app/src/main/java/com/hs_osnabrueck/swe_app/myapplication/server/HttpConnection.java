@@ -1,6 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication.server;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,9 +22,15 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
 
     private JSONObject resultHttpConnection;
     private Boolean executed = false;
+    private String humidity;
 
     @Override
     protected Void doInBackground(String... urls) {
+
+        if(!urls[1].equals("GET")){
+            Log.e("debug", "put1");
+            humidity = urls[2];
+        }
         requestServer(urls[0], urls[1]);
         return null;
     }
@@ -55,24 +62,33 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
 
             URL urlToRequest = new URL(url);
 
-            urlConnection = (HttpURLConnection)
-                    urlToRequest.openConnection();
+            urlConnection = (HttpURLConnection) urlToRequest.openConnection();
             urlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
             //urlConnection.setReadTimeout(10000);
 
             // handle issues
-            int statusCode = urlConnection.getResponseCode();
+            /*int statusCode = urlConnection.getResponseCode();
             if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 // handle unauthorized (if service requires user login)
             } else if (statusCode != HttpURLConnection.HTTP_OK) {
                 // handle any other errors, like 404, 500,..
-            }
+            }*/
 
-            if(task.compareTo("GET") != 0){
+            if(!task.equals("GET")){
+                Log.e("debug", "put2");
+                urlConnection.setDoOutput(true);
                 urlConnection.setRequestMethod("PUT");
+                Log.e("debug", urlConnection.getRequestMethod());
+
+                //urlConnection.connect();
                 OutputStreamWriter out = new OutputStreamWriter(
                         urlConnection.getOutputStream());
-                out.write(task);
+
+                JSONObject json = new JSONObject();
+                json.put("beaconID",task);
+                json.put("humidity", humidity);
+
+                out.write(json.toString());
                 out.close();
                 InputStream in = new BufferedInputStream(
                         urlConnection.getInputStream());
@@ -80,7 +96,7 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
                 executed = true;
 
                 //return new JSONObject(getResponseText(in));
-            }else if(task.compareTo("GET") == 0){
+            }else if(task.equals("GET")){
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 resultHttpConnection = new JSONObject(getResponseText(in));
                 executed = true;
