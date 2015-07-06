@@ -1,5 +1,12 @@
 package com.hs_osnabrueck.swe_app.myapplication.common;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+
 public class Event {
 
     private String date;
@@ -7,38 +14,22 @@ public class Event {
     private String link;
     private String description;
     private String category;
-    private String content;
 
-    public Event(String json){
-        json = json.substring(1,json.length()-1);
-        String[] result = json.split("\",\"");
-        for(int i = 0; i < result.length; i++){
-            result[i] = result[i].substring(result[i].indexOf(":\"") + 1);
-            result[i] = result[i].replaceAll("\"", "");
-        }
 
-        this.title = result[0];
-        this.link = result[1];
-        this.description = result[2];
-        this.content = result[3];
-        this.category = result[4];
-        //this.date = result[5];
-        this.date = "5-4-2015";
-
-    }
-
-    public Event(String category, String content, String date, String description, String link, String title) {
+    public Event(String category, String date, String description, String link, String title) {
         this.category = category;
-        this.content = content;
-        this.date = date;
+        DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+        Date date2 = null;
+        try {
+            date2 = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.date = date2.getDate() + "." +  (1 + date2.getMonth()) + "." + (1900 + date2.getYear());
         this.description = description;
         this.link = link;
         this.title = title;
     }
-
-    public String getName() {return title;}
-
-    public void setName(String name) {this.title = name;}
 
     public String getDate() {
         return date;
@@ -49,11 +40,11 @@ public class Event {
     }
 
     public String getDescription() {
-        return content;
+        return description;
     }
 
     public void setDescription(String description) {
-        this.content = description;
+        this.description = description;
     }
 
     public String getCategory() {
@@ -63,10 +54,6 @@ public class Event {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    public String getContent() { return content;}
-
-    public void setContent(String content) {this.content = content;}
 
     public String getLink() {return link;}
 

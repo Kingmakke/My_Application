@@ -97,6 +97,12 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
 
                 //return new JSONObject(getResponseText(in));
             }else if(task.equals("GET")){
+                int statusCode = urlConnection.getResponseCode();
+                if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    // handle unauthorized (if service requires user login)
+                } else if (statusCode != HttpURLConnection.HTTP_OK) {
+                    // handle any other errors, like 404, 500,..
+                }
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 resultHttpConnection = new JSONObject(getResponseText(in));
                 executed = true;

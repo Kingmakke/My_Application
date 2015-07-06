@@ -49,11 +49,7 @@ public class AchievementFragment extends Fragment {
                 if(humidity != null){
                     HttpConnection connectionEvents = new HttpConnection();
 
-                    connectionEvents.execute(urlUpdate, "6515", humidity.getText().toString());
-                    while(!connectionEvents.isExecuted()){
-                    }
-                    result = (TextView)rootView.findViewById(R.id.result);
-                    result.setText(connectionEvents.getResultHttpConnection().toString());
+                    connectionEvents.execute(urlUpdate, main.getBeacon().getId(), humidity.getText().toString());
 
                 }
             }

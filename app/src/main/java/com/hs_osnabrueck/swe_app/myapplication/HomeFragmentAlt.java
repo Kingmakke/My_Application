@@ -64,7 +64,7 @@ public class HomeFragmentAlt extends Fragment {
                 listAdapter.addDate(main.getEventliste().elementAt(i).getDate());
                 dateitems.add(listAdapter.getCount()-1);
             }
-            listAdapter.addVeranstaltung(main.getEventliste().elementAt(i).getName(), main.getEventliste().elementAt(i).getDescription());
+            listAdapter.addVeranstaltung(main.getEventliste().elementAt(i).getTitle(), main.getEventliste().elementAt(i).getDescription());
             eventitems.add(listAdapter.getCount()-1);
 
         }
@@ -79,7 +79,7 @@ public class HomeFragmentAlt extends Fragment {
                     bundle.putString("title", main.getEventliste().elementAt(eventitems.indexOf(pos)).getTitle());
                     bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
                     bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
-                    bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
+                    //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
                     bundle.putInt("pos", 0);
                     Fragment fragment = new EventDetailsFragment();
                     fragment.setArguments(bundle);

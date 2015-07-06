@@ -15,6 +15,7 @@ import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
+import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,7 @@ public class MainActivity extends ActionBarActivity
     private static final String DESRCIPTION = "description";
     private static final String CONTENT = "content";
     private static final String CATEGORY = "category";
-    private static final String DATE = "date";
+    private static final String DATE = "pubDate";
     private static final String LATITUDE = "latitude";
     private static final String LONGITUDE = "longitude";
     private static final String BEACONID = "beaconID";
@@ -69,18 +70,24 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-/*
+
         HttpConnection connectionPOI = new HttpConnection();
         connectionPOI.execute(urlAllPOI, "GET");
-        while(!connectionPOI.isExecuted()) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         addPOIs(connectionPOI.getResultHttpConnection());
 
         HttpConnection connectionEvents = new HttpConnection();
         connectionEvents.execute(urlEvents, "GET");
-        while(!connectionEvents.isExecuted()){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        addEvents(connectionEvents.getResultHttpConnection());*/
+        addEvents(connectionEvents.getResultHttpConnection());
     }
 
 
@@ -204,20 +211,24 @@ public class MainActivity extends ActionBarActivity
         eventliste.removeAllElements();
         try {
             JSONArray jsonArray = json.getJSONArray("feeds");
+
+            Vector<Event> eventListeReverse = new Vector<>();
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                eventliste.add(new Event(
+                eventListeReverse.add(new Event(
                                 jsonObject.getString(CATEGORY),
-                                jsonObject.getString(CONTENT),
-                                //jsonObject.getString(DATE),
-                                (i+10) + ".6.2015",
+                                jsonObject.getString(DATE),
                                 jsonObject.getString(DESRCIPTION),
                                 jsonObject.getString(LINK),
                                 jsonObject.getString(TITLE)
                         )
                 );
             }
+            for(int i = eventListeReverse.size()-1; i >= 0 ;  i--){
+                eventliste.add(eventListeReverse.elementAt(i));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

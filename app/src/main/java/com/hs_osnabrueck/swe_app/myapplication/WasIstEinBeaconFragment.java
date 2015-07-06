@@ -43,7 +43,7 @@ public class WasIstEinBeaconFragment extends Fragment {
                     @Override
                     public void run() {*/
                         HttpConnection connectionEvents = new HttpConnection();
-                        connectionEvents.execute(urlUpdate, "BeaconID-G1", String.valueOf(40.40));
+                        connectionEvents.execute(urlUpdate, "BeaconID-G1", String.valueOf(20.40));
                         try {
                             Thread.sleep(2000);
                         } catch (InterruptedException e) {
