@@ -61,8 +61,8 @@ public class EventFragment extends Fragment {
                     fragment.setArguments(bundle);
                     android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container, fragment);
-                    main.restoreActionBar(getString(R.string.title_section10));
+                    fragmentTransaction.replace(R.id.container, fragment, "8");
+                    main.restoreActionBar(getString(R.string.Veranstaltungsdetailsscreen));
                     fragmentTransaction.commit();
 
                 }
@@ -85,7 +85,7 @@ public class EventFragment extends Fragment {
         this.inflater = inflater;
         this.container = container;
 
-        main.setPos(2);
+        main.setPos(0);
 
         initEvent();
         return rootView;

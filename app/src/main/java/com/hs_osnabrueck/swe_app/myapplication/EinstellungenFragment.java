@@ -21,7 +21,7 @@ public class EinstellungenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_einstellungen, container, false);
-        main.setPos(7);
+        main.setPos(6);
         return rootView;
     }
 

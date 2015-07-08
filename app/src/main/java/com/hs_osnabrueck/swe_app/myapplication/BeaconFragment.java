@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 
-public class HomeFragment extends Fragment {
+public class BeaconFragment extends Fragment {
 
     private final static int REQUEST_ENABLE_BT = 1;
     private final static int REQUEST_ENABLE_BT_SCAN = 1;
@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
 
     private BluetoothAdapter btAdapter = null;
 
-    public HomeFragment() {}
+    public BeaconFragment() {}
 
     public void init(){
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
         this.inflater = inflater;
         this.container = container;
 
-        main.setPos(0);
+        main.setPos(3);
 
         init();
 

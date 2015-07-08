@@ -13,9 +13,11 @@ import android.support.v7.app.ActionBarActivity;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.common.Building;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
-import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
+import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
+import com.hs_osnabrueck.swe_app.myapplication.server.HttpGet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,15 +26,16 @@ import org.json.JSONObject;
 import java.util.Vector;
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, AsyncResponse {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Vector<Beacon> beacons = new Vector<>();
     private Vector<Event> eventliste = new Vector<>();
     private Vector<POI> poiliste = new Vector<>();
-    private String urlServer = "http://131.173.110.133:443/api";
+    private Vector<Building> buildingliste = new Vector<>();
     private String urlAllPOI = "http://131.173.110.133:443/api/all/POIs";
     private String urlEvents = "http://131.173.110.133:443/api/events";
+    private String urlBuildings = "http://131.173.110.133:443/api/buildings/all";
 
     private static final String TITLE = "title";
     private static final String LINK = "link";
@@ -45,6 +48,12 @@ public class MainActivity extends ActionBarActivity
     private static final String BEACONID = "beaconID";
     private static final String POIID = "poiID";
     private static final String NAME = "name";
+    private static final String POIS = "pois";
+    private static final String EVENTS = "feeds";
+    private static final String BUILDINGS = "buildings";
+    private static final String BUILDINGID = "buildingID";
+
+
 
     private int pos;
     private int pos_old;
@@ -71,23 +80,18 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        HttpConnection connectionPOI = new HttpConnection();
-        connectionPOI.execute(urlAllPOI, "GET");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        addPOIs(connectionPOI.getResultHttpConnection());
+        HttpGet httpGetPOI = new HttpGet(this);
+        httpGetPOI.execute(urlAllPOI);
+        httpGetPOI.asyncResponse = this;
 
-        HttpConnection connectionEvents = new HttpConnection();
-        connectionEvents.execute(urlEvents, "GET");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        addEvents(connectionEvents.getResultHttpConnection());
+        HttpGet httpGetEvents = new HttpGet(this);
+        httpGetEvents.execute(urlEvents);
+        httpGetEvents.asyncResponse = this;
+/*
+        HttpGet httpGetBuilding = new HttpGet(this);
+        httpGetBuilding.execute(urlBuildings);
+        httpGetBuilding.asyncResponse = this;
+*/
     }
 
 
@@ -97,51 +101,45 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new HomeFragment())
+                        .replace(R.id.container, new EventFragment(), "0")
                         .commit();
-                restoreActionBar(getString(R.string.title_section1));
+                restoreActionBar(getString(R.string.Versanstaltungsscreen));
                 break;
             case 1:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new KarteFragment())
+                        .replace(R.id.container, new KarteFragment(), "1")
                         .commit();
-                restoreActionBar(getString(R.string.title_section2));
+                restoreActionBar(getString(R.string.Kartenscreen));
                 break;
             case 2:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new EventFragment())
+                        .replace(R.id.container, new BuildingsFragment(), "2")
                         .commit();
-                restoreActionBar(getString(R.string.title_section3));
+                restoreActionBar(getString(R.string.Buildingsscreen));
                 break;
             case 3:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new EinkaufswagenFragment())
+                        .replace(R.id.container, new BeaconFragment(), "3")
                         .commit();
-                restoreActionBar(getString(R.string.title_section4));
+                restoreActionBar(getString(R.string.Beaconsuchescreen));
                 break;
             case 4:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new SpielstatistikFragment())
+                        .replace(R.id.container, new PalmenFragment(), "4")
                         .commit();
-                restoreActionBar(getString(R.string.title_section5));
+                restoreActionBar(getString(R.string.Palmenscreen));
                 break;
             case 5:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new AchievementFragment())
+                        .replace(R.id.container, new WasIstEinBeaconFragment(), "5")
                         .commit();
-                restoreActionBar(getString(R.string.title_section6));
+                restoreActionBar(getString(R.string.WieBscreen));
                 break;
             case 6:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new WasIstEinBeaconFragment())
+                        .replace(R.id.container, new EinstellungenFragment(), "6")
                         .commit();
-                restoreActionBar(getString(R.string.title_section7));
-                break;
-            case 7:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, new EinstellungenFragment())
-                        .commit();
-                restoreActionBar(getString(R.string.title_section8));
+                restoreActionBar(getString(R.string.Einstellungsscreen));
                 break;
         }
     }
@@ -185,10 +183,10 @@ public class MainActivity extends ActionBarActivity
         this.poiliste = poiliste;
     }
 
-    public void addPOIs(JSONObject json){
+    public void addPOIs(JSONArray jsonArray){
         poiliste.removeAllElements();
         try {
-            JSONArray jsonArray = json.getJSONArray("pois");
+            //JSONArray jsonArray = json.getJSONArray("pois");
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 poiliste.add(new POI(
@@ -207,10 +205,10 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    public void addEvents(JSONObject json){
+    public void addEvents(JSONArray jsonArray){
         eventliste.removeAllElements();
         try {
-            JSONArray jsonArray = json.getJSONArray("feeds");
+            //JSONArray jsonArray = json.getJSONArray("feeds");
 
             Vector<Event> eventListeReverse = new Vector<>();
             for(int i = 0; i < jsonArray.length(); i++){
@@ -234,6 +232,27 @@ public class MainActivity extends ActionBarActivity
         }
 
     }
+//TODO mit serverleuten sprechen
+
+    public void addBuildings(JSONArray jsonArray){
+        poiliste.removeAllElements();
+        try {
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                buildingliste.add(new Building(
+                                Integer.valueOf(jsonObject.getString(BUILDINGID)),
+                                jsonObject.getString(NAME),
+                                jsonObject.getString(DESRCIPTION),
+                                Double.valueOf(jsonObject.getString(LATITUDE)),
+                                Double.valueOf(jsonObject.getString(LONGITUDE))
+                        )
+                );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -242,19 +261,19 @@ public class MainActivity extends ActionBarActivity
             mDrawerLayout.closeDrawers();
         }else if(pos == 0){
             finish();
-        }else if(pos == 8 && pos_old == 2){
+        }else if(pos == 9 && pos_old == 3){
+            Fragment fragment = new BeaconFragment();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment, "3");
+            restoreActionBar(getString(R.string.Beaconsuchescreen));
+            fragmentTransaction.commit();
+        }else{
             Fragment fragment = new EventFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
-            restoreActionBar(getString(R.string.title_section3));
-            fragmentTransaction.commit();
-        }else{
-            Fragment fragment = new HomeFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
-            restoreActionBar(getString(R.string.title_section1));
+            fragmentTransaction.replace(R.id.container, fragment, "0");
+            restoreActionBar(getString(R.string.Versanstaltungsscreen));
             fragmentTransaction.commit();
         }
     }
@@ -289,5 +308,46 @@ public class MainActivity extends ActionBarActivity
 
     public void setBeacon(Beacon beacon) {
         this.beacon = beacon;
+    }
+
+    @Override
+    public void processFinish(JSONObject output) {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+        try {
+            addEvents(output.getJSONArray(EVENTS));
+            if(fragmentManager.findFragmentById(R.id.container).getTag().equals("0")){
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new EventFragment(), "0");
+                restoreActionBar(getString(R.string.Versanstaltungsscreen));
+                fragmentTransaction.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            addPOIs(output.getJSONArray(POIS));
+            if(fragmentManager.findFragmentById(R.id.container).getTag().equals("1")){
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new KarteFragment(), "1");
+                restoreActionBar(getString(R.string.Kartenscreen));
+                fragmentTransaction.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            addBuildings(output.getJSONArray(BUILDINGS));
+            if(fragmentManager.findFragmentById(R.id.container).getTag().equals("2")){
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new BeaconFragment(), "2");
+                restoreActionBar(getString(R.string.Buildingsscreen));
+                fragmentTransaction.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

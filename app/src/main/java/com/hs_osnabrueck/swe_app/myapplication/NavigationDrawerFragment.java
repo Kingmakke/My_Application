@@ -96,14 +96,13 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         //TODO andere Icons
-        mNavItems.add(new NavItem(getString(R.string.title_section1), R.drawable.ic_menu_home));
-        mNavItems.add(new NavItem(getString(R.string.title_section2), R.drawable.ic_action_map));
-        mNavItems.add(new NavItem(getString(R.string.title_section3), R.drawable.ic_action_go_to_today));
-        mNavItems.add(new NavItem(getString(R.string.title_section4), R.drawable.ic_cart));
-        mNavItems.add(new NavItem(getString(R.string.title_section5), R.drawable.ic_action_data_usage));
-        mNavItems.add(new NavItem(getString(R.string.title_section6), R.drawable.ic_action_not_important));
-        mNavItems.add(new NavItem(getString(R.string.title_section7), R.drawable.ic_action_about));
-        mNavItems.add(new NavItem(getString(R.string.title_section8), R.drawable.ic_action_settings));
+        mNavItems.add(new NavItem(getString(R.string.Versanstaltungsscreen), R.drawable.ic_action_go_to_today));
+        mNavItems.add(new NavItem(getString(R.string.Kartenscreen), R.drawable.ic_action_map));
+        mNavItems.add(new NavItem(getString(R.string.Buildingsscreen), R.drawable.ic_menu_home));
+        mNavItems.add(new NavItem(getString(R.string.Beaconsuchescreen), R.drawable.ic_action_search));
+        mNavItems.add(new NavItem(getString(R.string.Palmenscreen), R.drawable.ic_palme));
+        mNavItems.add(new NavItem(getString(R.string.WieBscreen), R.drawable.ic_action_about));
+        mNavItems.add(new NavItem(getString(R.string.Einstellungsscreen), R.drawable.ic_action_settings));
 
         MyDrawerAdapter myAdapter = new MyDrawerAdapter(getActionBar().getThemedContext(), mNavItems );
         mDrawerListView.setAdapter(myAdapter);

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.estimote.sdk.cloud.model.BeaconInfo;
 import com.estimote.sdk.connection.BeaconConnection;
 import com.estimote.sdk.exception.EstimoteDeviceException;
-import com.hs_osnabrueck.swe_app.myapplication.AchievementFragment;
+import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
 import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.Point3D;
@@ -34,6 +34,7 @@ public class BleConnect{
     private List<BluetoothGattCharacteristic> config = new ArrayList<>();
     private List<BluetoothGattCharacteristic> data = new ArrayList<>();
     private String temperatur, iR_Temperature, humidity, pressure_1, pressure_2, acc_1, acc_2, acc_3;
+    private boolean calibrated = false;
 
     private BeaconConnection beaconConnection;
     private BeaconConnection.ConnectionCallback connectionCallback = new BeaconConnection.ConnectionCallback() {
@@ -54,7 +55,7 @@ public class BleConnect{
     };
 
     byte[] value = {(byte) 1};
-    private AchievementFragment fragment;
+    private BeaconinfoFragment fragment;
     private static final double PA_PER_METER = 12.0;
     private DecimalFormat decimal = new DecimalFormat("+0.00;-0.00");
     private BluetoothGatt bluetoothGatt;
@@ -109,6 +110,7 @@ public class BleConnect{
                 gatt.setCharacteristicNotification(config.get(2), true);
                 config.get(2).setValue(value);
                 gatt.writeCharacteristic(config.get(2));
+
 
             }else if(characteristic.getUuid().toString().equals(TiPressureSensor.getUUID_DATA())){
                 Point3D p = Sensor.BAROMETER.convert(sensorData);
@@ -171,7 +173,7 @@ public class BleConnect{
             // this will get called when a device connects or disconnects
             if(newState == BluetoothProfile.STATE_CONNECTED){
                 gatt.discoverServices();
-            }else{
+            }else if(newState == BluetoothProfile.STATE_DISCONNECTED){
                 gatt.close();
             }
         }
@@ -215,7 +217,7 @@ public class BleConnect{
 
     };
 
-    public BleConnect(final AchievementFragment fragment, Beacon beacon) {
+    public BleConnect(final BeaconinfoFragment fragment, Beacon beacon) {
         this.fragment = fragment;
         if(beacon.getBluetoothDevice().getName().contains("SensorTag")){
             bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);

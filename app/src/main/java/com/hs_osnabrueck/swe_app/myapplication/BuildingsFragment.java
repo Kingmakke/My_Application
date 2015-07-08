@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SpielstatistikFragment extends Fragment {
+public class BuildingsFragment extends Fragment {
 
     private View rootView;
     private MainActivity main;
 
-    public SpielstatistikFragment() {
+    public BuildingsFragment() {
         // Required empty public constructor
     }
 
@@ -20,8 +20,11 @@ public class SpielstatistikFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_spielstatistik, container, false);
-        main.setPos(4);
+        rootView =  inflater.inflate(R.layout.fragment_veranstaltungen, container, false);
+
+        main.setPos(3);
+
+
         return rootView;
     }
 

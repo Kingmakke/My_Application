@@ -3,6 +3,7 @@ package com.hs_osnabrueck.swe_app.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
 
-public class AchievementFragment extends Fragment {
+public class BeaconinfoFragment extends Fragment {
 
     private View rootView;
     private MainActivity main;
@@ -24,7 +25,7 @@ public class AchievementFragment extends Fragment {
     public TextView temperature, iR_Temperature, humidity, pressure, accelerometer, result;
 
 
-    public AchievementFragment() {
+    public BeaconinfoFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +38,7 @@ public class AchievementFragment extends Fragment {
 
         main.setPos_old(bundle.getInt("pos"));
 
-        main.setPos(5);
+        main.setPos(9);
 
 
         bleConnect = new BleConnect(this, main.getBeacon());
@@ -47,8 +48,7 @@ public class AchievementFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(humidity != null){
-                    HttpConnection connectionEvents = new HttpConnection();
-
+                    HttpConnection connectionEvents = new HttpConnection(getActivity().getBaseContext());
                     connectionEvents.execute(urlUpdate, main.getBeacon().getId(), humidity.getText().toString());
 
                 }
@@ -69,7 +69,14 @@ public class AchievementFragment extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        this.
+        Log.e("debug", "pause");
+        bleConnect.bleDisconnect(main.getBeacon());
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.e("debug", "stop");
         bleConnect.bleDisconnect(main.getBeacon());
     }
 

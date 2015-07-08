@@ -1,14 +1,7 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/einkaufswagenscreen_scrollView"
-    tools:context="com.hs_osnabrueck.swe_app.myapplication.EinkaufswagenFragment"
     android:background="@color/weiß">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
@@ -41,27 +34,19 @@
             android:layout_below="@+id/einkaufswagenscreen_download_button"
             android:layout_marginTop="20sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/einkaufswagenscreen_beaconinfo"
-            android:layout_below="@+id/einkaufswagenscreen_divider"
-            android:padding="5sp"
-            android:background="@drawable/cell_shape_beaconinfo"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="10sp"
-            android:textColor="@color/schwarz" />
-
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/homescreen_button"
             android:id="@+id/einkaufswagenscreen_scan_button"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_action_refresh"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/einkaufswagenscreen_beaconinfo"
             android:background="@color/normal"
-            android:textColor="@color/weiß" />
+            android:textColor="@color/weiß"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true" />
 
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

@@ -3,22 +3,4 @@
     android:layout_height="match_parent"
     tools:context="com.hs_osnabrueck.swe_app.myapplication.WasIstEinBeaconFragment">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Humidity"
-        android:id="@+id/wiebscreen_update"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-
-        android:id="@+id/wiebscreen_result"
-        android:layout_below="@+id/wiebscreen_update"
-        android:layout_centerHorizontal="true" />
-
 </RelativeLayout>

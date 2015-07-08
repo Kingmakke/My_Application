@@ -1,17 +1,15 @@
 <resources>
     <string name="app_name">My Application</string>
 
-    <string name="title_section1">Home</string>
-    <string name="title_section2">Karte</string>
-    <string name="title_section3">Veranstaltungen</string>
-    <string name="title_section4">Einkaufswagen</string>
-    <string name="title_section5">Spielstatistik</string>
-    <string name="title_section6">Achievements</string>
-    <string name="title_section7">Was ist ein Beacon?</string>
-    <string name="title_section8">Einstellungen</string>
-    <string name="title_section9">Achievement 1</string>
-    <string name="title_section10">Veranstaltungsdetails</string>
-
+    <string name="Beaconsuchescreen">Beacon suchen</string>
+    <string name="Kartenscreen">Karte</string>
+    <string name="Versanstaltungsscreen">Veranstaltungen</string>
+    <string name="Palmenscreen">Palme</string>
+    <string name="Beaconinfoscreen">Details zum Beacon</string>
+    <string name="WieBscreen">Was ist ein Beacon?</string>
+    <string name="Einstellungsscreen">Einstellungen</string>
+    <string name="Veranstaltungsdetailsscreen">Veranstaltungsdetails</string>
+    <string name="Buildingsscreen">Gebäude</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

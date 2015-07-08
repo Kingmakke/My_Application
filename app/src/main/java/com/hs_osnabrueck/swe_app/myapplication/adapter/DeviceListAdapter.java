@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.AchievementFragment;
+import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
 import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
 import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
@@ -92,13 +92,13 @@ public class DeviceListAdapter extends BaseAdapter {
                     //bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
                     //bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
                     //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
-                    bundle.putInt("pos", 0);
-                    Fragment fragment = new AchievementFragment();
+                    bundle.putInt("pos", 3);
+                    Fragment fragment = new BeaconinfoFragment();
                     fragment.setArguments(bundle);
                     android.support.v4.app.FragmentManager fragmentManager = main.getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container, fragment);
-                    main.restoreActionBar(main.getString(R.string.title_section9));
+                    fragmentTransaction.replace(R.id.container, fragment, "9");
+                    main.restoreActionBar(main.getString(R.string.Beaconinfoscreen));
                     fragmentTransaction.commit();
                 }else{
                     //TODO ?
