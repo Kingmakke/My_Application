@@ -6,13 +6,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
 import com.hs_osnabrueck.swe_app.myapplication.adapter.DeviceListAdapter;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.interfaces.BleSearchResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,10 @@ public class BleScanner{
     private ScanCallback scanCallback;
     private MainActivity main;
 
+    public BleSearchResponse bleSearchResponse = null;
 
     @SuppressLint("NewApi")
-    public BleScanner(final ListView deviceList, MainActivity main, final TextView noDevice) {
+    public BleScanner() {
         this.deviceList = deviceList;
         this.main = main;
         this.noDevice = noDevice;
@@ -61,35 +62,12 @@ public class BleScanner{
     }
 
     private void bleSearch(BluetoothDevice device, int rssi){
-        Boolean update = false;
-        for(int i = 0; i < beaconList.size(); i++){
-            beaconList.get(i).raiseCounter();
 
-            if(beaconList.get(i).getBluetoothDevice().getAddress().equals(device.getAddress())){
-                beaconList.get(i).setRssi(rssi);
-                beaconList.get(i).resetCounter();
-                update = true;
-                continue;
-            }
-            if(beaconList.get(i).getCounter() > 10){
-                beaconList.remove(i);
-                i--;
-                continue;
-            }
 
-        }
-        if(!update){
-            beaconList.add(new Beacon(device, rssi));
-        }
-        adapter = new DeviceListAdapter(beaconList, main);
-        deviceList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        if(beaconList.isEmpty()){
-            noDevice.setVisibility(View.VISIBLE);
-        }else{
-            noDevice.setVisibility(View.INVISIBLE);
-        }
+        bleSearchResponse.beaconFound(device, rssi);
+        /*
 
+        */
     }
 
     public LeScanCallback getLeScanCallback(){

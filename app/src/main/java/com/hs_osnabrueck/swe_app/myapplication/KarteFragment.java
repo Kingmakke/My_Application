@@ -47,6 +47,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     private double latitude = latitude_campus;
     private double longitude = longitude_campus;
     private Boolean gps = false;
+    private Bundle bundle;
 
     public KarteFragment() {}
 
@@ -146,6 +147,13 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         this.savedInstanceState = savedInstanceState;
 
         main.setPos(1);
+
+        bundle = getArguments();
+
+        if(bundle != null){
+            latitude = bundle.getDouble("latitude");
+            longitude = bundle.getDouble("longitude");
+        }
 
         initMap();
 

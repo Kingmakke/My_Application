@@ -26,27 +26,4 @@
             android:paddingLeft="5sp"
             android:paddingRight="5sp" />
 
-        <View
-            android:id="@+id/einkaufswagenscreen_divider"
-            android:layout_width="match_parent"
-            android:layout_height="2sp"
-            android:background="@color/normal"
-            android:layout_below="@+id/einkaufswagenscreen_download_button"
-            android:layout_marginTop="20sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/homescreen_button"
-            android:id="@+id/einkaufswagenscreen_scan_button"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/ic_action_refresh"
-            android:layout_centerHorizontal="true"
-            android:background="@color/normal"
-            android:textColor="@color/weiß"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentBottom="true" />
-
 </RelativeLayout>

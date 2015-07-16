@@ -1,6 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -69,6 +70,12 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.normal)));
+        getSupportActionBar().setElevation(0);
+
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        editor.putString("institut", getIntent().getStringExtra("institut"));
+        editor.putString("course", getIntent().getStringExtra("course"));
+        editor.apply();
 
         btAdapter = BleUtils.getBluetoothAdapter(getBaseContext());
 
@@ -92,11 +99,13 @@ public class MainActivity extends ActionBarActivity
         httpGetBuilding.execute(urlBuildings);
         httpGetBuilding.asyncResponse = this;
 */
+
+
+        chooseFragment(getIntent().getIntExtra("pos", 0));
     }
 
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void chooseFragment(int position){
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
@@ -144,6 +153,12 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        chooseFragment(position);
+
+    }
+
     public void restoreActionBar(String mTitle) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -189,6 +204,7 @@ public class MainActivity extends ActionBarActivity
             //JSONArray jsonArray = json.getJSONArray("pois");
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+
                 poiliste.add(new POI(
                         jsonObject.getString(BEACONID),
                         jsonObject.getString(DESRCIPTION),

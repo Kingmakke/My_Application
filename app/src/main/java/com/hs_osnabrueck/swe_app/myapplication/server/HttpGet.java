@@ -1,8 +1,12 @@
 package com.hs_osnabrueck.swe_app.myapplication.server;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
+
+import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +36,8 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog = new ProgressDialog(context,ProgressDialog.STYLE_SPINNER);
+        dialog = new ProgressDialog(context, R.style.MyTheme);
+        dialog.setCancelable(false);
         dialog.show();
     }
     @Override
@@ -45,7 +50,12 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject result) {
         dialog.dismiss();
-        asyncResponse.processFinish(result);
+        if(result == null){
+            dialog();
+        }else{
+            asyncResponse.processFinish(result);
+        }
+
     }
 
     private static String getResponseText(InputStream inStream) {
@@ -63,7 +73,7 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
 
             urlConnection = (HttpURLConnection) urlToRequest.openConnection();
             urlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
-            //urlConnection.setReadTimeout(10000);
+            urlConnection.setReadTimeout(10000);
 
             // handle issues
             /*int statusCode = urlConnection.getResponseCode();
@@ -87,6 +97,10 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
         } catch (MalformedURLException e) {
             // URL is invalid
         } catch (SocketTimeoutException e) {
+
+            dialog();
+
+
             // data retrieval or connection timed out
         } catch (IOException e) {
             // could not read response body
@@ -102,6 +116,32 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
         return null;
 
     }
+
+    public void dialog(){
+
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+            // set title
+
+            // set dialog message
+            alertDialogBuilder
+                    .setTitle("Verbindungstimeout")
+                    .setMessage("Diese App benötigt eine aktive Internetverbindung!")
+                    .setCancelable(false)
+                    .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            System.exit(0);
+                        }
+                    });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+        }
+
 
 }
 

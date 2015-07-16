@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <drawable name="pressed_color">@color/grey_light</drawable> <!--custom color for pressed state -->
-    <drawable name="normal_color">@android:color/transparent</drawable> <!--transperent color for normal state -->
+    <drawable name="normal_color">@color/transparent</drawable> <!--transperent color for normal state -->
 </resources>

@@ -2,7 +2,6 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -33,23 +32,32 @@ public class FirstActivity extends Activity {
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] array;
                 switch (position) {
                     case 0:
                         courseList.clear();
-                        courseList.add("Medieninformatik");
-                        courseList.add("Technische - Informatik");
+                        array = getResources().getStringArray(R.array.courseliste_hochschule_array);
+                        for (int i = 0; i < array.length; i++) {
+                            courseList.add(array[i]);
+                        }
                         course.setVisibility(View.VISIBLE);
                         break;
 
                     case 1:
                         courseList.clear();
-                        courseList.add("??");
+                        array = getResources().getStringArray(R.array.courseliste_uni_array);
+                        for (int i = 0; i < array.length; i++) {
+                            courseList.add(array[i]);
+                        }
                         course.setVisibility(View.VISIBLE);
                         break;
 
                     case 2:
                         courseList.clear();
-                        courseList.add("--");
+                        array = getResources().getStringArray(R.array.courseliste_studieninteressierte_array);
+                        for (int i = 0; i < array.length; i++) {
+                            courseList.add(array[i]);
+                        }
                         course.setVisibility(View.INVISIBLE);
                         break;
 
@@ -72,12 +80,14 @@ public class FirstActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                /*SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
                 editor.putString("insitut", institut.getSelectedItem().toString());
                 editor.putString("course", course.getSelectedItem().toString());
                 editor.apply();
-
+*/
                 Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                intent.putExtra("institut", institut.getSelectedItem().toString());
+                intent.putExtra("course", course.getSelectedItem().toString());
                 startActivity(intent);
                 finish();
             }
