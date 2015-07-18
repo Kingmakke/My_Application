@@ -1,6 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,18 +16,18 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
-
 import java.util.ArrayList;
 
 public class EinstellungenFragment extends Fragment {
+
+    private final static int REQUEST_ENABLE_BT = 1;
+    private final static int REQUEST_ENABLE_BT_SCAN = 1;
 
     private View rootView;
     private MainActivity main;
     private Switch toggleBleSearch;
     private Spinner institut, course;
     private ArrayList<String> courseList = new ArrayList<>();
-    private Boolean scanning;
 
     public EinstellungenFragment() {
         // Required empty public constructor
@@ -39,7 +40,6 @@ public class EinstellungenFragment extends Fragment {
         rootView =  inflater.inflate(R.layout.fragment_einstellungen, container, false);
 
         SharedPreferences prefs = main.getPreferences(main.MODE_PRIVATE);
-
 
         main.setPos(6);
 
@@ -131,21 +131,26 @@ public class EinstellungenFragment extends Fragment {
 
         toggleBleSearch = (Switch)rootView.findViewById(R.id.einstellungsscreen_toggle);
         //set the switch to ON
-        scanning = prefs.getBoolean("scanning", false);
-        toggleBleSearch.setChecked(scanning);
+        main.setBackgroundScanning(prefs.getBoolean("scanning", false));
+        toggleBleSearch.setChecked(main.isBackgroundScanning());
         //attach a listener to check for changes in state
-        final Intent intent = new Intent(main.getBaseContext(), BleSearchService.class);
+
         toggleBleSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-                    main.startService(intent);
-                    scanning = true;
+                    if (main.getBtAdapter() != null && !main.getBtAdapter().isEnabled()) {
+                        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
+                    }else{
+                        //main.startService(main.getMyIntent());
+                        main.setBackgroundScanning(true);
+                    }
                 } else {
-                    main.stopService(intent);
-                    scanning = false;
+                    //main.stopService(main.getMyIntent());
+                    main.setBackgroundScanning(false);
                 }
 
             }
@@ -161,7 +166,7 @@ public class EinstellungenFragment extends Fragment {
         SharedPreferences.Editor editor = main.getPreferences(main.MODE_PRIVATE).edit();
         editor.putString("institut", institut.getSelectedItem().toString());
         editor.putString("course", course.getSelectedItem().toString());
-        editor.putBoolean("scanning", scanning);
+        editor.putBoolean("scanning", main.isBackgroundScanning());
         editor.apply();
     }
 
@@ -171,4 +176,16 @@ public class EinstellungenFragment extends Fragment {
         main = (MainActivity)activity;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_ENABLE_BT_SCAN && resultCode == Activity.RESULT_OK) {
+            //Log.e("debug", "2");
+            //main.startService(main.getMyIntent());
+            main.setBackgroundScanning(true);
+        }else{
+            main.setBackgroundScanning(false);
+            toggleBleSearch.setChecked(main.isBackgroundScanning());
+        }
+    }
 }

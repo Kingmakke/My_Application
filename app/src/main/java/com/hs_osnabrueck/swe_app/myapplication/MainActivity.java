@@ -1,6 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
@@ -19,6 +20,7 @@ import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
 import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpGet;
+import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +40,11 @@ public class MainActivity extends ActionBarActivity
     private String urlEvents = "http://131.173.110.133:443/api/events";
     private String urlBuildings = "http://131.173.110.133:443/api/buildings/all";
 
+    private final static int REQUEST_ENABLE_BT = 1;
+    private final static int REQUEST_ENABLE_BT_SCAN = 1;
+
+    private boolean backgroundScanning = false;
+
     private static final String TITLE = "title";
     private static final String LINK = "link";
     private static final String DESRCIPTION = "description";
@@ -54,7 +61,7 @@ public class MainActivity extends ActionBarActivity
     private static final String BUILDINGS = "buildings";
     private static final String BUILDINGID = "buildingID";
 
-
+    private Intent intent;
 
     private int pos;
     private int pos_old;
@@ -77,7 +84,9 @@ public class MainActivity extends ActionBarActivity
         editor.putString("course", getIntent().getStringExtra("course"));
         editor.apply();
 
+        intent = new Intent(getBaseContext(), BleSearchService.class);
         btAdapter = BleUtils.getBluetoothAdapter(getBaseContext());
+        bleScanner = new BleScanner();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -326,6 +335,22 @@ public class MainActivity extends ActionBarActivity
         this.beacon = beacon;
     }
 
+    public Intent getMyIntent() {
+        return intent;
+    }
+
+    public void setMyIntent(Intent intent) {
+        this.intent = intent;
+    }
+
+    public boolean isBackgroundScanning() {
+        return backgroundScanning;
+    }
+
+    public void setBackgroundScanning(boolean backgroundScanning) {
+        this.backgroundScanning = backgroundScanning;
+    }
+
     @Override
     public void processFinish(JSONObject output) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -365,5 +390,21 @@ public class MainActivity extends ActionBarActivity
         }
 
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(backgroundScanning && btAdapter != null && bleScanner != null){
+            startService(intent);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(intent != null){
+            stopService(intent);
+        }
     }
 }

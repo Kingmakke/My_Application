@@ -28,6 +28,7 @@ public class BleSearchService extends Service implements BleSearchResponse{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
+
         this.intent = intent;
         new Thread(new Runnable() {
             @Override
@@ -67,9 +68,15 @@ public class BleSearchService extends Service implements BleSearchResponse{
                 myIntent,
                 0);
 
+        String devicename;
+        if(device.getName() == null){
+            devicename = "unknown";
+        }else{
+            devicename = device.getName();
+        }
         Notification notification  = new Notification.Builder(this)
                 .setContentTitle("Beacon gefunden")
-                //.setContentText("Subject")
+                .setContentText(devicename)
                 .setSmallIcon(R.drawable.ic_palme)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
@@ -83,8 +90,7 @@ public class BleSearchService extends Service implements BleSearchResponse{
                 .build();
 
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         notificationManager.notify(0, notification);
     }
