@@ -9,38 +9,23 @@ public class POI {
     private String description;
     private double gps_latitude;
     private double gps_longitude;
+    private String institut;
     private Vector<String> imageLinks;
     private Vector<String> webLinks;
     private String beaconId;
     private Vector<Course> course;
 
-    public POI(String json){
-        json = json.substring(1,json.length()-1);
-        String[] result = json.split(",");
-        String temp = "";
-        for(int i = 0; i < result.length; i++){
-            result[i] = result[i].substring(result[i].indexOf(":")+1);
-            result[i] = result[i].replaceAll("\"", "");
-        }
-        this.id = Integer.parseInt(result[0]);
-        this.beaconId = result[1];
-        this.name = result[2];
-        this.description = result[3];
-        this.gps_latitude = Double.parseDouble(result[4]);
-        this.gps_longitude = Double.parseDouble(result[5]);
-
-
-    }
-    public POI(String beaconId, String description, double gps_latitude, double gps_longitude, int id, String name) {
+    public POI(String beaconId, String description, double gps_latitude, double gps_longitude, int id, String name, String institut) {
         this.beaconId = beaconId;
         this.description = description;
         this.gps_latitude = gps_latitude;
         this.gps_longitude = gps_longitude;
         this.id = id;
         this.name = name;
+        this.institut = institut;
     }
 
-    public POI(String beaconId, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks) {
+    public POI(String beaconId, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks, String institut) {
         this.beaconId = beaconId;
         this.course = course;
         this.description = description;
@@ -50,6 +35,7 @@ public class POI {
         this.imageLinks = imageLinks;
         this.name = name;
         this.webLinks = webLinks;
+        this.institut = institut;
     }
 
     public int getId() {
@@ -122,5 +108,13 @@ public class POI {
 
     public void setCourse(Vector<Course> course) {
         this.course = course;
+    }
+
+    public String getInstitut() {
+        return institut;
+    }
+
+    public void setInstitut(String institut) {
+        this.institut = institut;
     }
 }

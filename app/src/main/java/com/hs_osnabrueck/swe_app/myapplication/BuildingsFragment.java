@@ -30,8 +30,6 @@ public class BuildingsFragment extends Fragment {
         setHasOptionsMenu(true);
         main.setPos(3);
 
-
-
         ArrayAdapter listAdapter = new ArrayAdapter(rootView.getContext(), android.R.layout.simple_list_item_1);
         for(int i = 0; i < main.getPoiliste().size(); i++){
             listAdapter.add(main.getPoiliste().get(i).getName());

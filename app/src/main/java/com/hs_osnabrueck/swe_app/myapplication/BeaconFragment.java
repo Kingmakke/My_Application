@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,13 +26,12 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
 
     private MainActivity main;
     private View rootView;
-    private Button scan;
+    //private Button scan;
     private TextView noDevice;
     private ListView deviceList;
     private LayoutInflater inflater;
     private ViewGroup container;
     private DeviceListAdapter adapter;
-    private BluetoothAdapter btAdapter = null;
 
     public BeaconFragment() {}
 
@@ -47,15 +45,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
             case BleUtils.STATUS_BLE_NOT_AVAILABLE:
                 enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableIntent,REQUEST_ENABLE_BT);
-                //ErrorDialog.newInstance(R.string.dialog_error_no_ble).show(getFragmentManager(), ErrorDialog.TAG);
-                //return;
             case BleUtils.STATUS_BLUETOOTH_NOT_AVAILABLE:
                 enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableIntent,REQUEST_ENABLE_BT);
-                // ErrorDialog.newInstance(R.string.dialog_error_no_bluetooth).show(getFragmentManager(), ErrorDialog.TAG);
-                // return;
-            default:
-                btAdapter = main.getBtAdapter();
         }
         //-----bis-----
 
@@ -91,8 +83,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         this.inflater = inflater;
         this.container = container;
@@ -107,32 +98,26 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
     @Override
     public void onResume() {
         super.onResume();
-        if (btAdapter != null && !btAdapter.isEnabled()) {
+        if (main.getBtAdapter() != null && !main.getBtAdapter().isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
         } else {
             findBeacon();
         }
-        /*if(main.getMyIntent() != null){
-            main.stopService(main.getMyIntent());
-        }*/
-
     }
 
     @SuppressLint("NewApi")
     @Override
     public void onStop() {
         super.onStop();
-        if (btAdapter != null && main.getBleScanner() != null) {
+        if (main.getBtAdapter() != null && main.getBleScanner() != null && main.getBtAdapter().isEnabled()) {
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
                 //noinspection deprecation
-                btAdapter.stopLeScan(main.getBleScanner().getLeScanCallback());
+                main.getBtAdapter().stopLeScan(main.getBleScanner().getLeScanCallback());
             }else{
-                btAdapter.getBluetoothLeScanner().stopScan(main.getBleScanner().getScanCallback());
+                main.getBtAdapter().getBluetoothLeScanner().stopScan(main.getBleScanner().getScanCallback());
             }
-            //main.startService(main.getMyIntent());
         }
-
     }
 
     @Override
@@ -154,9 +139,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
         main.getBleScanner().bleSearchResponse = this;
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             //noinspection deprecation
-            btAdapter.startLeScan(main.getBleScanner().getLeScanCallback());
+            main.getBtAdapter().startLeScan(main.getBleScanner().getLeScanCallback());
         }else{
-            btAdapter.getBluetoothLeScanner().startScan(main.getBleScanner().getScanCallback());
+            main.getBtAdapter().getBluetoothLeScanner().startScan(main.getBleScanner().getScanCallback());
         }
     }
 

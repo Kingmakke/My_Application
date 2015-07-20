@@ -60,6 +60,7 @@ public class MainActivity extends ActionBarActivity
     private static final String EVENTS = "feeds";
     private static final String BUILDINGS = "buildings";
     private static final String BUILDINGID = "buildingID";
+    private static final String INSTITUT = "isBuildingBelongingTo";
 
     private Intent intent;
 
@@ -88,13 +89,10 @@ public class MainActivity extends ActionBarActivity
         btAdapter = BleUtils.getBluetoothAdapter(getBaseContext());
         bleScanner = new BleScanner();
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
         HttpGet httpGetPOI = new HttpGet(this);
         httpGetPOI.execute(urlAllPOI);
@@ -103,19 +101,12 @@ public class MainActivity extends ActionBarActivity
         HttpGet httpGetEvents = new HttpGet(this);
         httpGetEvents.execute(urlEvents);
         httpGetEvents.asyncResponse = this;
-/*
-        HttpGet httpGetBuilding = new HttpGet(this);
-        httpGetBuilding.execute(urlBuildings);
-        httpGetBuilding.asyncResponse = this;
-*/
-
 
         chooseFragment(getIntent().getIntExtra("pos", 0));
     }
 
 
-    public void chooseFragment(int position){
-        FragmentManager fragmentManager = getSupportFragmentManager();
+    public void chooseFragment(int position){FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
                 fragmentManager.beginTransaction()
@@ -220,7 +211,8 @@ public class MainActivity extends ActionBarActivity
                         Double.valueOf(jsonObject.getString(LATITUDE)),
                         Double.valueOf(jsonObject.getString(LONGITUDE)),
                         Integer.valueOf(jsonObject.getString(POIID)),
-                        jsonObject.getString(NAME)
+                        jsonObject.getString(NAME),
+                        jsonObject.getString(INSTITUT)
                         )
                 );
             }
@@ -233,8 +225,6 @@ public class MainActivity extends ActionBarActivity
     public void addEvents(JSONArray jsonArray){
         eventliste.removeAllElements();
         try {
-            //JSONArray jsonArray = json.getJSONArray("feeds");
-
             Vector<Event> eventListeReverse = new Vector<>();
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -258,7 +248,7 @@ public class MainActivity extends ActionBarActivity
 
     }
 //TODO mit serverleuten sprechen
-
+/*
     public void addBuildings(JSONArray jsonArray){
         poiliste.removeAllElements();
         try {
@@ -278,7 +268,7 @@ public class MainActivity extends ActionBarActivity
         }
 
     }
-
+*/
     @Override
     public void onBackPressed() {
         if(mNavigationDrawerFragment.isVisible()){
@@ -377,7 +367,7 @@ public class MainActivity extends ActionBarActivity
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        try {
+        /*try {
             addBuildings(output.getJSONArray(BUILDINGS));
             if(fragmentManager.findFragmentById(R.id.container).getTag().equals("2")){
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -387,7 +377,7 @@ public class MainActivity extends ActionBarActivity
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
     }

@@ -90,4 +90,6 @@ public class EventFragment extends Fragment {
         initEvent();
         return rootView;
     }
+
+
 }

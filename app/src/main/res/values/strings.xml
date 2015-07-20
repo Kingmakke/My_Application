@@ -35,7 +35,9 @@
     <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
     <string name="einkaufswagenscreen_info">Informationen zu den Palmen</string>
 
+
     <string name="event_details_date">Datum und Uhrzeit:</string>
+    <string name="event_details_date_navigate">navigieren</string>
     <string name="event_details_location">Veranstaltungsort:</string>
     <string name="event_details_description">Weitere Informationen:</string>
     <string name="title_activity_start">StartActivity</string>

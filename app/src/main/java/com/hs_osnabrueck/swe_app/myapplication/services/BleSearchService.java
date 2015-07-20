@@ -77,7 +77,7 @@ public class BleSearchService extends Service implements BleSearchResponse{
         Notification notification  = new Notification.Builder(this)
                 .setContentTitle("Beacon gefunden")
                 .setContentText(devicename)
-                .setSmallIcon(R.drawable.ic_palme)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setVibrate(new long[]{0, 1000})

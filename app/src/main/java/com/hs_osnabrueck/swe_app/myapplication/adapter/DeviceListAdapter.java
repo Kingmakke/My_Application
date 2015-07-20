@@ -84,14 +84,8 @@ public class DeviceListAdapter extends BaseAdapter {
 
                 Beacon beacon = devices.get(position);
                 if (beacon.getBluetoothDevice() != null) {
-
                     main.setBeacon(beacon);
                     Bundle bundle = new Bundle();
-                    //bundle("temperature", bleConnect.getTemperature());
-                    //bundle.putString("temperature", bleConnect.getTemperature());
-                    //bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
-                    //bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
-                    //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
                     bundle.putInt("pos", 3);
                     Fragment fragment = new BeaconinfoFragment();
                     fragment.setArguments(bundle);
@@ -100,12 +94,7 @@ public class DeviceListAdapter extends BaseAdapter {
                     fragmentTransaction.replace(R.id.container, fragment, "9");
                     main.restoreActionBar(main.getString(R.string.Beaconinfoscreen));
                     fragmentTransaction.commit();
-                }else{
-                    //TODO ?
                 }
-                //TODO
-                // auf Karte wechseln
-
             }
         });
 
