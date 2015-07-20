@@ -31,9 +31,7 @@ public class EinstellungenFragment extends Fragment {
     private String version;
     TextView ver;
 
-    public EinstellungenFragment() {
-        // Required empty public constructor
-    }
+    public EinstellungenFragment() {}
 
     public void init() {
 
@@ -139,7 +137,6 @@ public class EinstellungenFragment extends Fragment {
                         }
                         break;
                 }
-
             }
         }
 
@@ -165,11 +162,9 @@ public class EinstellungenFragment extends Fragment {
                         Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                         startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
                     } else {
-                        //main.startService(main.getMyIntent());
                         main.setBackgroundScanning(true);
                     }
                 } else {
-                    //main.stopService(main.getMyIntent());
                     main.setBackgroundScanning(false);
                 }
 
@@ -194,20 +189,14 @@ public class EinstellungenFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         init();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        /*SharedPreferences.Editor editor = main.getPreferences(main.MODE_PRIVATE).edit();
-        editor.putString("institut", institut.getSelectedItem().toString());
-        editor.putString("course", course.getSelectedItem().toString());
-        editor.putBoolean("scanning", main.isBackgroundScanning());
-        editor.apply();
-        */
         main.setInstitut(institut.getSelectedItem().toString());
         main.setCourse(course.getSelectedItem().toString());
     }
@@ -222,9 +211,8 @@ public class EinstellungenFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_ENABLE_BT_SCAN && resultCode == Activity.RESULT_OK) {
-            //Log.e("debug", "2");
-            //main.startService(main.getMyIntent());
             main.setBackgroundScanning(true);
+            toggleBleSearch.setChecked(main.isBackgroundScanning());
         }else{
             main.setBackgroundScanning(false);
             toggleBleSearch.setChecked(main.isBackgroundScanning());

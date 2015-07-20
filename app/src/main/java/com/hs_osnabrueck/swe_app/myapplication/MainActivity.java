@@ -423,6 +423,8 @@ public class MainActivity extends ActionBarActivity
         backgroundScanning = prefs.getBoolean("scanning", false);
         if(intent != null && btAdapter != null && btAdapter.isEnabled()){
             stopService(intent);
+        }else{
+            backgroundScanning = false;
         }
     }
 }
