@@ -3,10 +3,9 @@ package com.hs_osnabrueck.swe_app.myapplication;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class EinstellungenFragment extends Fragment {
 
-    private final static int REQUEST_ENABLE_BT = 1;
     private final static int REQUEST_ENABLE_BT_SCAN = 1;
 
     private View rootView;
@@ -28,110 +28,130 @@ public class EinstellungenFragment extends Fragment {
     private Switch toggleBleSearch;
     private Spinner institut, course;
     private ArrayList<String> courseList = new ArrayList<>();
+    private String version;
+    TextView ver;
 
     public EinstellungenFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_einstellungen, container, false);
+    public void init() {
 
-        SharedPreferences prefs = main.getPreferences(main.MODE_PRIVATE);
+        try {
+            version = main.getBaseContext().getPackageManager().getPackageInfo(main.getBaseContext().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e1) {
+            version = "";
+        }
 
-        main.setPos(6);
+        course = (Spinner) rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.firstscreen_course);
 
-        course = (Spinner) rootView.findViewById(R.id.firstscreen_course);
-
-        institut = (Spinner) rootView.findViewById(R.id.firstscreen_institut);
+        institut = (Spinner) rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.firstscreen_institut);
 
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] array;
                 switch (position) {
                     case 0:
                         courseList.clear();
-                        array = getResources().getStringArray(R.array.courseliste_hochschule_array);
-                        for (int i = 0; i < array.length; i++) {
-                            courseList.add(array[i]);
-                        }
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_hochschule_array));
                         course.setVisibility(View.VISIBLE);
                         break;
 
                     case 1:
                         courseList.clear();
-                        array = getResources().getStringArray(R.array.courseliste_uni_array);
-                        for (int i = 0; i < array.length; i++) {
-                            courseList.add(array[i]);
-                        }
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_uni_array));
                         course.setVisibility(View.VISIBLE);
                         break;
 
                     case 2:
                         courseList.clear();
-                        array = getResources().getStringArray(R.array.courseliste_studieninteressierte_array);
-                        for (int i = 0; i < array.length; i++) {
-                            courseList.add(array[i]);
-                        }
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_studieninteressierte_array));
                         course.setVisibility(View.INVISIBLE);
                         break;
 
                     default:
                         break;
                 }
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(main.getBaseContext(), android.R.layout.simple_spinner_item, courseList);
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(main.getBaseContext(), android.R.layout.simple_spinner_dropdown_item, courseList);
                 course.setAdapter(dataAdapter);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
-        int position = 0;
-        for(int i = 0; i < getResources().getStringArray(R.array.intitut_array).length; i++){
-            if( prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(R.array.intitut_array)[i])){
-                institut.setSelection(i);
-                position = i;
+        for (int i = 0; i < getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array).length; i++) {
+            if (main.getInstitut().equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[i])) {
+                institut.setSelection(i, true);
+                ArrayAdapter<String> dataAdapter;
+                switch (i) {
+                    case 0:
+                        courseList.clear();
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_hochschule_array));
+                        course.setVisibility(View.VISIBLE);
+                        dataAdapter = new ArrayAdapter<String>(main.getBaseContext(), android.R.layout.simple_spinner_dropdown_item, courseList);
+                        course.setAdapter(dataAdapter);
+                        for (int j = 0; j < courseList.size(); j++) {
+                            if (main.getCourse().equals(courseList.get(j))) {
+                                final int pos = j;
+                                course.post(new Runnable() {
+                                    public void run() {
+                                        course.setSelection(pos);
+                                    }
+                                });
+                            }
+                        }
+                        break;
+
+                    case 1:
+                        courseList.clear();
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_uni_array));
+                        course.setVisibility(View.VISIBLE);
+                        dataAdapter = new ArrayAdapter<String>(main.getBaseContext(), android.R.layout.simple_spinner_dropdown_item, courseList);
+                        course.setAdapter(dataAdapter);
+                        for (int j = 0; j < courseList.size(); j++) {
+                            if (main.getCourse().equals(courseList.get(j))) {
+                                final int pos = j;
+                                course.post(new Runnable() {
+                                    public void run() {
+                                        course.setSelection(pos);
+                                    }
+                                });
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        courseList.clear();
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_studieninteressierte_array));
+                        course.setVisibility(View.VISIBLE);
+                        dataAdapter = new ArrayAdapter<String>(main.getBaseContext(), android.R.layout.simple_spinner_dropdown_item, courseList);
+                        course.setAdapter(dataAdapter);
+                        for (int j = 0; j < courseList.size(); j++) {
+                            if (main.getCourse().equals(courseList.get(j))) {
+                                final int pos = j;
+                                course.post(new Runnable() {
+                                    public void run() {
+                                        course.setSelection(pos);
+                                        course.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                            }
+                        }
+                        break;
+                }
+
             }
         }
 
-        switch (position) {
-            case 0:
-                for(int i = 0; i < getResources().getStringArray(R.array.courseliste_hochschule_array).length; i++){
-                    if( prefs.getString("course", "Medieninformatik").equals(getResources().getStringArray(R.array.courseliste_hochschule_array)[i])){
-                        course.setSelection(i);
-                    }
-                }
-                break;
 
-            case 1:
-                for(int i = 0; i < getResources().getStringArray(R.array.courseliste_uni_array).length; i++){
-                    if( prefs.getString("course", "Jura").equals(getResources().getStringArray(R.array.courseliste_uni_array)[i])){
-                        Log.e("debug", String.valueOf(i));
-                        course.setSelection(i);
-                    }
-                }
-                break;
-
-            case 2:
-                for(int i = 0; i < getResources().getStringArray(R.array.courseliste_studieninteressierte_array).length; i++){
-                    if( prefs.getString("course", "--").equals(getResources().getStringArray(R.array.courseliste_studieninteressierte_array)[i])){
-                        course.setSelection(i);
-                        course.setVisibility(View.INVISIBLE);
-                    }
-                }
-                break;
-        }
-
-
-        toggleBleSearch = (Switch)rootView.findViewById(R.id.einstellungsscreen_toggle);
+        toggleBleSearch = (Switch) rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.einstellungsscreen_toggle);
         //set the switch to ON
-        main.setBackgroundScanning(prefs.getBoolean("scanning", false));
+
+        if (!main.getBtAdapter().isEnabled()) {
+            main.setBackgroundScanning(false);
+        }/*else{
+            main.setBackgroundScanning(prefs.getBoolean("scanning", false));
+        }*/
         toggleBleSearch.setChecked(main.isBackgroundScanning());
         //attach a listener to check for changes in state
 
@@ -144,7 +164,7 @@ public class EinstellungenFragment extends Fragment {
                     if (main.getBtAdapter() != null && !main.getBtAdapter().isEnabled()) {
                         Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                         startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
-                    }else{
+                    } else {
                         //main.startService(main.getMyIntent());
                         main.setBackgroundScanning(true);
                     }
@@ -156,18 +176,40 @@ public class EinstellungenFragment extends Fragment {
             }
         });
 
+        ver = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.einstellungsscreen_version);
+        ver.setText("v" + version);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_einstellungen, container, false);
+
+        //SharedPreferences prefs = main.getPreferences(main.MODE_PRIVATE);
+
+        main.setPos(6);
 
         return rootView;
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences.Editor editor = main.getPreferences(main.MODE_PRIVATE).edit();
+        /*SharedPreferences.Editor editor = main.getPreferences(main.MODE_PRIVATE).edit();
         editor.putString("institut", institut.getSelectedItem().toString());
         editor.putString("course", course.getSelectedItem().toString());
         editor.putBoolean("scanning", main.isBackgroundScanning());
         editor.apply();
+        */
+        main.setInstitut(institut.getSelectedItem().toString());
+        main.setCourse(course.getSelectedItem().toString());
     }
 
     @Override

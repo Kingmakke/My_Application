@@ -25,7 +25,7 @@ public class BuildingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_veranstaltungen, container, false);
+        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_veranstaltungen, container, false);
 
         setHasOptionsMenu(true);
         main.setPos(3);
@@ -34,7 +34,7 @@ public class BuildingsFragment extends Fragment {
         for(int i = 0; i < main.getPoiliste().size(); i++){
             listAdapter.add(main.getPoiliste().get(i).getName());
         }
-        ListView gebaeudeListView = (ListView)rootView.findViewById(R.id.veranstaltungsscreen_veranstaltungsliste);
+        ListView gebaeudeListView = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.veranstaltungsscreen_veranstaltungsliste);
         gebaeudeListView.setAdapter(listAdapter);
         gebaeudeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -47,8 +47,8 @@ public class BuildingsFragment extends Fragment {
                 fragment.setArguments(bundle);
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment, "1");
-                main.restoreActionBar(getString(R.string.Kartenscreen));
+                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, fragment, "1");
+                main.restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen));
                 fragmentTransaction.commit();
             }
         });
@@ -60,7 +60,7 @@ public class BuildingsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.buildings, menu);
+        inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.buildings, menu);
     }
 
     @Override

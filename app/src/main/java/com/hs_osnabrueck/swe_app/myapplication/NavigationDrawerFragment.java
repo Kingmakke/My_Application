@@ -88,7 +88,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView = (ListView) inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,13 +96,13 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         //TODO andere Icons
-        mNavItems.add(new NavItem(getString(R.string.Versanstaltungsscreen), R.drawable.ic_action_go_to_today));
-        mNavItems.add(new NavItem(getString(R.string.Kartenscreen), R.drawable.ic_action_map));
-        mNavItems.add(new NavItem(getString(R.string.Buildingsscreen), R.drawable.ic_menu_home));
-        mNavItems.add(new NavItem(getString(R.string.Beaconsuchescreen), R.drawable.ic_action_search));
-        mNavItems.add(new NavItem(getString(R.string.Palmenscreen), R.drawable.ic_palme));
-        mNavItems.add(new NavItem(getString(R.string.WieBscreen), R.drawable.ic_action_about));
-        mNavItems.add(new NavItem(getString(R.string.Einstellungsscreen), R.drawable.ic_action_settings));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_go_to_today));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_map));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Buildingsscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_menu_home));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Beaconsuchescreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_search));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Palmenscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_palme));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.WieBscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_about));
+        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Einstellungsscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_settings));
 
         MyDrawerAdapter myAdapter = new MyDrawerAdapter(getActionBar().getThemedContext(), mNavItems );
         mDrawerListView.setAdapter(myAdapter);
@@ -125,7 +125,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout = drawerLayout;
 
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerLayout.setDrawerShadow(com.hs_osnabrueck.swe_app.myapplication.R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
         ActionBar actionBar = getActionBar();
@@ -137,8 +137,8 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
+                com.hs_osnabrueck.swe_app.myapplication.R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
+                com.hs_osnabrueck.swe_app.myapplication.R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -235,7 +235,7 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
+        if (item.getItemId() == com.hs_osnabrueck.swe_app.myapplication.R.id.action_example) {
             Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
             return true;
         }

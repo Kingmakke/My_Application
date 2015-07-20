@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 
 public class PalmenFragment extends Fragment {
 
@@ -35,9 +35,9 @@ public class PalmenFragment extends Fragment {
     public PalmenFragment() {}
 
     public void init(){
-        rootView = inflater.inflate(R.layout.fragment_einkaufswagen, container, false);
+        rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_einkaufswagen, container, false);
 
-        download = (Button)rootView.findViewById(R.id.einkaufswagenscreen_download_button);
+        download = (Button)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.einkaufswagenscreen_download_button);
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

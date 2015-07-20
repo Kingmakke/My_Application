@@ -53,7 +53,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
 
     public void initMap(){
 
-        rootView = inflater.inflate(R.layout.fragment_karte, container, false);
+        rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_karte, container, false);
 
         SharedPreferences prefs = main.getPreferences(main.MODE_PRIVATE);
 
@@ -62,10 +62,10 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         if(bundle != null){
             latitude = bundle.getDouble("latitude");
             longitude = bundle.getDouble("longitude");
-        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(R.array.intitut_array)[0])){
+        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[0])){
             latitude = latitude_hs;
             longitude = longitude_hs;
-        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(R.array.intitut_array)[1])){
+        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[1])){
             latitude = latitude_uni;
             longitude = longitude_uni;
         }else{
@@ -77,16 +77,16 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(rootView.getContext());
             alertDialogBuilder
-                    .setMessage(getString(R.string.kartescreen_GPS_deaktiviert))
+                    .setMessage(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.kartescreen_GPS_deaktiviert))
                     .setCancelable(false)
-                    .setPositiveButton(getString(R.string.kartescreen_GPS_aktivieren_ja),
+                    .setPositiveButton(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.kartescreen_GPS_aktivieren_ja),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Intent enableIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivityForResult(enableIntent, REQUEST_ENABLE_GPS);
                                 }
                             });
-            alertDialogBuilder.setNegativeButton(getString(R.string.kartescreen_GPS_aktivieren_nein),
+            alertDialogBuilder.setNegativeButton(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.kartescreen_GPS_aktivieren_nein),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
@@ -96,7 +96,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
             alert.show();
         }
 
-        mMapView = (MapView) rootView.findViewById(R.id.kartescreen_map);
+        mMapView = (MapView) rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.kartescreen_map);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume();// needed to get the map to display immediately
@@ -114,11 +114,11 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
                     .title(main.getPoiliste().elementAt(i).getName())
                     .snippet(main.getPoiliste().elementAt(i).getDescription());
             if(main.getPoiliste().elementAt(i).getInstitut().equals("H")){
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_hs));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(com.hs_osnabrueck.swe_app.myapplication.R.drawable.marker_hs));
             }else if(main.getPoiliste().elementAt(i).getInstitut().equals("U")){
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_uni));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(com.hs_osnabrueck.swe_app.myapplication.R.drawable.marker_uni));
             }else {
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker2));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(com.hs_osnabrueck.swe_app.myapplication.R.drawable.marker2));
             }
             googleMap.addMarker(markerOptions);
         }
@@ -224,14 +224,14 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // TODO Auto-generated method stub
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.karte, menu);
+        inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.karte, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_karte_campus:
+            case com.hs_osnabrueck.swe_app.myapplication.R.id.menu_karte_campus:
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(17).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 return false;

@@ -8,8 +8,8 @@ import android.bluetooth.le.ScanResult;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import java.util.List;
 

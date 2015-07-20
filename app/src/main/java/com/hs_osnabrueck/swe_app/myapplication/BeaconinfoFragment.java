@@ -33,7 +33,7 @@ public class BeaconinfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_achievement, container, false);
+        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_achievement, container, false);
         bundle = getArguments();
 
         main.setPos_old(bundle.getInt("pos"));
@@ -43,7 +43,7 @@ public class BeaconinfoFragment extends Fragment {
 
         bleConnect = new BleConnect(this, main.getBeacon());
 
-        update = (Button)rootView.findViewById(R.id.achievementscreen_update);
+        update = (Button)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.achievementscreen_update);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

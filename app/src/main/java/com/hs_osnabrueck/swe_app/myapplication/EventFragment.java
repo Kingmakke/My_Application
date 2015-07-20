@@ -25,7 +25,7 @@ public class EventFragment extends Fragment {
     public EventFragment() {}
 
     public void initEvent(){
-        rootView =  inflater.inflate(R.layout.fragment_veranstaltungen, container, false);
+        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_veranstaltungen, container, false);
 
         MyArrayAdapter listAdapter = new MyArrayAdapter(rootView.getContext(), android.R.layout.simple_list_item_1);
         final List<Integer> eventitems = new ArrayList<>();
@@ -44,7 +44,7 @@ public class EventFragment extends Fragment {
                     main.getEventliste().elementAt(i).getDescription());
             eventitems.add(listAdapter.getCount() - 1);
         }
-        ListView veranstaltungsListView = (ListView)rootView.findViewById(R.id.veranstaltungsscreen_veranstaltungsliste);
+        ListView veranstaltungsListView = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.veranstaltungsscreen_veranstaltungsliste);
         veranstaltungsListView.setAdapter(listAdapter);
         veranstaltungsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
@@ -61,8 +61,8 @@ public class EventFragment extends Fragment {
                     fragment.setArguments(bundle);
                     android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container, fragment, "8");
-                    main.restoreActionBar(getString(R.string.Veranstaltungsdetailsscreen));
+                    fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, fragment, "8");
+                    main.restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Veranstaltungsdetailsscreen));
                     fragmentTransaction.commit();
 
                 }

@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hs_osnabrueck.swe_app.myapplication.interfaces.BleSearchResponse;
 import com.hs_osnabrueck.swe_app.myapplication.adapter.DeviceListAdapter;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
-import com.hs_osnabrueck.swe_app.myapplication.interfaces.BleSearchResponse;
 
-public class BeaconFragment extends Fragment implements BleSearchResponse{
+public class BeaconFragment extends Fragment implements BleSearchResponse {
 
     private final static int REQUEST_ENABLE_BT = 1;
     private final static int REQUEST_ENABLE_BT_SCAN = 1;
@@ -36,7 +36,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
     public BeaconFragment() {}
 
     public void init(){
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_home, container, false);
         //TODO  zum Testen auf dem Emulator auskommentieren
         //-----von-----
         final int bleStatus = BleUtils.getBleStatus(getActivity().getBaseContext());
@@ -51,9 +51,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
         }
         //-----bis-----
 
-        deviceList = (ListView)rootView.findViewById(R.id.homescreen_device_list);
+        deviceList = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.homescreen_device_list);
 
-        noDevice = (TextView)rootView.findViewById(R.id.homescreen_no_beacon);
+        noDevice = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.homescreen_no_beacon);
 /*
         scan = (Button)rootView.findViewById(R.id.homescreen_scan_button);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +129,8 @@ public class BeaconFragment extends Fragment implements BleSearchResponse{
             Fragment fragment = new EventFragment();
             android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment, "0");
-            main.restoreActionBar(getString(R.string.Versanstaltungsscreen));
+            fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, fragment, "0");
+            main.restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
             fragmentTransaction.commit();
         }
     }

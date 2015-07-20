@@ -13,14 +13,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Building;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
+import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
 import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpGet;
-import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +63,8 @@ public class MainActivity extends ActionBarActivity
     private static final String INSTITUT = "isBuildingBelongingTo";
 
     private Intent intent;
-
+    private String institut;
+    private String course;
     private int pos;
     private int pos_old;
 
@@ -75,24 +76,26 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_main);
+        setContentView(com.hs_osnabrueck.swe_app.myapplication.R.layout.activity_main);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.normal)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal)));
         getSupportActionBar().setElevation(0);
-
-        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+/*
+        editor = getPreferences(MODE_PRIVATE).edit();
         editor.putString("institut", getIntent().getStringExtra("institut"));
         editor.putString("course", getIntent().getStringExtra("course"));
         editor.apply();
+*/
+
 
         intent = new Intent(getBaseContext(), BleSearchService.class);
         btAdapter = BleUtils.getBluetoothAdapter(getBaseContext());
         bleScanner = new BleScanner();
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.navigation_drawer);
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(com.hs_osnabrueck.swe_app.myapplication.R.id.navigation_drawer, (DrawerLayout) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.drawer_layout));
 
         HttpGet httpGetPOI = new HttpGet(this);
         httpGetPOI.execute(urlAllPOI);
@@ -110,45 +113,45 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new EventFragment(), "0")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new EventFragment(), "0")
                         .commit();
-                restoreActionBar(getString(R.string.Versanstaltungsscreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
                 break;
             case 1:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new KarteFragment(), "1")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new KarteFragment(), "1")
                         .commit();
-                restoreActionBar(getString(R.string.Kartenscreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen));
                 break;
             case 2:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new BuildingsFragment(), "2")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new BuildingsFragment(), "2")
                         .commit();
-                restoreActionBar(getString(R.string.Buildingsscreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Buildingsscreen));
                 break;
             case 3:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new BeaconFragment(), "3")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new BeaconFragment(), "3")
                         .commit();
-                restoreActionBar(getString(R.string.Beaconsuchescreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Beaconsuchescreen));
                 break;
             case 4:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new PalmenFragment(), "4")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new PalmenFragment(), "4")
                         .commit();
-                restoreActionBar(getString(R.string.Palmenscreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Palmenscreen));
                 break;
             case 5:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new WasIstEinBeaconFragment(), "5")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new WasIstEinBeaconFragment(), "5")
                         .commit();
-                restoreActionBar(getString(R.string.WieBscreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.WieBscreen));
                 break;
             case 6:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new EinstellungenFragment(), "6")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new EinstellungenFragment(), "6")
                         .commit();
-                restoreActionBar(getString(R.string.Einstellungsscreen));
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Einstellungsscreen));
                 break;
         }
     }
@@ -272,7 +275,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onBackPressed() {
         if(mNavigationDrawerFragment.isVisible()){
-            DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.drawer_layout);
             mDrawerLayout.closeDrawers();
         }else if(pos == 0){
             finish();
@@ -280,15 +283,15 @@ public class MainActivity extends ActionBarActivity
             Fragment fragment = new BeaconFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment, "3");
-            restoreActionBar(getString(R.string.Beaconsuchescreen));
+            fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, fragment, "3");
+            restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Beaconsuchescreen));
             fragmentTransaction.commit();
         }else{
             Fragment fragment = new EventFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment, "0");
-            restoreActionBar(getString(R.string.Versanstaltungsscreen));
+            fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, fragment, "0");
+            restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
             fragmentTransaction.commit();
         }
     }
@@ -341,16 +344,32 @@ public class MainActivity extends ActionBarActivity
         this.backgroundScanning = backgroundScanning;
     }
 
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public String getInstitut() {
+        return institut;
+    }
+
+    public void setInstitut(String institut) {
+        this.institut = institut;
+    }
+
     @Override
     public void processFinish(JSONObject output) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         try {
             addEvents(output.getJSONArray(EVENTS));
-            if(fragmentManager.findFragmentById(R.id.container).getTag().equals("0")){
+            if(fragmentManager.findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.container).getTag().equals("0")){
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new EventFragment(), "0");
-                restoreActionBar(getString(R.string.Versanstaltungsscreen));
+                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new EventFragment(), "0");
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
                 fragmentTransaction.commit();
             }
         } catch (JSONException e) {
@@ -358,10 +377,10 @@ public class MainActivity extends ActionBarActivity
         }
         try {
             addPOIs(output.getJSONArray(POIS));
-            if(fragmentManager.findFragmentById(R.id.container).getTag().equals("1")){
+            if(fragmentManager.findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.container).getTag().equals("1")){
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new KarteFragment(), "1");
-                restoreActionBar(getString(R.string.Kartenscreen));
+                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new KarteFragment(), "1");
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen));
                 fragmentTransaction.commit();
             }
         } catch (JSONException e) {
@@ -385,6 +404,11 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onPause() {
         super.onPause();
+        SharedPreferences.Editor editor = getSharedPreferences("settings",MODE_PRIVATE).edit();
+        editor.putString("institut", institut);
+        editor.putString("course", course);
+        editor.putBoolean("scanning", backgroundScanning);
+        editor.commit();
         if(backgroundScanning && btAdapter != null && bleScanner != null){
             startService(intent);
         }
@@ -393,7 +417,11 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(intent != null){
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        institut = prefs.getString("institut", "Hochschule");
+        course = prefs.getString("course", "Medieninformatik");
+        backgroundScanning = prefs.getBoolean("scanning", false);
+        if(intent != null && btAdapter != null && btAdapter.isEnabled()){
             stopService(intent);
         }
     }

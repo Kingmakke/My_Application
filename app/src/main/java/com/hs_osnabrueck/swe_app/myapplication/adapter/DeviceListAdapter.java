@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
 import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
-import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import java.util.List;
 

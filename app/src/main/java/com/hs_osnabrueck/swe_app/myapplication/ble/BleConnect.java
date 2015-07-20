@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.estimote.sdk.cloud.model.BeaconInfo;
 import com.estimote.sdk.connection.BeaconConnection;
 import com.estimote.sdk.exception.EstimoteDeviceException;
-import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
-import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.Point3D;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.Sensor;
@@ -22,6 +20,8 @@ import com.hs_osnabrueck.swe_app.myapplication.sensors.TiAccelerometerSensor;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.TiHumiditySensor;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.TiIRTemperatureSensor;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.TiPressureSensor;
+import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
+import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

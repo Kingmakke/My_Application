@@ -20,7 +20,7 @@ public class WasIstEinBeaconFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_was_ist_ein_beacon, container, false);
+        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_was_ist_ein_beacon, container, false);
         main.setPos(5);
 
         return rootView;

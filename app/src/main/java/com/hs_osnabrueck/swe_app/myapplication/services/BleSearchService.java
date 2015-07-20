@@ -10,12 +10,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
-import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
-import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.interfaces.BleSearchResponse;
+import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
+import com.hs_osnabrueck.swe_app.myapplication.R;
 
-public class BleSearchService extends Service implements BleSearchResponse{
+public class BleSearchService extends Service implements BleSearchResponse {
 
     private BleScanner scanner;
     private BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();

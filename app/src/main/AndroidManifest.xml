@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hs_osnabrueck.swe_app.myapplication" >
+    package="com.hs_osnabrueck.swe_app.myapplication">
 
     <uses-sdk
         android:minSdkVersion="18"
@@ -51,7 +51,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".StartActivity"
+            android:name="com.hs_osnabrueck.swe_app.myapplication.StartActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FirstActivity"
+            android:name="com.hs_osnabrueck.swe_app.myapplication.FirstActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.hs_osnabrueck.swe_app.myapplication.FIRSTACTIVITY" />
@@ -68,7 +68,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.hs_osnabrueck.swe_app.myapplication.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.hs_osnabrueck.swe_app.myapplication.MAINACTIVITY" />
@@ -77,7 +77,7 @@
         </activity>
 
         <service
-            android:name=".services.BleSearchService"
+            android:name="com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService"
             android:enabled="true"
             android:exported="true" >
         </service>

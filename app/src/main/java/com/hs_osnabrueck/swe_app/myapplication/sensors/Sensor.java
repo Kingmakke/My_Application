@@ -58,21 +58,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import java.util.UUID;
 
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_ACC_CONF;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_ACC_DATA;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_ACC_SERV;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_HUM_CONF;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_HUM_DATA;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_HUM_SERV;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_IRT_CONF;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_IRT_DATA;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_IRT_SERV;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_MAG_CONF;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_MAG_DATA;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_MAG_SERV;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_OPT_CONF;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_OPT_DATA;
-import static com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt.UUID_OPT_SERV;
 import static java.lang.Math.pow;
 
 
@@ -81,7 +66,7 @@ import static java.lang.Math.pow;
  * characteristic-containing-measurement.
  */
 public enum Sensor {
-  IR_TEMPERATURE(UUID_IRT_SERV, UUID_IRT_DATA, UUID_IRT_CONF) {
+  IR_TEMPERATURE(SensorTagGatt.UUID_IRT_SERV, SensorTagGatt.UUID_IRT_DATA, SensorTagGatt.UUID_IRT_CONF) {
     @Override
     public Point3D convert(final byte [] value) {
 
@@ -126,7 +111,7 @@ public enum Sensor {
     }
   },
 
-  ACCELEROMETER(UUID_ACC_SERV, UUID_ACC_DATA, UUID_ACC_CONF,(byte)3) {
+  ACCELEROMETER(SensorTagGatt.UUID_ACC_SERV, SensorTagGatt.UUID_ACC_DATA, SensorTagGatt.UUID_ACC_CONF,(byte)3) {
   	@Override
   	public Point3D convert(final byte[] value) {
   		/*
@@ -150,7 +135,7 @@ public enum Sensor {
   	}
   },
 
-  HUMIDITY(UUID_HUM_SERV, UUID_HUM_DATA, UUID_HUM_CONF) {
+  HUMIDITY(SensorTagGatt.UUID_HUM_SERV, SensorTagGatt.UUID_HUM_DATA, SensorTagGatt.UUID_HUM_CONF) {
     @Override
     public Point3D convert(final byte[] value) {
       int a = shortUnsignedAtOffset(value, 2);
@@ -163,7 +148,7 @@ public enum Sensor {
     }
   },
 
-  MAGNETOMETER(UUID_MAG_SERV, UUID_MAG_DATA, UUID_MAG_CONF) {
+  MAGNETOMETER(SensorTagGatt.UUID_MAG_SERV, SensorTagGatt.UUID_MAG_DATA, SensorTagGatt.UUID_MAG_CONF) {
     @Override
     public Point3D convert(final byte [] value) {
       Point3D mcal = MagnetometerCalibrationCoefficients.INSTANCE.val;
@@ -176,7 +161,7 @@ public enum Sensor {
     }
   },
 
-  LUXOMETER(UUID_OPT_SERV, UUID_OPT_DATA, UUID_OPT_CONF) {
+  LUXOMETER(SensorTagGatt.UUID_OPT_SERV, SensorTagGatt.UUID_OPT_DATA, SensorTagGatt.UUID_OPT_CONF) {
     @Override
     public Point3D convert(final byte [] value) {
       int mantissa;

@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.NavItem;
+import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import java.util.ArrayList;
 

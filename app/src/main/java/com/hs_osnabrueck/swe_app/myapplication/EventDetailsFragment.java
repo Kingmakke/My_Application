@@ -25,7 +25,7 @@ public class EventDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_event_details, container, false);
+        rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_event_details, container, false);
 
         setHasOptionsMenu(true);
 
@@ -34,16 +34,16 @@ public class EventDetailsFragment extends Fragment {
         main.setPos(8);
         main.setPos_old(bundle.getInt("pos"));
 
-        title = (TextView)rootView.findViewById(R.id.event_details_title);
+        title = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_title);
         title.setText(bundle.getString("title"));
 
-        date = (TextView)rootView.findViewById(R.id.event_details_date);
+        date = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_date);
         date.setText(bundle.getString("date"));
 
-        location = (TextView)rootView.findViewById(R.id.event_details_location);
+        location = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_location);
         location.setText(bundle.getString("location"));
 
-        description = (TextView)rootView.findViewById(R.id.event_details_description);
+        description = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_description);
         description.setText(bundle.getString("description"));
 
         return rootView;
@@ -58,13 +58,13 @@ public class EventDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.event, menu);
+        inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.event, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_event_navigate:
+            case com.hs_osnabrueck.swe_app.myapplication.R.id.menu_event_navigate:
                 /*
                 double latitude = 0;
                 double longitude = 0;

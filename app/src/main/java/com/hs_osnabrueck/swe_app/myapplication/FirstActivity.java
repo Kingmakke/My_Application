@@ -2,6 +2,7 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class FirstActivity extends Activity {
@@ -23,11 +25,11 @@ public class FirstActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_first);
+        setContentView(com.hs_osnabrueck.swe_app.myapplication.R.layout.activity_first);
 
-        course = (Spinner) findViewById(R.id.firstscreen_course);
+        course = (Spinner) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.firstscreen_course);
 
-        institut = (Spinner) findViewById(R.id.firstscreen_institut);
+        institut = (Spinner) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.firstscreen_institut);
 
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -36,28 +38,20 @@ public class FirstActivity extends Activity {
                 switch (position) {
                     case 0:
                         courseList.clear();
-                        array = getResources().getStringArray(R.array.courseliste_hochschule_array);
-                        for (int i = 0; i < array.length; i++) {
-                            courseList.add(array[i]);
-                        }
+                        //array = getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_hochschule_array);
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_hochschule_array));
                         course.setVisibility(View.VISIBLE);
                         break;
 
                     case 1:
                         courseList.clear();
-                        array = getResources().getStringArray(R.array.courseliste_uni_array);
-                        for (int i = 0; i < array.length; i++) {
-                            courseList.add(array[i]);
-                        }
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_uni_array));
                         course.setVisibility(View.VISIBLE);
                         break;
 
                     case 2:
                         courseList.clear();
-                        array = getResources().getStringArray(R.array.courseliste_studieninteressierte_array);
-                        for (int i = 0; i < array.length; i++) {
-                            courseList.add(array[i]);
-                        }
+                        Collections.addAll(courseList, getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.courseliste_studieninteressierte_array));
                         course.setVisibility(View.INVISIBLE);
                         break;
 
@@ -75,19 +69,18 @@ public class FirstActivity extends Activity {
             }
         });
 
-        start = (Button)findViewById(R.id.first_activity_button);
+        start = (Button)findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.first_activity_button);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /*SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-                editor.putString("insitut", institut.getSelectedItem().toString());
+                SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+                editor.putString("institut", institut.getSelectedItem().toString());
                 editor.putString("course", course.getSelectedItem().toString());
-                editor.apply();
-*/
+                editor.commit();
+
                 Intent intent = new Intent(FirstActivity.this, MainActivity.class);
-                intent.putExtra("institut", institut.getSelectedItem().toString());
-                intent.putExtra("course", course.getSelectedItem().toString());
+                //intent.putExtra("institut", institut.getSelectedItem().toString());
+                //intent.putExtra("course", course.getSelectedItem().toString());
                 startActivity(intent);
                 finish();
             }
