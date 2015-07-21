@@ -67,6 +67,7 @@ public class DeviceListAdapter extends BaseAdapter {
             iv.setImageResource(R.drawable.sensortag);
         }else if(name.contains("estimote")) {
             iv.setImageResource(R.drawable.estimote);
+            bv.setVisibility(View.INVISIBLE);
         }else {
             iv.setImageResource(R.drawable.unknown);
             bv.setVisibility(View.INVISIBLE);

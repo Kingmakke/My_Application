@@ -42,7 +42,7 @@ public class BuildingsFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putDouble("longitude", main.getPoiliste().get(position).getGps_longitude());
                 bundle.putDouble("latitude", main.getPoiliste().get(position).getGps_latitude());
-
+                bundle.putString("name", main.getPoiliste().get(position).getName());
                 Fragment fragment = new KarteFragment();
                 fragment.setArguments(bundle);
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

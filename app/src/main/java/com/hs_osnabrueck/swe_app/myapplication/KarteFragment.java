@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,7 +46,10 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     final private double longitude_uni = 8.044795;
     private double latitude;
     private double longitude;
+    private double latitudeButton;
+    private double longitudeButton;
     private Bundle bundle;
+    private String name = "";
 
     public KarteFragment() {}
 
@@ -55,23 +57,31 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
 
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_karte, container, false);
 
-        SharedPreferences prefs = main.getPreferences(main.MODE_PRIVATE);
-
         bundle = getArguments();
 
+        if(main.getInstitut().equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[0])){
+            latitude = latitude_hs;
+            longitude = longitude_hs;
+            latitudeButton = latitude_hs;
+            longitudeButton = longitude_hs;
+        }else if(main.getInstitut().equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[1])){
+            latitude = latitude_uni;
+            longitude = longitude_uni;
+            latitudeButton = latitude_uni;
+            longitudeButton = longitude_uni;
+        }else{
+            //TODO Ort für Studieninteressierte
+            latitude = latitude_uni;
+            longitude = longitude_uni;
+            latitudeButton = latitude_uni;
+            longitudeButton = longitude_uni;
+        };
         if(bundle != null){
             latitude = bundle.getDouble("latitude");
             longitude = bundle.getDouble("longitude");
-        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[0])){
-            latitude = latitude_hs;
-            longitude = longitude_hs;
-        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(com.hs_osnabrueck.swe_app.myapplication.R.array.intitut_array)[1])){
-            latitude = latitude_uni;
-            longitude = longitude_uni;
-        }else{
-            latitude = latitude_uni;
-            longitude = longitude_uni;
-        };
+            name = bundle.getString("name", "AA");
+        }
+
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
@@ -120,7 +130,12 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
             }else {
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(com.hs_osnabrueck.swe_app.myapplication.R.drawable.marker2));
             }
-            googleMap.addMarker(markerOptions);
+            if(name.equals(main.getPoiliste().elementAt(i).getName())){
+                Marker marker = googleMap.addMarker(markerOptions);
+                marker.showInfoWindow();
+            }else{
+                googleMap.addMarker(markerOptions);
+            }
         }
         googleMap.setMyLocationEnabled(true);
         googleMap.setIndoorEnabled(true);
@@ -232,7 +247,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         // handle item selection
         switch (item.getItemId()) {
             case com.hs_osnabrueck.swe_app.myapplication.R.id.menu_karte_campus:
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(17).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitudeButton, longitudeButton)).zoom(17).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 return false;
             default:

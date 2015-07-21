@@ -31,17 +31,17 @@ public class EventFragment extends Fragment {
         final List<Integer> eventitems = new ArrayList<>();
         final List<Integer> dateitems = new ArrayList<>();
 
-        for(int i = 0; i < main.getEventliste().size(); i++){
-            if(!listAdapter.isEmpty()){
-                if(listAdapter.getItem(dateitems.get(dateitems.size() - 1)).compareTo(main.getEventliste().elementAt(i).getDate()) != 0){
-                    listAdapter.addDate(main.getEventliste().elementAt(i).getDate());
-                }
-            }else{
-                listAdapter.addDate(main.getEventliste().elementAt(i).getDate());
-                dateitems.add(0);
+        for(int i = 0; i < main.getEventliste().size(); i++) {
+            //if(!listAdapter.isEmpty()){
+            int size = dateitems.size();
+            if(i == 0 || !main.getEventliste().elementAt(i-1).getDate().equals(main.getEventliste().elementAt(i).getDate())){
+                Log.e("debug", String.valueOf(size));
+                listAdapter.addDate(main.getEventliste().elementAt(i).getDate(), size * 5);
+                dateitems.add(listAdapter.getCount() - 1);
             }
+
             listAdapter.addVeranstaltung(main.getEventliste().elementAt(i).getTitle(),
-                    main.getEventliste().elementAt(i).getDescription());
+                    main.getEventliste().elementAt(i).getDescription(), size * 5);
             eventitems.add(listAdapter.getCount() - 1);
         }
         ListView veranstaltungsListView = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.veranstaltungsscreen_veranstaltungsliste);
@@ -54,7 +54,7 @@ public class EventFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("title", main.getEventliste().elementAt(eventitems.indexOf(pos)).getTitle());
                     bundle.putString("date", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDate());
-                    bundle.putString("location",main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
+                    bundle.putString("location", main.getEventliste().elementAt(eventitems.indexOf(pos)).getDescription());
                     //bundle.putString("description", main.getEventliste().elementAt(eventitems.indexOf(pos)).getContent());
                     bundle.putInt("pos", 2);
                     Fragment fragment = new EventDetailsFragment();

@@ -6,6 +6,6 @@
     android:id="@+id/veranstaltungsscreen_veranstaltungsliste"
     android:choiceMode="singleChoice"
     android:divider="@color/grey_darkest"
-    android:dividerHeight="1px"
+    android:dividerHeight="0px"
     android:background="@color/weiß">
 </ListView>

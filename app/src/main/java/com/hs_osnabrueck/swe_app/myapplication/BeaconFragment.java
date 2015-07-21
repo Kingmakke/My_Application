@@ -37,8 +37,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
 
     public void init(){
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_home, container, false);
-        //TODO  zum Testen auf dem Emulator auskommentieren
-        //-----von-----
+
         final int bleStatus = BleUtils.getBleStatus(getActivity().getBaseContext());
         Intent enableIntent;
         switch (bleStatus) {
@@ -49,37 +48,10 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
                 enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableIntent,REQUEST_ENABLE_BT);
         }
-        //-----bis-----
 
         deviceList = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.homescreen_device_list);
 
         noDevice = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.homescreen_no_beacon);
-/*
-        scan = (Button)rootView.findViewById(R.id.homescreen_scan_button);
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (scan.getText().toString().compareTo("Scan") == 0) {
-                    scan.setText("Stop");
-                    if (btAdapter != null && !btAdapter.isEnabled()) {
-                        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(enableIntent, REQUEST_ENABLE_BT_SCAN);
-                    } else {
-                        findBeacon();
-                    }
-                } else if (scan.getText().toString().compareTo("Stop") == 0) {
-                    scan.setText("Scan");
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-                        //noinspection deprecation
-                        btAdapter.stopLeScan(scanner.getLeScanCallback());
-                    }else{
-                        btAdapter.getBluetoothLeScanner().stopScan(scanner.getScanCallback());
-                    }
-                }
-
-
-            }
-        });*/
     }
 
     @Override
