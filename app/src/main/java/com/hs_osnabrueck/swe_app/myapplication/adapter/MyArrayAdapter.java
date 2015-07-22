@@ -14,6 +14,9 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class MyArrayAdapter extends ArrayAdapter<String> {
 
     private final int TYPE_VERANSTALTUNG = 0;
@@ -27,11 +30,21 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     private ArrayList<Float> translation = new ArrayList<>();
     final List<Integer> datePos = new ArrayList<>();
 
+    /**
+     *
+     * @param context
+     * @param resource
+     */
     public MyArrayAdapter(Context context, int resource) {
         super(context, resource);
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     *
+     * @param item
+     * @param translation
+     */
     public void addDate(String item, float translation){
         this.translation.add(translation);
         Log.e("debug", String.valueOf(translation));
@@ -40,22 +53,42 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
         notifyDataSetChanged();
     }
 
+    /**
+     *
+     * @param item1
+     * @param item2
+     * @param translation
+     */
     public void addVeranstaltung(String item1, String item2, float translation){
         this.translation.add(translation);
         mData.add(new DoubleString(item1, item2));
         notifyDataSetChanged();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getCount() {
         return mData.size();
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public String getItem(int position) {
         return mData.get(position).getFirst() + mData.get(position).getSecond();
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         if(datePos.contains(position)){
@@ -65,12 +98,22 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getViewTypeCount(){
         return 2;
     }
 
-
+    /**
+     *
+     * @param pos
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int pos, View convertView, ViewGroup parent){
         Log.e("debug3", String.valueOf(pos));
@@ -105,6 +148,9 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
+    /**
+     *
+     */
     private static class DoubleString{
 
         public String first, second;
@@ -114,18 +160,34 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
             this.second = second;
         }
 
+        /**
+         *
+         * @return
+         */
         public String getFirst() {
             return first;
         }
 
+        /**
+         *
+         * @param first
+         */
         public void setFirst(String first) {
             this.first = first;
         }
 
+        /**
+         *
+         * @return
+         */
         public String getSecond() {
             return second;
         }
 
+        /**
+         *
+         * @param second
+         */
         public void setSecond(String second) {
             this.second = second;
         }

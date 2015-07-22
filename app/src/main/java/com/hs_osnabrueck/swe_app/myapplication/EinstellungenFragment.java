@@ -19,6 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ *
+ */
 public class EinstellungenFragment extends Fragment {
 
     private final static int REQUEST_ENABLE_BT_SCAN = 1;
@@ -33,6 +36,9 @@ public class EinstellungenFragment extends Fragment {
 
     public EinstellungenFragment() {}
 
+    /**
+     *
+     */
     public void init() {
 
         try {
@@ -175,6 +181,13 @@ public class EinstellungenFragment extends Fragment {
         ver.setText("v" + version);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -188,12 +201,18 @@ public class EinstellungenFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     *
+     */
     @Override
     public void onStart() {
         super.onStart();
         init();
     }
 
+    /**
+     *
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -201,12 +220,22 @@ public class EinstellungenFragment extends Fragment {
         main.setCourse(course.getSelectedItem().toString());
     }
 
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
         main = (MainActivity)activity;
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

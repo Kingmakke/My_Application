@@ -3,7 +3,6 @@ package com.hs_osnabrueck.swe_app.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,9 @@ import android.widget.TextView;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
 
+/**
+ *
+ */
 public class BeaconinfoFragment extends Fragment {
 
     private View rootView;
@@ -29,6 +31,13 @@ public class BeaconinfoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,26 +69,39 @@ public class BeaconinfoFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
         main = (MainActivity)activity;
     }
 
+    /**
+     *
+     */
     @Override
     public void onPause(){
         super.onPause();
-        Log.e("debug", "pause");
         bleConnect.bleDisconnect(main.getBeacon());
     }
 
+    /**
+     *
+     */
     @Override
     public void onStop(){
         super.onStop();
-        Log.e("debug", "stop");
         bleConnect.bleDisconnect(main.getBeacon());
     }
 
+    /**
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

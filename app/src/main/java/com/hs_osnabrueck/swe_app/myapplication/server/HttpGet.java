@@ -20,6 +20,9 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class HttpGet extends AsyncTask<String, Void, JSONObject> {
 
     static private final int CONNECTION_TIMEOUT = 10000;
@@ -33,6 +36,9 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
         this.context = context;
     }
 
+    /**
+     *
+     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -40,13 +46,22 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
         dialog.setCancelable(false);
         dialog.show();
     }
+
+    /**
+     *
+     * @param urls
+     * @return
+     */
     @Override
     protected JSONObject doInBackground(String... urls) {
 
         return requestServer(urls[0]);
     }
 
-    // onPostExecute displays the results of the AsyncTask.
+    /**
+     * onPostExecute displays the results of the AsyncTask.
+     * @param result
+     */
     @Override
     protected void onPostExecute(JSONObject result) {
         dialog.dismiss();
@@ -58,11 +73,20 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
 
     }
 
+    /**
+     *
+     * @param inStream
+     * @return
+     */
     private static String getResponseText(InputStream inStream) {
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 
-
+    /**
+     *
+     * @param url
+     * @return
+     */
     public JSONObject requestServer(String url){
 
         HttpURLConnection urlConnection = null;
@@ -112,14 +136,13 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
                 urlConnection.disconnect();
             }
         }
-
         return null;
-
     }
 
+    /**
+     *
+     */
     public void dialog(){
-
-
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
             // set title
@@ -141,7 +164,4 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
             // show it
             alertDialog.show();
         }
-
-
 }
-

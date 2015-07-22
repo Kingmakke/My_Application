@@ -19,6 +19,9 @@ import com.hs_osnabrueck.swe_app.myapplication.adapter.DeviceListAdapter;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
+/**
+ *
+ */
 public class BeaconFragment extends Fragment implements BleSearchResponse {
 
     private final static int REQUEST_ENABLE_BT = 1;
@@ -35,6 +38,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
 
     public BeaconFragment() {}
 
+    /**
+     *
+     */
     public void init(){
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_home, container, false);
 
@@ -54,6 +60,13 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         noDevice = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.homescreen_no_beacon);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -67,6 +80,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         return rootView;
     }
 
+    /**
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -78,6 +94,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         }
     }
 
+    /**
+     *
+     */
     @SuppressLint("NewApi")
     @Override
     public void onStop() {
@@ -92,6 +111,12 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         }
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -107,6 +132,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         }
     }
 
+    /**
+     *
+     */
     public void findBeacon(){
         main.getBleScanner().bleSearchResponse = this;
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
@@ -117,12 +145,21 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         }
     }
 
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
         main = (MainActivity)activity;
     }
 
+    /**
+     *
+     * @param device
+     * @param rssi
+     */
     @Override
     public void beaconFound(BluetoothDevice device, int rssi) {
         Boolean update = false;

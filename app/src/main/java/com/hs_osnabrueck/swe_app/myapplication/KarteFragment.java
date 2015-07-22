@@ -26,6 +26,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hs_osnabrueck.swe_app.myapplication.adapter.MyInfoWindowAdapter;
 
+/**
+ *
+ */
 public class KarteFragment extends Fragment{//} implements LocationListener{
 
     private final int REQUEST_ENABLE_GPS = 0;
@@ -53,6 +56,9 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
 
     public KarteFragment() {}
 
+    /**
+     *
+     */
     public void initMap(){
 
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_karte, container, false);
@@ -70,7 +76,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
             latitudeButton = latitude_uni;
             longitudeButton = longitude_uni;
         }else{
-            //TODO Ort für Studieninteressierte
+            //TODO Ort fï¿½r Studieninteressierte
             latitude = latitude_uni;
             longitude = longitude_uni;
             latitudeButton = latitude_uni;
@@ -152,6 +158,11 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         });
         */
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            /**
+             *
+             * @param marker
+             * @return
+             */
             @Override
             public boolean onMarkerClick(Marker marker) {
 
@@ -162,6 +173,10 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         });
 
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            /**
+             *
+             * @param marker
+             */
             @Override
             public void onInfoWindowClick(Marker marker) {
 
@@ -173,7 +188,13 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
 
     }
 
-
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -192,30 +213,48 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         return rootView;
     }
 
+    /**
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
     }
 
+    /**
+     *
+     */
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
     }
 
+    /**
+     *
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
     }
 
+    /**
+     *
+     */
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -224,6 +263,9 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void onDetach() {
         super.onDetach();

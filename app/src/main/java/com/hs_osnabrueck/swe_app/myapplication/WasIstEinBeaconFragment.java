@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ *
+ */
 public class WasIstEinBeaconFragment extends Fragment {
 
     private View rootView;
@@ -16,6 +19,13 @@ public class WasIstEinBeaconFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,6 +35,11 @@ public class WasIstEinBeaconFragment extends Fragment {
 
         return rootView;
     }
+
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);

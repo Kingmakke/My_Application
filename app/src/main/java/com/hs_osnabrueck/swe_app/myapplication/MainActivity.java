@@ -28,6 +28,9 @@ import org.json.JSONObject;
 
 import java.util.Vector;
 
+/**
+ *
+ */
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, AsyncResponse {
 
@@ -72,6 +75,10 @@ public class MainActivity extends ActionBarActivity
     private BleScanner bleScanner;
     private Beacon beacon;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +115,10 @@ public class MainActivity extends ActionBarActivity
         chooseFragment(getIntent().getIntExtra("pos", 0));
     }
 
-
+    /**
+     *
+     * @param position
+     */
     public void chooseFragment(int position){FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
@@ -156,12 +166,20 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    /**
+     *
+     * @param position
+     */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         chooseFragment(position);
 
     }
 
+    /**
+     *
+     * @param mTitle
+     */
     public void restoreActionBar(String mTitle) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -169,38 +187,74 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector<Beacon> getBeacons() {
         return beacons;
     }
 
+    /**
+     *
+     * @param beacon
+     */
     public void addBeacon(Beacon beacon) {
         beacons.addElement(beacon);
     }
 
+    /**
+     *
+     * @param beacons
+     */
     public void setBeacons(Vector<Beacon> beacons) {
         this.beacons = beacons;
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector<Event> getEventliste() {
         return eventliste;
     }
 
+    /**
+     *
+     * @param veranstaltung
+     */
     public void addEvent(Event veranstaltung) {
         eventliste.addElement(veranstaltung);
     }
 
+    /**
+     *
+     * @param veranstaltungsliste
+     */
     public void setEventliste(Vector<Event> veranstaltungsliste) {
         this.eventliste = veranstaltungsliste;
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector<POI> getPoiliste() {
         return poiliste;
     }
 
+    /**
+     *
+     * @param poiliste
+     */
     public void setPoiliste(Vector<POI> poiliste) {
         this.poiliste = poiliste;
     }
 
+    /**
+     *
+     * @param jsonArray
+     */
     public void addPOIs(JSONArray jsonArray){
         poiliste.removeAllElements();
         try {
@@ -225,6 +279,10 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    /**
+     *
+     * @param jsonArray
+     */
     public void addEvents(JSONArray jsonArray){
         eventliste.removeAllElements();
         try {
@@ -272,6 +330,10 @@ public class MainActivity extends ActionBarActivity
 
     }
 */
+
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         if(mNavigationDrawerFragment.isVisible()){
@@ -296,70 +358,142 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPos() {
         return pos;
     }
 
+    /**
+     *
+     * @param pos
+     */
     public void setPos(int pos) {
         this.pos = pos;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPos_old() {return pos_old;}
 
+    /**
+     *
+     * @param pos_old
+     */
     public void setPos_old(int pos_old) {this.pos_old = pos_old;}
 
+    /**
+     *
+     * @return
+     */
     public BluetoothAdapter getBtAdapter() {
         return btAdapter;
     }
 
+    /**
+     *
+     * @return
+     */
     public BleScanner getBleScanner() {
         return bleScanner;
     }
 
+    /**
+     *
+     * @param bleScanner
+     */
     public void setBleScanner(BleScanner bleScanner) {
         this.bleScanner = bleScanner;
     }
 
+    /**
+     *
+     * @return
+     */
     public Beacon getBeacon() {
         return beacon;
     }
 
+    /**
+     *
+     * @param beacon
+     */
     public void setBeacon(Beacon beacon) {
         this.beacon = beacon;
     }
 
+    /**
+     *
+     * @return
+     */
     public Intent getMyIntent() {
         return intent;
     }
 
+    /**
+     *
+     * @param intent
+     */
     public void setMyIntent(Intent intent) {
         this.intent = intent;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isBackgroundScanning() {
         return backgroundScanning;
     }
 
+    /**
+     *
+     * @param backgroundScanning
+     */
     public void setBackgroundScanning(boolean backgroundScanning) {
         this.backgroundScanning = backgroundScanning;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCourse() {
         return course;
     }
 
+    /**
+     *
+     * @param course
+     */
     public void setCourse(String course) {
         this.course = course;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getInstitut() {
         return institut;
     }
 
+    /**
+     *
+     * @param institut
+     */
     public void setInstitut(String institut) {
         this.institut = institut;
     }
 
+    /**
+     *
+     * @param output
+     */
     @Override
     public void processFinish(JSONObject output) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -401,6 +535,9 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    /**
+     *
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -414,6 +551,9 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    /**
+     *
+     */
     @Override
     protected void onResume() {
         super.onResume();

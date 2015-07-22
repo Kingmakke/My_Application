@@ -9,19 +9,36 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.hs_osnabrueck.swe_app.myapplication.R;
 
+/**
+ *
+ */
 public class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
 
     private LayoutInflater inflater;
 
+    /**
+     *
+     * @param inflater
+     */
     public MyInfoWindowAdapter(LayoutInflater inflater){
         this.inflater = inflater;
     }
 
+    /**
+     *
+     * @param marker
+     * @return
+     */
     @Override
     public View getInfoWindow(Marker marker) {
         return null;
     }
 
+    /**
+     *
+     * @param marker
+     * @return
+     */
     @Override
     public View getInfoContents(final Marker marker) {
         View view = inflater.inflate(R.layout.info_window_layout, null);

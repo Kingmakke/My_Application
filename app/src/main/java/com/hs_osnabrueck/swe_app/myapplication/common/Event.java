@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
+/**
+ *
+ */
 public class Event {
 
     private String date;
@@ -15,7 +17,14 @@ public class Event {
     private String description;
     private String category;
 
-
+    /**
+     *
+     * @param category
+     * @param date
+     * @param description
+     * @param link
+     * @param title
+     */
     public Event(String category, String date, String description, String link, String title) {
         this.category = category;
         DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -31,35 +40,75 @@ public class Event {
         this.title = title;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     *
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     *
+     * @param category
+     */
     public void setCategory(String category) {
         this.category = category;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLink() {return link;}
 
+    /**
+     *
+     * @param link
+     */
     public void setLink(String link) {this.link = link;}
 
+    /**
+     *
+     * @return
+     */
     public String getTitle() {return title;}
 
+    /**
+     *
+     * @param title
+     */
     public void setTitle(String title) {this.title = title;}
 }

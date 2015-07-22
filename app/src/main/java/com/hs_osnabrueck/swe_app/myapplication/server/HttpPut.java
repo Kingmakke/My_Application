@@ -17,6 +17,9 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class HttpPut extends AsyncTask<String, Void, JSONObject> {
 
     static private final int CONNECTION_TIMEOUT = 10000;
@@ -30,29 +33,52 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
         this.context = context;
     }
 
+    /**
+     *
+     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         dialog = new ProgressDialog(context,ProgressDialog.STYLE_SPINNER);
         dialog.show();
     }
+
+    /**
+     *
+     * @param urls
+     * @return
+     */
     @Override
     protected JSONObject doInBackground(String... urls) {
         return requestServer(urls[0], urls[1], urls[2]);
     }
 
-    // onPostExecute displays the results of the AsyncTask.
+    /**
+     * onPostExecute displays the results of the AsyncTask.
+     * @param result
+     */
     @Override
     protected void onPostExecute(JSONObject result) {
         dialog.dismiss();
         asyncResponse.processFinish(result);
     }
 
+    /**
+     *
+     * @param inStream
+     * @return
+     */
     private static String getResponseText(InputStream inStream) {
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 
-
+    /**
+     *
+     * @param url
+     * @param beaconID
+     * @param humidity
+     * @return
+     */
     public JSONObject requestServer(String url, String beaconID, String humidity){
 
         HttpURLConnection urlConnection = null;
@@ -93,10 +119,7 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
                 urlConnection.disconnect();
             }
         }
-
         return null;
-
     }
-
 }
 

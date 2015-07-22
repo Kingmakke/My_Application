@@ -5,6 +5,9 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
+/**
+ * This is a utility class for BLE
+ */
 public class BleUtils {
 
     public static final int STATUS_BLE_ENABLED = 0;
@@ -12,9 +15,13 @@ public class BleUtils {
     public static final int STATUS_BLE_NOT_AVAILABLE = 2;
     public static final int STATUS_BLUETOOTH_DISABLED = 3;
 
+    /**
+     * Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
+     * BluetoothAdapter through BluetoothManager.
+     * @param context
+     * @return reference to BluetoothAdapter
+     */
     public static BluetoothAdapter getBluetoothAdapter(Context context) {
-        // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
-        // BluetoothAdapter through BluetoothManager.
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         if (bluetoothManager == null)
@@ -22,9 +29,13 @@ public class BleUtils {
         return bluetoothManager.getAdapter();
     }
 
+    /**
+     * Check to determine whether BLE is supported on the device. Then you can
+     * selectively disable BLE-related features.
+     * @param context
+     * @return status, whether BLE is enabled or disabled or not supported
+     */
     public static int getBleStatus(Context context) {
-        // Use this check to determine whether BLE is supported on the device.  Then you can
-        // selectively disable BLE-related features.
         if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             return STATUS_BLE_NOT_AVAILABLE;
         }

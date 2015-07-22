@@ -15,6 +15,9 @@ import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 
+/**
+ *
+ */
 public class PalmenFragment extends Fragment {
 
     private final static int REQUEST_ENABLE_BT = 1;
@@ -34,6 +37,9 @@ public class PalmenFragment extends Fragment {
 
     public PalmenFragment() {}
 
+    /**
+     *
+     */
     public void init(){
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_einkaufswagen, container, false);
 
@@ -48,7 +54,13 @@ public class PalmenFragment extends Fragment {
         });
     }
 
-
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,6 +75,10 @@ public class PalmenFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);

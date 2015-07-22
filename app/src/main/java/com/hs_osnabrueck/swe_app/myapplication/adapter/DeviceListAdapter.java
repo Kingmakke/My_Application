@@ -19,29 +19,58 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class DeviceListAdapter extends BaseAdapter {
     private List<Beacon> devices;
     private LayoutInflater inflater;
     private MainActivity main;
 
+    /**
+     *
+     * @param devices
+     * @param main
+     */
     public DeviceListAdapter(List<Beacon> devices, MainActivity main) {
         this.inflater = LayoutInflater.from(main.getBaseContext());
         this.devices = devices;
         this.main = main;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCount() {
         return devices.size();
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     public Object getItem(int position) {
         return devices.get(position);
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewGroup vg;
 

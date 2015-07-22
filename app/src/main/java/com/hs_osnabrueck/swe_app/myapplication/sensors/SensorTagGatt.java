@@ -58,6 +58,9 @@ import java.util.UUID;
 
 import static java.util.UUID.fromString;
 
+/**
+ *
+ */
 public class SensorTagGatt {
 
   public final static UUID

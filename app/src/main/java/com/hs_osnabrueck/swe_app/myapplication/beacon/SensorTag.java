@@ -2,6 +2,9 @@ package com.hs_osnabrueck.swe_app.myapplication.beacon;
 
 import java.util.UUID;
 
+/**
+ * Define how a SensorTag object looks like
+ */
 public class SensorTag {
 
     private UUID uuid;
@@ -11,6 +14,15 @@ public class SensorTag {
     private String humidity;
     private String barometer;
 
+    /**
+     * Constructor for the SensorTag object
+     * @param accelerometer
+     * @param barometer
+     * @param humidity
+     * @param irTemperature
+     * @param temperature
+     * @param uuid
+     */
     public SensorTag(String accelerometer, String barometer, String humidity, String irTemperature, String temperature, UUID uuid) {
         this.accelerometer = accelerometer;
         this.barometer = barometer;

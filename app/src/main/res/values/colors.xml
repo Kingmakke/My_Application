@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="normal">#33B5E5</color>
+    <color name="normal_alt">#33B5E5</color>
+    <color name="normal">#003772</color>
+    <color name="normal_uni">#ac0536</color>
     <color name="schwarz">#222222</color>
     <color name="weiß">#FFFFFF</color>
     <color name="grey_darkest">#6e6e6e</color>

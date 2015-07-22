@@ -14,13 +14,19 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+/**
+ *
+ */
 public class FirstActivity extends Activity {
 
     private Button start;
     private Spinner institut, course;
     private ArrayList<String> courseList = new ArrayList<>();
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,13 @@ public class FirstActivity extends Activity {
         institut = (Spinner) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.firstscreen_institut);
 
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] array;
@@ -63,6 +76,10 @@ public class FirstActivity extends Activity {
                 course.setAdapter(dataAdapter);
             }
 
+            /**
+             *
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -71,6 +88,10 @@ public class FirstActivity extends Activity {
 
         start = (Button)findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.first_activity_button);
         start.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();

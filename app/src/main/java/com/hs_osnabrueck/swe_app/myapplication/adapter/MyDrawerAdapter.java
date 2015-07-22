@@ -13,31 +13,60 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class MyDrawerAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<NavItem> mNavItems;
 
+    /**
+     *
+     * @param context
+     * @param navItems
+     */
     public MyDrawerAdapter(Context context, ArrayList<NavItem> navItems) {
         mContext = context;
         mNavItems = navItems;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getCount() {
         return mNavItems.size();
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public Object getItem(int position) {
         return mNavItems.get(position);
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
+    /**
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;

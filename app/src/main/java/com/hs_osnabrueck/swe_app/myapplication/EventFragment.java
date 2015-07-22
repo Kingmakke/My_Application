@@ -15,6 +15,9 @@ import com.hs_osnabrueck.swe_app.myapplication.adapter.MyArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class EventFragment extends Fragment {
 
     private View rootView;
@@ -24,6 +27,9 @@ public class EventFragment extends Fragment {
 
     public EventFragment() {}
 
+    /**
+     *
+     */
     public void initEvent(){
         rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_veranstaltungen, container, false);
 
@@ -71,12 +77,23 @@ public class EventFragment extends Fragment {
         });
     }
 
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
         main = (MainActivity)activity;
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

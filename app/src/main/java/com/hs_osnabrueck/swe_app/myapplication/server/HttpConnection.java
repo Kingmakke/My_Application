@@ -18,6 +18,9 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class HttpConnection extends AsyncTask<String, Void, JSONObject> {
 
     static private final int CONNECTION_TIMEOUT = 10000;
@@ -32,12 +35,21 @@ public class HttpConnection extends AsyncTask<String, Void, JSONObject> {
         this.context = context;
     }
 
+    /**
+     *
+     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         dialog = new ProgressDialog(context,ProgressDialog.STYLE_SPINNER);
         dialog.show();
     }
+
+    /**
+     *
+     * @param urls
+     * @return
+     */
     @Override
     protected JSONObject doInBackground(String... urls) {
 
@@ -49,18 +61,31 @@ public class HttpConnection extends AsyncTask<String, Void, JSONObject> {
         return requestServer(urls[0], urls[1]);
     }
 
-    // onPostExecute displays the results of the AsyncTask.
+    /**
+     * onPostExecute displays the results of the AsyncTask.
+     * @param result
+     */
     @Override
     protected void onPostExecute(JSONObject result) {
         dialog.dismiss();
         asyncResponse.processFinish(result);
     }
 
+    /**
+     *
+     * @param inStream
+     * @return
+     */
     private static String getResponseText(InputStream inStream) {
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 
-
+    /**
+     *
+     * @param url
+     * @param task
+     * @return
+     */
     public JSONObject requestServer(String url, String task){
 
         HttpURLConnection urlConnection = null;
