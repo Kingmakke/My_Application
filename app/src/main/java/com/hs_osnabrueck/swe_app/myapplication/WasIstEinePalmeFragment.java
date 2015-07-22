@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
 
 /**
  *
  */
-public class PalmenFragment extends Fragment {
+public class WasIstEinePalmeFragment extends Fragment {
 
     private final static int REQUEST_ENABLE_BT = 1;
     private final static int REQUEST_ENABLE_BT_SCAN = 1;
@@ -35,15 +35,23 @@ public class PalmenFragment extends Fragment {
     private BleScanner scanner;
     private BleConnect bleConnect;
 
-    public PalmenFragment() {}
+    public WasIstEinePalmeFragment() {}
 
     /**
      *
      */
     public void init(){
-        rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_einkaufswagen, container, false);
+        rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_wiep, container, false);
 
         download = (Button)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.einkaufswagenscreen_download_button);
+        if(main.getInstitut().equals(getResources().getStringArray(R.array.intitut_array)[0])){
+            download.setBackgroundColor(main.getResources().getColor(R.color.normal));
+        }else if(main.getInstitut().equals(getResources().getStringArray(R.array.intitut_array)[1])){
+            download.setBackgroundColor(main.getResources().getColor(R.color.normal_uni));
+        }else{
+            download.setBackgroundColor(main.getResources().getColor(R.color.normal_int));
+        }
+
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

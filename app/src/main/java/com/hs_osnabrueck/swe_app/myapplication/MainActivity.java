@@ -13,14 +13,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
+import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Building;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
-import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
-import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
 import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpGet;
+import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,15 +85,8 @@ public class MainActivity extends ActionBarActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(com.hs_osnabrueck.swe_app.myapplication.R.layout.activity_main);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal)));
-        getSupportActionBar().setElevation(0);
-/*
-        editor = getPreferences(MODE_PRIVATE).edit();
-        editor.putString("institut", getIntent().getStringExtra("institut"));
-        editor.putString("course", getIntent().getStringExtra("course"));
-        editor.apply();
-*/
 
+        getSupportActionBar().setElevation(0);
 
         intent = new Intent(getBaseContext(), BleSearchService.class);
         btAdapter = BleUtils.getBluetoothAdapter(getBaseContext());
@@ -147,9 +140,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 4:
                 fragmentManager.beginTransaction()
-                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new PalmenFragment(), "4")
+                        .replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new WasIstEinePalmeFragment(), "4")
                         .commit();
-                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Palmenscreen));
+                restoreActionBar(getString(R.string.WiePscreen));
                 break;
             case 5:
                 fragmentManager.beginTransaction()
@@ -295,7 +288,8 @@ public class MainActivity extends ActionBarActivity
                                 jsonObject.getString(DATE),
                                 jsonObject.getString(DESRCIPTION),
                                 jsonObject.getString(LINK),
-                                jsonObject.getString(TITLE)
+                                jsonObject.getString(TITLE),
+                                jsonObject.getString(CONTENT)
                         )
                 );
             }
@@ -308,28 +302,6 @@ public class MainActivity extends ActionBarActivity
         }
 
     }
-//TODO mit serverleuten sprechen
-/*
-    public void addBuildings(JSONArray jsonArray){
-        poiliste.removeAllElements();
-        try {
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                buildingliste.add(new Building(
-                                Integer.valueOf(jsonObject.getString(BUILDINGID)),
-                                jsonObject.getString(NAME),
-                                jsonObject.getString(DESRCIPTION),
-                                Double.valueOf(jsonObject.getString(LATITUDE)),
-                                Double.valueOf(jsonObject.getString(LONGITUDE))
-                        )
-                );
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-*/
 
     /**
      *
@@ -492,6 +464,14 @@ public class MainActivity extends ActionBarActivity
 
     /**
      *
+     * @return
+     */
+    public NavigationDrawerFragment getmNavigationDrawerFragment() {
+        return mNavigationDrawerFragment;
+    }
+
+    /**
+     *
      * @param output
      */
     @Override
@@ -520,19 +500,6 @@ public class MainActivity extends ActionBarActivity
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        /*try {
-            addBuildings(output.getJSONArray(BUILDINGS));
-            if(fragmentManager.findFragmentById(R.id.container).getTag().equals("2")){
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new BeaconFragment(), "2");
-                restoreActionBar(getString(R.string.Buildingsscreen));
-                fragmentTransaction.commit();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
     }
 
     /**
@@ -561,6 +528,13 @@ public class MainActivity extends ActionBarActivity
         institut = prefs.getString("institut", "Hochschule");
         course = prefs.getString("course", "Medieninformatik");
         backgroundScanning = prefs.getBoolean("scanning", false);
+        if(institut.equals(getResources().getStringArray(R.array.intitut_array)[0])){
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal)));
+        }else if(institut.equals(getResources().getStringArray(R.array.intitut_array)[1])){
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_uni)));
+        }else{
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_int)));
+        }
         if(intent != null && btAdapter != null && btAdapter.isEnabled()){
             stopService(intent);
         }else{

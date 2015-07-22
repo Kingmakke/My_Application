@@ -10,12 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
-import com.hs_osnabrueck.swe_app.myapplication.server.HttpConnection;
+import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
+import com.hs_osnabrueck.swe_app.myapplication.server.HttpPut;
+
+import org.json.JSONObject;
 
 /**
  *
  */
-public class BeaconinfoFragment extends Fragment {
+public class PalmeFragment extends Fragment implements AsyncResponse{
 
     private View rootView;
     private MainActivity main;
@@ -24,12 +27,10 @@ public class BeaconinfoFragment extends Fragment {
     private Button update;
 
     private String urlUpdate = "http://131.173.110.133:443/api/updatePOIHumidity";
-    public TextView temperature, iR_Temperature, humidity, pressure, accelerometer, result;
+    public TextView humidity;
 
 
-    public BeaconinfoFragment() {
-        // Required empty public constructor
-    }
+    public PalmeFragment() {}
 
     /**
      *
@@ -42,24 +43,31 @@ public class BeaconinfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_achievement, container, false);
+        rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_palme, container, false);
         bundle = getArguments();
 
         main.setPos_old(bundle.getInt("pos"));
 
         main.setPos(9);
 
-
         bleConnect = new BleConnect(this, main.getBeacon());
 
-        update = (Button)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.achievementscreen_update);
+        update = (Button)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.palmescreen_update);
+        if(main.getInstitut().equals(getResources().getStringArray(R.array.intitut_array)[0])){
+            update.setBackgroundColor(main.getResources().getColor(R.color.normal));
+        }else if(main.getInstitut().equals(getResources().getStringArray(R.array.intitut_array)[1])){
+            update.setBackgroundColor(main.getResources().getColor(R.color.normal_uni));
+        }else{
+            update.setBackgroundColor(main.getResources().getColor(R.color.normal_int));
+        }
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(humidity != null){
-                    HttpConnection connectionEvents = new HttpConnection(getActivity().getBaseContext());
+                    HttpPut connectionEvents = new HttpPut();
+                    connectionEvents.asyncResponse = PalmeFragment.this;
+                    //TODO humidity.getText() liefert nicht nur den wert
                     connectionEvents.execute(urlUpdate, main.getBeacon().getId(), humidity.getText().toString());
-
                 }
             }
         });
@@ -106,5 +114,14 @@ public class BeaconinfoFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bleConnect = new BleConnect(this, main.getBeacon());
+    }
+
+    @Override
+    public void processFinish(JSONObject output) {
+
+    }
+
+    public MainActivity getMain() {
+        return main;
     }
 }

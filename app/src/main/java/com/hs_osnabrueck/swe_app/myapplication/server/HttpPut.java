@@ -1,7 +1,5 @@
 package com.hs_osnabrueck.swe_app.myapplication.server;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
@@ -25,12 +23,11 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     static private final int CONNECTION_TIMEOUT = 10000;
 
     public AsyncResponse asyncResponse = null;
-    private ProgressDialog dialog;
-    private Context context;
+    //private ProgressDialog dialog;
+    //private Context context;
 
 
-    public HttpPut(Context context){
-        this.context = context;
+    public HttpPut(){
     }
 
     /**
@@ -39,8 +36,8 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog = new ProgressDialog(context,ProgressDialog.STYLE_SPINNER);
-        dialog.show();
+        //dialog = new ProgressDialog(context,ProgressDialog.STYLE_SPINNER);
+        //dialog.show();
     }
 
     /**
@@ -59,7 +56,7 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
      */
     @Override
     protected void onPostExecute(JSONObject result) {
-        dialog.dismiss();
+        //dialog.dismiss();
         asyncResponse.processFinish(result);
     }
 

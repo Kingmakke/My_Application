@@ -7,12 +7,18 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.estimote.sdk.cloud.model.BeaconInfo;
 import com.estimote.sdk.connection.BeaconConnection;
 import com.estimote.sdk.exception.EstimoteDeviceException;
-import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
+import com.hs_osnabrueck.swe_app.myapplication.PalmeFragment;
 import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.Point3D;
@@ -56,7 +62,7 @@ public class BleConnect{
     };
 
     byte[] value = {(byte) 1};
-    private BeaconinfoFragment fragment;
+    private PalmeFragment fragment;
     private static final double PA_PER_METER = 12.0;
     private DecimalFormat decimal = new DecimalFormat("+0.00;-0.00");
     private BluetoothGatt bluetoothGatt;
@@ -79,10 +85,7 @@ public class BleConnect{
                     @Override
                     public void run() {
                         if(fragment.getView() != null) {
-                            TextView tv1 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_IR_temperature);
-                            tv1.setText("IR Temperatur: " + iR_Temperature + " \u00B0C");
-                            TextView tv2 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_temperature);
-                            tv2.setText("Temperatur: " + temperatur + " \u00B0C");
+
                         }
                     }
                 });
@@ -97,12 +100,29 @@ public class BleConnect{
             }else if(characteristic.getUuid().toString().equals(TiHumiditySensor.getUUID_DATA())){
                 Point3D p = Sensor.HUMIDITY.convert(sensorData);
                 humidity = decimal.format(p.x);
+                final float hum = (float)p.x;
                 fragment.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if(fragment.getView() != null) {
-                            TextView tv1 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_humidity);
-                            tv1.setText("Humidity: " + humidity + " %rH");
+                            TextView tv1 = (TextView) fragment.getView().findViewById(R.id.palmescreen_humidity);
+                            tv1.setText("Feuchtigkeitswert: " + humidity + " %rH");
+                            ImageView image1 = (ImageView)fragment.getView().findViewById(R.id.palmescreen_imageView1);
+                            ImageView image2 = (ImageView)fragment.getView().findViewById(R.id.palmescreen_imageView2);
+
+                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(image1.getWidth(), image1.getHeight());
+                            params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                            params.topMargin = 10;
+                            params.addRule(RelativeLayout.VISIBLE);
+                            params.addRule(RelativeLayout.BELOW,tv1.getId());
+                            image2.setLayoutParams(params);
+                            Bitmap tempBitmap = Bitmap.createBitmap(image1.getWidth(), image1.getHeight(), Bitmap.Config.RGB_565);
+                            Canvas canvas = new Canvas(tempBitmap);
+                            Paint paint = new Paint();
+                            paint.setColor(fragment.getResources().getColor(R.color.normal));
+                            paint.setStyle(Paint.Style.FILL);
+                            canvas.drawRect(0, image1.getHeight(), image1.getWidth(), image1.getHeight() * (100 - hum) / 100, paint);
+                            image2.setImageDrawable(new BitmapDrawable(fragment.getResources(), tempBitmap));
                         }
                     }
                 });
@@ -126,8 +146,7 @@ public class BleConnect{
                     @Override
                     public void run() {
                         if(fragment.getView() != null) {
-                            TextView tv1 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_pressure);
-                            tv1.setText("Druck: " + pressure_1 + " mBar, " + pressure_2 + " m");
+
                         }
                     }
                 });
@@ -146,8 +165,7 @@ public class BleConnect{
                     @Override
                     public void run() {
                         if(fragment.getView() != null){
-                            TextView tv1 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_accelerometer);
-                            tv1.setText("X: " + acc_1 + " G, Y: " + acc_2 + " G, Z: " + acc_3 + " G");
+
                         }
 
 
@@ -233,7 +251,7 @@ public class BleConnect{
      * @param fragment fragment on which the results will be shown
      * @param beacon beacon we have found and want to connect with
      */
-    public BleConnect(final BeaconinfoFragment fragment, Beacon beacon) {
+    public BleConnect(final PalmeFragment fragment, Beacon beacon) {
         this.fragment = fragment;
         if(beacon.getBluetoothDevice().getName().contains("SensorTag")){
             bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);
@@ -279,9 +297,9 @@ public class BleConnect{
         data.add(services.get(3).getCharacteristic(UUID.fromString(TiAccelerometerSensor.getUUID_DATA())));
 
 
-        gatt.setCharacteristicNotification(config.get(0), true);
-        config.get(0).setValue(value);
-        gatt.writeCharacteristic(config.get(0));
+        gatt.setCharacteristicNotification(config.get(1), true);
+        config.get(1).setValue(value);
+        gatt.writeCharacteristic(config.get(1));
 
     }
 
@@ -295,18 +313,8 @@ public class BleConnect{
             @Override
             public void run() {
                 if(fragment.getView() != null) {
-                    TextView tv1 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_temperature);
-                    tv1.setText("Proximity UUID: " + connection.proximityUuid());
-                    TextView tv2 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_IR_temperature);
-                    tv2.setText("Minor ID: " + connection.minor());
-                    TextView tv3 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_humidity);
-                    tv3.setText("Major ID: " + connection.major());
-                    TextView tv4 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_pressure);
-                    tv4.setText("Hardware Version: " + connection.getHardwareVersion() + "\n"
-                            + "Sofware Version: " + connection.getSoftwareVersion() + "\n"
-                            + "MAC: " + connection.getMacAddress());
-                    TextView tv5 = (TextView) fragment.getView().findViewById(R.id.achievementscreen_accelerometer);
-                    tv5.setText("Batterie: " + connection.getBatteryPercent());
+
+
                 }
             }
         });

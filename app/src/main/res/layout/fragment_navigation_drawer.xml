@@ -5,7 +5,8 @@
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
-    android:listSelector="@drawable/drawer_list_selector"
+
     android:background="@color/weiß"
     tools:context=".NavigationDrawerFragment" />
-    <!--android:background="?android:attr/activatedBackgroundIndicator"-->
+    <!--android:background="?android:attr/activatedBackgroundIndicator"
+    android:listSelector="@drawable/drawer_list_selector_hs"-->

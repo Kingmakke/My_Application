@@ -45,6 +45,7 @@ public class BuildingsFragment extends Fragment {
             listAdapter.add(main.getPoiliste().get(i).getName());
         }
         ListView gebaeudeListView = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.veranstaltungsscreen_veranstaltungsliste);
+        gebaeudeListView.setDividerHeight(1);
         gebaeudeListView.setAdapter(listAdapter);
         gebaeudeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,7 +76,7 @@ public class BuildingsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.buildings, menu);
+        //inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.buildings, menu);
     }
 
     /**

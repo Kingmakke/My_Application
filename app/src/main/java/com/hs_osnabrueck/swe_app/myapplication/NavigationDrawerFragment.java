@@ -57,6 +57,7 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private MainActivity main;
 
     ArrayList<NavItem> mNavItems = new ArrayList<>();
 
@@ -107,6 +108,14 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerListView = (ListView) inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_navigation_drawer, container, false);
+        SharedPreferences prefs = main.getSharedPreferences("settings", main.MODE_PRIVATE);
+        if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(R.array.intitut_array)[0])){
+            mDrawerListView.setSelector(R.drawable.drawer_list_selector_hs);
+        }else if(prefs.getString("institut", "Hochschule").equals(getResources().getStringArray(R.array.intitut_array)[1])){
+            mDrawerListView.setSelector(R.drawable.drawer_list_selector_uni);
+        }else{
+            mDrawerListView.setSelector(R.drawable.drawer_list_selector_int);
+        }
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,7 +127,7 @@ public class NavigationDrawerFragment extends Fragment {
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_map));
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Buildingsscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_menu_home));
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Beaconsuchescreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_search));
-        mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Palmenscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_palme));
+        mNavItems.add(new NavItem(getString(R.string.WiePscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_palme));
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.WieBscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_about));
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Einstellungsscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_settings));
 
@@ -233,6 +242,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        main = (MainActivity)activity;
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
         } catch (ClassCastException e) {
@@ -305,5 +315,13 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ListView getmDrawerListView() {
+        return mDrawerListView;
     }
 }

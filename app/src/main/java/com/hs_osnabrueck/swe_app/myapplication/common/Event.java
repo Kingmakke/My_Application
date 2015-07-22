@@ -16,6 +16,7 @@ public class Event {
     private String link;
     private String description;
     private String category;
+    private String content;
 
     /**
      *
@@ -25,7 +26,7 @@ public class Event {
      * @param link
      * @param title
      */
-    public Event(String category, String date, String description, String link, String title) {
+    public Event(String category, String date, String description, String link, String title, String content) {
         this.category = category;
         DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         Date date2 = null;
@@ -38,6 +39,7 @@ public class Event {
         this.description = description;
         this.link = link;
         this.title = title;
+        this.content = content;
     }
 
     /**
@@ -111,4 +113,21 @@ public class Event {
      * @param title
      */
     public void setTitle(String title) {this.title = title;}
+
+    /**
+     *
+     * @return
+     */
+    public String getContent() {
+        return content;
+    }
+
+
+    /**
+     *
+     * @param content
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

@@ -2,8 +2,10 @@ package com.hs_osnabrueck.swe_app.myapplication;
 
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +23,7 @@ public class EventDetailsFragment extends Fragment {
     private MainActivity main;
     private TextView title, date, location, description;
     private Bundle bundle;
+    private View divider;
 
     public EventDetailsFragment() {}
 
@@ -47,6 +50,15 @@ public class EventDetailsFragment extends Fragment {
         title = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_title);
         title.setText(bundle.getString("title"));
 
+        divider = (View)rootView.findViewById(R.id.event_details_divider);
+        if(main.getInstitut().equals(getResources().getStringArray(R.array.intitut_array)[0])){
+            divider.setBackground(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal)));
+        }else if(main.getInstitut().equals(getResources().getStringArray(R.array.intitut_array)[1])){
+            divider.setBackground(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_uni)));
+        }else{
+            divider.setBackground(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_int)));
+        }
+
         date = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_date);
         date.setText(bundle.getString("date"));
 
@@ -54,7 +66,7 @@ public class EventDetailsFragment extends Fragment {
         location.setText(bundle.getString("location"));
 
         description = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.event_details_description);
-        description.setText(bundle.getString("description"));
+        description.setText(Html.fromHtml(bundle.getString("description")));
 
         return rootView;
     }

@@ -74,6 +74,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         this.container = container;
 
         main.setPos(3);
+        main.getBeacons().clear();
 
         init();
 
@@ -182,6 +183,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         if(!update){
             main.getBeacons().add(new Beacon(device, rssi));
         }
+
         adapter = new DeviceListAdapter(main.getBeacons(), main);
         deviceList.setAdapter(adapter);
         adapter.notifyDataSetChanged();

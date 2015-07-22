@@ -4,8 +4,8 @@
     <string name="Beaconsuchescreen">Beacon suchen</string>
     <string name="Kartenscreen">Karte</string>
     <string name="Versanstaltungsscreen">Veranstaltungen</string>
-    <string name="Palmenscreen">Palme</string>
-    <string name="Beaconinfoscreen">Details zum Beacon</string>
+    <string name="WiePscreen">Was ist eine Palme?</string>
+    <string name="Beaconinfoscreen">Palme</string>
     <string name="WieBscreen">Was ist ein Beacon?</string>
     <string name="Einstellungsscreen">Einstellungen</string>
     <string name="Veranstaltungsdetailsscreen">Veranstaltungsdetails</string>
@@ -17,8 +17,6 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
-
-<!-- TODO: Remove or change this placeholder text -->
 
     <string name="firstscreen_button">Start</string>
 
@@ -35,6 +33,7 @@
     <string name="einkaufswagenscreen_download_button">Download "Wir sind im Garten"-App</string>
     <string name="einkaufswagenscreen_info">Informationen zu den Palmen</string>
 
+    <string name="palmescreen_update">Update</string>
 
     <string name="event_details_date">Datum und Uhrzeit:</string>
     <string name="event_details_date_navigate">navigieren</string>
@@ -70,6 +69,7 @@
         <item>--</item>
     </string-array>
 
-    <string name="wieb">Was ist ein Beacon?\nBeacons sind kleine Bluetooth-Low-Energy-Sender, die beispielsweise an Türen, Produkten, Läden oder Points of Interest angebracht werden können. Die kleinen Sender können mit Smartphones kommunizieren und ermöglichen so eine automatisierte Kommunikation mit einzelnen Geräten. Man kann sich einen Beacon (übersetzt "Leuchtfeuer") als kleinen Lautsprecher vorstellen, welcher dauerhaft seine Anwesenheit und seinen Namen publiziert. Empfängt man ein Signal eines Beacons, so erfährt man auch wie stark der Empfang ist - je näher am Beacon desto besser der Empfang. Dies ermöglicht bei mehreren Beacons eine genaue Positionsbestimmung.\n\nWas können Beacons?\nEmpfangen: Insbesondere in geschlossenen Räumen war eine genaue Ortung von Menschen und Geräten bislang schwierig, Beacons ermöglichen dies nun. So wird es zum Beispiel auch möglich, Menschen intelligent durch große Gebäude, wie die der Hochschule, zu lotsen.\nSenden: Nähert sich ein Smartphone einem Sender, kann dieser gezielt Informationen an das Smartphone senden. So können Angebote, Aktionen oder weiterführende Informationen wie der Feuchtigkeitswert, der Luftdruck oder auch die Temperatur direkt an das Smartphone gesendet werden.\n\nZusammenfassend lässt sich sagen, dass Beacons den Einsatz von NFC, Indoor-GPS und QR-Codes ersetzen können und auch in Gebäuden funktionieren, in denen es keinen Mobilfunkempfang gibt.</string>
+    <string name="wieb">Was ist ein Beacon?\n\nBeacons sind kleine Bluetooth-Low-Energy-Sender, die beispielsweise an Türen, Produkten, Läden oder Points of Interest angebracht werden können. Die kleinen Sender können mit Smartphones kommunizieren und ermöglichen so eine automatisierte Kommunikation mit einzelnen Geräten. Man kann sich einen Beacon (übersetzt "Leuchtfeuer") als kleinen Lautsprecher vorstellen, welcher dauerhaft seine Anwesenheit und seinen Namen publiziert. Empfängt man ein Signal eines Beacons, so erfährt man auch wie stark der Empfang ist - je näher am Beacon desto besser der Empfang. Dies ermöglicht bei mehreren Beacons eine genaue Positionsbestimmung.\n\n\nWas können Beacons?\n\nEmpfangen: Insbesondere in geschlossenen Räumen war eine genaue Ortung von Menschen und Geräten bislang schwierig, Beacons ermöglichen dies nun. So wird es zum Beispiel auch möglich, Menschen intelligent durch große Gebäude, wie die der Hochschule, zu lotsen.\nSenden: Nähert sich ein Smartphone einem Sender, kann dieser gezielt Informationen an das Smartphone senden. So können Angebote, Aktionen oder weiterführende Informationen wie der Feuchtigkeitswert, der Luftdruck oder auch die Temperatur direkt an das Smartphone gesendet werden.\n\nZusammenfassend lässt sich sagen, dass Beacons den Einsatz von NFC, Indoor-GPS und QR-Codes ersetzen können und auch in Gebäuden funktionieren, in denen es keinen Mobilfunkempfang gibt.</string>
 
+    <string name="wiep">Palmen sind mit Beacons ausgestattete Planzen. Die Beacons messen die Feuchtigkeit der Erde und senden diese Werte an in der Nähe befindliche Smartphones. Dadurch können Vorbeigehende sehen, ob die Planzen gegossen werden müssen oder nicht.</string>
 </resources>

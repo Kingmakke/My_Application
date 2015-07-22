@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.BeaconinfoFragment;
+import com.hs_osnabrueck.swe_app.myapplication.PalmeFragment;
 import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.R;
@@ -66,6 +66,15 @@ public class DeviceListAdapter extends BaseAdapter {
 
     /**
      *
+     * @return
+     */
+    @Override
+    public int getViewTypeCount(){
+        return 1;
+    }
+
+    /**
+     *
      * @param position
      * @param convertView
      * @param parent
@@ -94,6 +103,7 @@ public class DeviceListAdapter extends BaseAdapter {
         ImageView iv = (ImageView)vg.findViewById(R.id.device_image);
         if (name.contains("SensorTag")) {
             iv.setImageResource(R.drawable.sensortag);
+            bv.setVisibility(View.VISIBLE);
         }else if(name.contains("estimote")) {
             iv.setImageResource(R.drawable.estimote);
             bv.setVisibility(View.INVISIBLE);
@@ -117,7 +127,7 @@ public class DeviceListAdapter extends BaseAdapter {
                     main.setBeacon(beacon);
                     Bundle bundle = new Bundle();
                     bundle.putInt("pos", 3);
-                    Fragment fragment = new BeaconinfoFragment();
+                    Fragment fragment = new PalmeFragment();
                     fragment.setArguments(bundle);
                     android.support.v4.app.FragmentManager fragmentManager = main.getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
