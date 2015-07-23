@@ -12,12 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.PalmeFragment;
 import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
-import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
+import com.hs_osnabrueck.swe_app.myapplication.PalmeFragment;
 import com.hs_osnabrueck.swe_app.myapplication.R;
+import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * ListAdapter for Bluetooth devices
@@ -26,6 +27,7 @@ public class DeviceListAdapter extends BaseAdapter {
     private List<Beacon> devices;
     private LayoutInflater inflater;
     private MainActivity main;
+    public static UUID UART_UUID = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 
     /**
      * DeviceListAdapter class
@@ -101,12 +103,18 @@ public class DeviceListAdapter extends BaseAdapter {
         ((TextView) vg.findViewById(R.id.device_discription)).setText(descr);
         Button bv = (Button)vg.findViewById(R.id.device_connect);
         ImageView iv = (ImageView)vg.findViewById(R.id.device_image);
-        if (name.contains("SensorTag")) {
+        if (name.equals("SensorTag")) {
             iv.setImageResource(R.drawable.sensortag);
             bv.setVisibility(View.VISIBLE);
         }else if(name.contains("estimote")) {
             iv.setImageResource(R.drawable.estimote);
             bv.setVisibility(View.INVISIBLE);
+        }else if(name.equals("CC2650 SensorTag")){
+            iv.setImageResource(R.drawable.sensortag2);
+            bv.setVisibility(View.INVISIBLE);
+        /*}else if(device.getUuids().toString().equals(UART_UUID)){
+            iv.setImageResource(R.drawable.core);
+            bv.setVisibility(View.INVISIBLE);*/
         }else {
             iv.setImageResource(R.drawable.unknown);
             bv.setVisibility(View.INVISIBLE);

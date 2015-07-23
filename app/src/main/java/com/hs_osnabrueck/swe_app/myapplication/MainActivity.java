@@ -85,7 +85,6 @@ public class MainActivity extends ActionBarActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(com.hs_osnabrueck.swe_app.myapplication.R.layout.activity_main);
 
-
         getSupportActionBar().setElevation(0);
 
         intent = new Intent(getBaseContext(), BleSearchService.class);
@@ -308,6 +307,7 @@ public class MainActivity extends ActionBarActivity
      */
     @Override
     public void onBackPressed() {
+
         if(mNavigationDrawerFragment.isVisible()){
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.drawer_layout);
             mDrawerLayout.closeDrawers();

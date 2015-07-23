@@ -43,6 +43,13 @@ public class BleConnect{
     private List<BluetoothGattCharacteristic> data = new ArrayList<>();
     private String temperatur, iR_Temperature, humidity, pressure_1, pressure_2, acc_1, acc_2, acc_3;
     private boolean calibrated = false;
+    public static UUID UART_UUID = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+    public static UUID TX_UUID = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
+    public static UUID RX_UUID = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+    // UUID for the BTLE client characteristic which is necessary for notifications.
+    public static UUID CLIENT_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+    private BluetoothGattCharacteristic tx;
+    private BluetoothGattCharacteristic rx;
 
     private BeaconConnection beaconConnection;
     private BeaconConnection.ConnectionCallback connectionCallback = new BeaconConnection.ConnectionCallback() {
@@ -81,14 +88,14 @@ public class BleConnect{
                 temperatur = decimal.format(p.x);
                 iR_Temperature = decimal.format(p.y);
 
-                fragment.getActivity().runOnUiThread(new Runnable() {
+                /*fragment.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if(fragment.getView() != null) {
 
                         }
                     }
-                });
+                });*/
 
 
                 //gatt.setCharacteristicNotification(characteristic, false);
@@ -101,31 +108,35 @@ public class BleConnect{
                 Point3D p = Sensor.HUMIDITY.convert(sensorData);
                 humidity = decimal.format(p.x);
                 final float hum = (float)p.x;
-                fragment.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(fragment.getView() != null) {
-                            TextView tv1 = (TextView) fragment.getView().findViewById(R.id.palmescreen_humidity);
-                            tv1.setText("Feuchtigkeitswert: " + humidity + " %rH");
-                            ImageView image1 = (ImageView)fragment.getView().findViewById(R.id.palmescreen_imageView1);
-                            ImageView image2 = (ImageView)fragment.getView().findViewById(R.id.palmescreen_imageView2);
+                try{
+                    fragment.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(fragment.getView() != null) {
+                                TextView tv1 = (TextView) fragment.getView().findViewById(R.id.palmescreen_humidity);
+                                tv1.setText("Feuchtigkeitswert: " + humidity + " %rH");
+                                ImageView image1 = (ImageView)fragment.getView().findViewById(R.id.palmescreen_imageView1);
+                                ImageView image2 = (ImageView)fragment.getView().findViewById(R.id.palmescreen_imageView2);
 
-                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(image1.getWidth(), image1.getHeight());
-                            params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                            params.topMargin = 10;
-                            params.addRule(RelativeLayout.VISIBLE);
-                            params.addRule(RelativeLayout.BELOW,tv1.getId());
-                            image2.setLayoutParams(params);
-                            Bitmap tempBitmap = Bitmap.createBitmap(image1.getWidth(), image1.getHeight(), Bitmap.Config.RGB_565);
-                            Canvas canvas = new Canvas(tempBitmap);
-                            Paint paint = new Paint();
-                            paint.setColor(fragment.getResources().getColor(R.color.normal));
-                            paint.setStyle(Paint.Style.FILL);
-                            canvas.drawRect(0, image1.getHeight(), image1.getWidth(), image1.getHeight() * (100 - hum) / 100, paint);
-                            image2.setImageDrawable(new BitmapDrawable(fragment.getResources(), tempBitmap));
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(image1.getWidth(), image1.getHeight());
+                                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                                params.topMargin = 10;
+                                params.addRule(RelativeLayout.VISIBLE);
+                                params.addRule(RelativeLayout.BELOW,tv1.getId());
+                                image2.setLayoutParams(params);
+                                Bitmap tempBitmap = Bitmap.createBitmap(image1.getWidth(), image1.getHeight(), Bitmap.Config.RGB_565);
+                                Canvas canvas = new Canvas(tempBitmap);
+                                Paint paint = new Paint();
+                                paint.setColor(fragment.getResources().getColor(R.color.normal));
+                                paint.setStyle(Paint.Style.FILL);
+                                canvas.drawRect(0, image1.getHeight(), image1.getWidth(), image1.getHeight() * (100 - hum) / 100, paint);
+                                image2.setImageDrawable(new BitmapDrawable(fragment.getResources(), tempBitmap));
+                            }
                         }
-                    }
-                });
+                    });
+                }catch(NullPointerException e){
+                    gatt.disconnect();
+                }
                 //gatt.setCharacteristicNotification(characteristic, false);
                 //gatt.setCharacteristicNotification(data.get(1), false);
 
@@ -142,14 +153,14 @@ public class BleConnect{
 
                 pressure_1 = decimal.format(p.x);
                 pressure_2 = decimal.format(h);
-                fragment.getActivity().runOnUiThread(new Runnable() {
+                /*fragment.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if(fragment.getView() != null) {
 
                         }
                     }
-                });
+                });*/
                 //gatt.setCharacteristicNotification(characteristic, false);
                 //gatt.setCharacteristicNotification(data.get(2), false);
 
@@ -161,22 +172,53 @@ public class BleConnect{
                 acc_1 = decimal.format(p.x);
                 acc_2 = decimal.format(p.y);
                 acc_3 = decimal.format(p.z);
-                fragment.getActivity().runOnUiThread(new Runnable() {
+                /*fragment.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if(fragment.getView() != null){
 
                         }
-
-
                     }
-                });
+                });*/
                 //gatt.setCharacteristicNotification(characteristic, false);
                 //gatt.setCharacteristicNotification(data.get(3), false);
 
                 gatt.setCharacteristicNotification(config.get(0), true);
                 config.get(0).setValue(value);
                 gatt.writeCharacteristic(config.get(0));
+            /*}else if(gatt.getDevice().getUuids().toString().equals(UART_UUID)){
+
+                humidity = characteristic.getStringValue(0);
+                final float hum = Float.valueOf(humidity);
+                try {
+                    fragment.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (fragment.getView() != null) {
+                                TextView tv1 = (TextView) fragment.getView().findViewById(R.id.palmescreen_humidity);
+                                tv1.setText("Feuchtigkeitswert: " + humidity + " %rH");
+                                ImageView image1 = (ImageView) fragment.getView().findViewById(R.id.palmescreen_imageView1);
+                                ImageView image2 = (ImageView) fragment.getView().findViewById(R.id.palmescreen_imageView2);
+
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(image1.getWidth(), image1.getHeight());
+                                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                                params.topMargin = 10;
+                                params.addRule(RelativeLayout.VISIBLE);
+                                params.addRule(RelativeLayout.BELOW, tv1.getId());
+                                image2.setLayoutParams(params);
+                                Bitmap tempBitmap = Bitmap.createBitmap(image1.getWidth(), image1.getHeight(), Bitmap.Config.RGB_565);
+                                Canvas canvas = new Canvas(tempBitmap);
+                                Paint paint = new Paint();
+                                paint.setColor(fragment.getResources().getColor(R.color.normal));
+                                paint.setStyle(Paint.Style.FILL);
+                                canvas.drawRect(0, image1.getHeight(), image1.getWidth(), image1.getHeight() * (100 - hum) / 100, paint);
+                                image2.setImageDrawable(new BitmapDrawable(fragment.getResources(), tempBitmap));
+                            }
+                        }
+                    });
+                }catch(NullPointerException e){
+                    gatt.disconnect();
+                }*/
             }else{
                 //TODO
             }
@@ -206,6 +248,21 @@ public class BleConnect{
         public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
             if (gatt.getDevice().getName().contains("SensorTag")){
                 sensorTag(gatt);
+            /*}else if(gatt.getDevice().getUuids().toString().equals(UART_UUID)){
+                tx = gatt.getService(UART_UUID).getCharacteristic(TX_UUID);
+                rx = gatt.getService(UART_UUID).getCharacteristic(RX_UUID);
+                // Setup notifications on RX characteristic changes (i.e. data received).
+                // First call setCharacteristicNotification to enable notification.
+                if (!gatt.setCharacteristicNotification(rx, true)) {
+                }
+                // Next update the RX characteristic's client descriptor to enable notifications.
+                if (rx.getDescriptor(CLIENT_UUID) != null) {
+                    BluetoothGattDescriptor desc = rx.getDescriptor(CLIENT_UUID);
+                    desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                    if (!gatt.writeDescriptor(desc)) {
+                    }
+                }*/
+
             }else{
                 //TODO
             }
@@ -231,9 +288,9 @@ public class BleConnect{
             }else if(characteristic.getUuid().toString().equals(TiPressureSensor.getUUID_CONFIG())){
                 gatt.setCharacteristicNotification(data.get(2), true);
                 descriptor = data.get(2).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            }else if(characteristic.getUuid().toString().equals(TiAccelerometerSensor.getUUID_CONFIG())){
+            /*}else if(characteristic.getUuid().toString().equals(TiAccelerometerSensor.getUUID_CONFIG())){
                 gatt.setCharacteristicNotification(data.get(3), true);
-                descriptor = data.get(3).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
+                descriptor = data.get(3).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));*/
             }else{
                 //TODO
             }
@@ -258,8 +315,9 @@ public class BleConnect{
         }else if(beacon.getBluetoothDevice().getName().contains("estimote")){
             beaconConnection = new BeaconConnection(fragment.getActivity().getBaseContext(), beacon.getId(), connectionCallback);
             estimote(beaconConnection);
+        /*}else if(beacon.getBluetoothDevice().getUuids().toString().equals(UART_UUID)){
+            bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);*/
         }
-
     }
 
     /**
@@ -271,6 +329,8 @@ public class BleConnect{
             bluetoothGatt.disconnect();
         }else if(beacon.getBluetoothDevice().getName().contains("estimote")){
             beaconConnection.close();
+        /*}else if(beacon.getBluetoothDevice().getUuids().toString().equals(UART_UUID)){
+            bluetoothGatt.disconnect();*/
         }
     }
 
@@ -307,18 +367,16 @@ public class BleConnect{
      * This method is called for estimote Beacons and sets the TextViews
      * @param connection
      */
-    private void estimote(final BeaconConnection connection){
+    private void estimote(final BeaconConnection connection) {
 
         fragment.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(fragment.getView() != null) {
+                if (fragment.getView() != null) {
 
 
                 }
             }
         });
-
     }
-
 }

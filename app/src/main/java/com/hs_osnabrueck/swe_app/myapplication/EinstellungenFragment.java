@@ -208,6 +208,7 @@ public class EinstellungenFragment extends Fragment {
 
         ver = (TextView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.einstellungsscreen_version);
         ver.setText("v" + version);
+        ver.setVisibility(View.INVISIBLE);
 
     }
 
