@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- *
+ * Fragment of the Beaconinfo
  */
 public class WasIstEinBeaconFragment extends Fragment {
 
@@ -20,7 +20,7 @@ public class WasIstEinBeaconFragment extends Fragment {
     }
 
     /**
-     *
+     * gets called when the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -36,10 +36,6 @@ public class WasIstEinBeaconFragment extends Fragment {
         return rootView;
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);

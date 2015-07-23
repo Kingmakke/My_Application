@@ -16,7 +16,7 @@ import com.hs_osnabrueck.swe_app.myapplication.server.HttpPut;
 import org.json.JSONObject;
 
 /**
- *
+ * Palm Fragment
  */
 public class PalmeFragment extends Fragment implements AsyncResponse{
 
@@ -33,7 +33,7 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
     public PalmeFragment() {}
 
     /**
-     *
+     * gets called when the the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -77,10 +77,6 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
         return rootView;
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
@@ -88,7 +84,7 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
     }
 
     /**
-     *
+     * when app is minimized, bluetooth connection will be disconnected
      */
     @Override
     public void onPause(){
@@ -97,7 +93,7 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
     }
 
     /**
-     *
+     * when the app is closed, bluetooth connection will be disconnected
      */
     @Override
     public void onStop(){
@@ -106,7 +102,7 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
     }
 
     /**
-     *
+     * is called when the fragment is loaded
      * @param view
      * @param savedInstanceState
      */
@@ -121,6 +117,10 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
 
     }
 
+    /**
+     * returns the main
+     * @return main
+     */
     public MainActivity getMain() {
         return main;
     }

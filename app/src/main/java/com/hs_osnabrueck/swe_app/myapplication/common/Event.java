@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- *
+ * this class defines how an event object looks like
  */
 public class Event {
 
@@ -19,12 +19,12 @@ public class Event {
     private String content;
 
     /**
-     *
-     * @param category
-     * @param date
-     * @param description
-     * @param link
-     * @param title
+     * Event constructor (transorms the date to european format)
+     * @param category event category
+     * @param date event date
+     * @param description event description
+     * @param link event link
+     * @param title event title
      */
     public Event(String category, String date, String description, String link, String title, String content) {
         this.category = category;
@@ -43,80 +43,80 @@ public class Event {
     }
 
     /**
-     *
-     * @return
+     * returns the date
+     * @return date
      */
     public String getDate() {
         return date;
     }
 
     /**
-     *
-     * @param date
+     * sets the date
+     * @param date course date
      */
     public void setDate(String date) {
         this.date = date;
     }
 
     /**
-     *
-     * @return
+     * returns the description
+     * @return description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     *
-     * @param description
+     * sets the description
+     * @param description course description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     *
-     * @return
+     * returns the category
+     * @return category
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     *
-     * @param category
+     * sets the category
+     * @param category course category
      */
     public void setCategory(String category) {
         this.category = category;
     }
 
     /**
-     *
-     * @return
+     * returns the link
+     * @return link
      */
     public String getLink() {return link;}
 
     /**
-     *
-     * @param link
+     * sets the link
+     * @param link course link
      */
     public void setLink(String link) {this.link = link;}
 
     /**
-     *
-     * @return
+     * returns the title
+     * @return title
      */
     public String getTitle() {return title;}
 
     /**
-     *
-     * @param title
+     * sets the title
+     * @param title course title
      */
     public void setTitle(String title) {this.title = title;}
 
     /**
-     *
-     * @return
+     * returns the content
+     * @return content
      */
     public String getContent() {
         return content;
@@ -124,8 +124,8 @@ public class Event {
 
 
     /**
-     *
-     * @param content
+     * sets the content
+     * @param content course content
      */
     public void setContent(String content) {
         this.content = content;

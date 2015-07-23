@@ -14,7 +14,7 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 import java.util.ArrayList;
 
 /**
- *
+ * DrawerAdapter class
  */
 public class MyDrawerAdapter extends BaseAdapter {
 
@@ -22,9 +22,9 @@ public class MyDrawerAdapter extends BaseAdapter {
     ArrayList<NavItem> mNavItems;
 
     /**
-     *
-     * @param context
-     * @param navItems
+     * DrawerAdapter constructor
+     * @param context context
+     * @param navItems menu entries
      */
     public MyDrawerAdapter(Context context, ArrayList<NavItem> navItems) {
         mContext = context;
@@ -32,8 +32,8 @@ public class MyDrawerAdapter extends BaseAdapter {
     }
 
     /**
-     *
-     * @return
+     * gives the number of elements in the menu
+     * @return number of menu entries
      */
     @Override
     public int getCount() {
@@ -41,9 +41,9 @@ public class MyDrawerAdapter extends BaseAdapter {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * gives the entry of the given position
+     * @param position position of the entry
+     * @return the item of the menu at position position
      */
     @Override
     public Object getItem(int position) {
@@ -51,9 +51,9 @@ public class MyDrawerAdapter extends BaseAdapter {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * gives the item id
+     * @param position position of the item
+     * @return 0
      */
     @Override
     public long getItemId(int position) {
@@ -61,11 +61,11 @@ public class MyDrawerAdapter extends BaseAdapter {
     }
 
     /**
-     *
-     * @param position
+     * get the view
+     * @param position position of the item we want the view of
      * @param convertView
      * @param parent
-     * @return
+     * @return the view
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

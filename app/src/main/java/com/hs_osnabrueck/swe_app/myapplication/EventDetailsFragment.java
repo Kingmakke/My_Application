@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- *
+ * Eventdetail Fragment
  */
 public class EventDetailsFragment extends Fragment {
 
@@ -28,7 +28,7 @@ public class EventDetailsFragment extends Fragment {
     public EventDetailsFragment() {}
 
     /**
-     *
+     * gets called when the the fragment loads and showsthe event details
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -71,10 +71,6 @@ public class EventDetailsFragment extends Fragment {
         return rootView;
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
@@ -82,7 +78,7 @@ public class EventDetailsFragment extends Fragment {
     }
 
     /**
-     *
+     * shows a button in the actionbar
      * @param menu
      * @param inflater
      */
@@ -93,9 +89,9 @@ public class EventDetailsFragment extends Fragment {
     }
 
     /**
-     *
+     * opens the map fragment and shows the event on the map when the actionbar button is clicked
      * @param item
-     * @return
+     * @return selected or not
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

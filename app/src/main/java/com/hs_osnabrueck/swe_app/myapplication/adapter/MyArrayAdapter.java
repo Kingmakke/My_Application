@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * extended ArrayAdapter class (for Veranstaltungsscreen)
  */
 public class MyArrayAdapter extends ArrayAdapter<String> {
 
@@ -30,8 +30,8 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     final private List<Integer> datePos = new ArrayList<>();
 
     /**
-     *
-     * @param context
+     * Constructor of the ArrayAdapter
+     * @param context some context
      * @param resource
      */
     public MyArrayAdapter(Context context, int resource) {
@@ -40,7 +40,7 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
+     * adds a date
      * @param item
      * @param translation
      */
@@ -52,7 +52,7 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
+     * adds an event
      * @param item1
      * @param item2
      * @param translation
@@ -63,8 +63,8 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
-     * @return
+     * returns the size of the data list
+     * @return size of the data list
      */
     @Override
     public int getCount() {
@@ -72,9 +72,9 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * gets item of the given position
+     * @param position position of the desired item
+     * @return the desired item
      */
     @Override
     public String getItem(int position) {
@@ -82,9 +82,9 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * returns 0 or 1 to point out which type the item has
+     * @param position position of the item
+     * @return the type of the item
      */
     @Override
     public int getItemViewType(int position) {
@@ -96,8 +96,8 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
-     * @return
+     * returns the amount of typed used in the event list
+     * @return 2
      */
     @Override
     public int getViewTypeCount(){
@@ -143,44 +143,49 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     }
 
     /**
-     *
+     * DoubleString class
      */
     private static class DoubleString{
 
         public String first, second;
 
+        /**
+         * DoubleString constructor
+         * @param first first string
+         * @param second second string
+         */
         public DoubleString(String first, String second){
             this.first = first;
             this.second = second;
         }
 
         /**
-         *
-         * @return
+         * returns the first string
+         * @return first string
          */
         public String getFirst() {
             return first;
         }
 
         /**
-         *
-         * @param first
+         * sets the first string
+         * @param first first string
          */
         public void setFirst(String first) {
             this.first = first;
         }
 
         /**
-         *
-         * @return
+         * returns the second string
+         * @return second string
          */
         public String getSecond() {
             return second;
         }
 
         /**
-         *
-         * @param second
+         * sets the second string
+         * @param second second string
          */
         public void setSecond(String second) {
             this.second = second;

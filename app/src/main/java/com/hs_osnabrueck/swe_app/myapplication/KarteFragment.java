@@ -27,7 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.hs_osnabrueck.swe_app.myapplication.adapter.MyInfoWindowAdapter;
 
 /**
- *
+ * Map Fragment
  */
 public class KarteFragment extends Fragment{//} implements LocationListener{
 
@@ -57,7 +57,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     public KarteFragment() {}
 
     /**
-     *
+     * initializes the map and defines the map location of the university
      */
     public void initMap(){
 
@@ -173,10 +173,6 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         });
 
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            /**
-             *
-             * @param marker
-             */
             @Override
             public void onInfoWindowClick(Marker marker) {
 
@@ -189,7 +185,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     }
 
     /**
-     *
+     * gets called when the the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -214,7 +210,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     }
 
     /**
-     *
+     * refreshes the map when app is resumed
      */
     @Override
     public void onResume() {
@@ -223,7 +219,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     }
 
     /**
-     *
+     * pauses the map fragment when app is minimized
      */
     @Override
     public void onPause() {
@@ -232,7 +228,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     }
 
     /**
-     *
+     * ends the map fragment when app is closed
      */
     @Override
     public void onDestroy() {
@@ -241,7 +237,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     }
 
     /**
-     *
+     * releases memory when the smartphone is low on memory
      */
     @Override
     public void onLowMemory() {
@@ -250,7 +246,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     }
 
     /**
-     *
+     * enables gps when map fragment is loaded
      * @param requestCode
      * @param resultCode
      * @param data
@@ -263,9 +259,6 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -277,6 +270,11 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         main = (MainActivity)activity;
     }
 
+    /**
+     * shows button in actionbar
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // TODO Auto-generated method stub
@@ -284,6 +282,11 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.karte, menu);
     }
 
+    /**
+     *  jumps back to the university when button in Actionbar is clicked
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
@@ -296,5 +299,4 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

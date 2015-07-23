@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.Vector;
 
 /**
- *
+ * MainActivity Fragment
  */
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, AsyncResponse {
@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity
     private Beacon beacon;
 
     /**
-     *
+     * sets basic functionality for the app to work
      * @param savedInstanceState
      */
     @Override
@@ -109,8 +109,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @param position
+     * choose one of the seven fragments which should be shown in the Activity
+     * @param position position of the desired fragment
      */
     public void chooseFragment(int position){FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
@@ -160,7 +160,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * defines what happens when a menu entry is clicked (change the fragment)
      * @param position
      */
     @Override
@@ -170,8 +170,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @param mTitle
+     * restores the actionbar after the fragment has changed
+     * @param mTitle title of the new displayed fragment
      */
     public void restoreActionBar(String mTitle) {
         ActionBar actionBar = getSupportActionBar();
@@ -181,15 +181,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the beacons
+     * @return beacons
      */
     public Vector<Beacon> getBeacons() {
         return beacons;
     }
 
     /**
-     *
+     * add a beacon to the Beacons vector
      * @param beacon
      */
     public void addBeacon(Beacon beacon) {
@@ -197,7 +197,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * sets the beacons vector
      * @param beacons
      */
     public void setBeacons(Vector<Beacon> beacons) {
@@ -205,15 +205,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the events vector
+     * @return eventliste
      */
     public Vector<Event> getEventliste() {
         return eventliste;
     }
 
     /**
-     *
+     * add event to the events vector
      * @param veranstaltung
      */
     public void addEvent(Event veranstaltung) {
@@ -221,7 +221,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * sets the events vector
      * @param veranstaltungsliste
      */
     public void setEventliste(Vector<Event> veranstaltungsliste) {
@@ -229,15 +229,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returs the Points of Interest vector
+     * @return poiliste
      */
     public Vector<POI> getPoiliste() {
         return poiliste;
     }
 
     /**
-     *
+     * sets the Points of Interest vector
      * @param poiliste
      */
     public void setPoiliste(Vector<POI> poiliste) {
@@ -245,7 +245,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * adds POIs from the jsonArray from the HTTPGet to the poiliste
      * @param jsonArray
      */
     public void addPOIs(JSONArray jsonArray){
@@ -273,7 +273,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * adds events from the jsonArray from the HTTPGet to the eventliste
      * @param jsonArray
      */
     public void addEvents(JSONArray jsonArray){
@@ -304,7 +304,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * defines what happens when the back button is pressed. Pressed on the 'home' screen closes the app
      */
     @Override
     public void onBackPressed() {
@@ -331,15 +331,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the position of the fragment
+     * @return pos
      */
     public int getPos() {
         return pos;
     }
 
     /**
-     *
+     * sets the position of the fragment
      * @param pos
      */
     public void setPos(int pos) {
@@ -347,35 +347,35 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the position of the fragment
+     * @return pos_old
      */
     public int getPos_old() {return pos_old;}
 
     /**
-     *
+     * sets the position of the fragment
      * @param pos_old
      */
     public void setPos_old(int pos_old) {this.pos_old = pos_old;}
 
     /**
-     *
-     * @return
+     * returns the BluetoothAdapter
+     * @return btAdapter
      */
     public BluetoothAdapter getBtAdapter() {
         return btAdapter;
     }
 
     /**
-     *
-     * @return
+     * returns the BleScanner
+     * @return bleScanner
      */
     public BleScanner getBleScanner() {
         return bleScanner;
     }
 
     /**
-     *
+     * sets the BleScanner
      * @param bleScanner
      */
     public void setBleScanner(BleScanner bleScanner) {
@@ -383,15 +383,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the Beacon
+     * @return beacon
      */
     public Beacon getBeacon() {
         return beacon;
     }
 
     /**
-     *
+     * sets the Beacon
      * @param beacon
      */
     public void setBeacon(Beacon beacon) {
@@ -399,15 +399,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the intent
+     * @return intent
      */
     public Intent getMyIntent() {
         return intent;
     }
 
     /**
-     *
+     * sets the intent
      * @param intent
      */
     public void setMyIntent(Intent intent) {
@@ -415,15 +415,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns whether backgroundScanning is enabled or not
+     * @return backgroundScanning
      */
     public boolean isBackgroundScanning() {
         return backgroundScanning;
     }
 
     /**
-     *
+     * sets backgroundScanning true or false
      * @param backgroundScanning
      */
     public void setBackgroundScanning(boolean backgroundScanning) {
@@ -431,15 +431,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the course
+     * @return course
      */
     public String getCourse() {
         return course;
     }
 
     /**
-     *
+     * sets the course
      * @param course
      */
     public void setCourse(String course) {
@@ -447,15 +447,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the institute
+     * @return institut
      */
     public String getInstitut() {
         return institut;
     }
 
     /**
-     *
+     * sets the institute
      * @param institut
      */
     public void setInstitut(String institut) {
@@ -463,8 +463,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
-     * @return
+     * returns the NavigationDrawerFragment
+     * @return mNavigationDrawerFragment
      */
     public NavigationDrawerFragment getmNavigationDrawerFragment() {
         return mNavigationDrawerFragment;
@@ -503,7 +503,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * saves preferences in file and starts backgroundScanning (if enabled) if app is paused
      */
     @Override
     protected void onPause() {
@@ -519,7 +519,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     *
+     * loads preferences from file and stops backgroundScanning (if enabled) when app is resumed
      */
     @Override
     protected void onResume() {

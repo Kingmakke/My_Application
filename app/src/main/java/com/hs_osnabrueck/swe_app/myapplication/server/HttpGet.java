@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 /**
- *
+ * class to get data from the server
  */
 public class HttpGet extends AsyncTask<String, Void, JSONObject> {
 
@@ -48,9 +48,9 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
     }
 
     /**
-     *
+     * is called when the AsyncTask starts
      * @param urls
-     * @return
+     * @return the requested server
      */
     @Override
     protected JSONObject doInBackground(String... urls) {
@@ -74,16 +74,16 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
     }
 
     /**
-     *
+     * get resonsetext from server
      * @param inStream
-     * @return
+     * @return scanner
      */
     private static String getResponseText(InputStream inStream) {
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 
     /**
-     *
+     * if everything is okay, data is called from the server
      * @param url
      * @return
      */
@@ -140,7 +140,7 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
     }
 
     /**
-     *
+     * dialog is shown when requestServer() throws an exception and gives the user feedback
      */
     public void dialog(){
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

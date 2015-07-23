@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- *
+ * FirstActivity class is just shown at the first app start
  */
 public class FirstActivity extends Activity {
 
@@ -24,7 +24,7 @@ public class FirstActivity extends Activity {
     private ArrayList<String> courseList = new ArrayList<>();
 
     /**
-     *
+     * defines what is shown on the screen
      * @param savedInstanceState
      */
     @Override
@@ -39,10 +39,10 @@ public class FirstActivity extends Activity {
 
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             /**
-             *
+             * defines the spinners and saves the institute and course when the start button is clicked
              * @param parent
              * @param view
-             * @param position
+             * @param position 0 for Hochschule, 1 for Uni, 2 for Studieninteressierte
              * @param id
              */
             @Override

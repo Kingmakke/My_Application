@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 /**
- *
+ * class to PUT data to the server
  */
 public class HttpPut extends AsyncTask<String, Void, JSONObject> {
 
@@ -30,9 +30,6 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     public HttpPut(){
     }
 
-    /**
-     *
-     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -41,7 +38,7 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     }
 
     /**
-     *
+     * is called when the AsyncTask starts
      * @param urls
      * @return
      */
@@ -61,20 +58,20 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     }
 
     /**
-     *
+     * get responsetext from server
      * @param inStream
-     * @return
+     * @return scanner
      */
     private static String getResponseText(InputStream inStream) {
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 
     /**
-     *
-     * @param url
-     * @param beaconID
-     * @param humidity
-     * @return
+     * send the humidity value to the server
+     * @param url the server
+     * @param beaconID the beacon id
+     * @param humidity humidity of the beacon
+     * @return the JSONObject
      */
     public JSONObject requestServer(String url, String beaconID, String humidity){
 

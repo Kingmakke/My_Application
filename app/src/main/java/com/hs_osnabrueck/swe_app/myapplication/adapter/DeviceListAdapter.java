@@ -20,7 +20,7 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 import java.util.List;
 
 /**
- *
+ * ListAdapter for Bluetooth devices
  */
 public class DeviceListAdapter extends BaseAdapter {
     private List<Beacon> devices;
@@ -28,9 +28,9 @@ public class DeviceListAdapter extends BaseAdapter {
     private MainActivity main;
 
     /**
-     *
-     * @param devices
-     * @param main
+     * DeviceListAdapter class
+     * @param devices list of found beacons
+     * @param main MainActivity
      */
     public DeviceListAdapter(List<Beacon> devices, MainActivity main) {
         this.inflater = LayoutInflater.from(main.getBaseContext());
@@ -39,34 +39,34 @@ public class DeviceListAdapter extends BaseAdapter {
     }
 
     /**
-     *
-     * @return
+     * returns the size of the list of found beacons
+     * @return the size of the device list
      */
     public int getCount() {
         return devices.size();
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * gets the item of the device list at a given position
+     * @param position desired position
+     * @return the item of a given position
      */
     public Object getItem(int position) {
         return devices.get(position);
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * gives the itemID
+     * @param position position of the item
+     * @return position
      */
     public long getItemId(int position) {
         return position;
     }
 
     /**
-     *
-     * @return
+     * returns the amount of different types in the view
+     * @return 1
      */
     @Override
     public int getViewTypeCount(){
@@ -74,11 +74,11 @@ public class DeviceListAdapter extends BaseAdapter {
     }
 
     /**
-     *
-     * @param position
+     * returns the view and how the screen looks like (e.g. icon and name of the beacon)
+     * @param position position of the desired item
      * @param convertView
      * @param parent
-     * @return
+     * @return the view
      */
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewGroup vg;

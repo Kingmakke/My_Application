@@ -59,7 +59,7 @@ import java.util.UUID;
 import static java.util.UUID.fromString;
 
 /**
- *
+ * defines the UUIDs for the SensorTag services
  */
 public class SensorTagGatt {
 

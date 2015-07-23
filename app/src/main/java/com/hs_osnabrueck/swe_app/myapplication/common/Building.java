@@ -1,7 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication.common;
 
 /**
- *
+ * Building class defines how a building object looks like
  */
 public class Building {
     private int id;
@@ -11,12 +11,12 @@ public class Building {
     private double longitude;
 
     /**
-     *
-     * @param id
-     * @param name
-     * @param description
-     * @param latitude
-     * @param longitude
+     * Building constructor
+     * @param id building id
+     * @param name building name
+     * @param description building description
+     * @param latitude building latitude
+     * @param longitude building longitude
      */
     public Building(int id, String name, String description,  double latitude, double longitude) {
         this.description = description;
@@ -27,80 +27,80 @@ public class Building {
     }
 
     /**
-     *
-     * @return
+     * returns the description
+     * @return description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     *
-     * @param description
+     * sets the description
+     * @param description building description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     *
-     * @return
+     * returns the id
+     * @return id
      */
     public int getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * sets the id
+     * @param id building id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * returns the latitude
+     * @return latitude
      */
     public double getLatitude() {
         return latitude;
     }
 
     /**
-     *
-     * @param latitude
+     * sets the latitude
+     * @param latitude building latitude
      */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
     /**
-     *
-     * @return
+     * returns the longitude
+     * @return longitude
      */
     public double getLongitude() {
         return longitude;
     }
 
     /**
-     *
-     * @param longitude
+     * sets the longitude
+     * @param longitude building longitude
      */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
     /**
-     *
-     * @return
+     *returns the name
+     * @return name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
+     * sets the name
+     * @param name building name
      */
     public void setName(String name) {
         this.name = name;

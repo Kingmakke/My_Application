@@ -20,7 +20,7 @@ import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
 /**
- *
+ * Beacon Fragment
  */
 public class BeaconFragment extends Fragment implements BleSearchResponse {
 
@@ -39,7 +39,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     public BeaconFragment() {}
 
     /**
-     *
+     * defines how the fragment looks like
      */
     public void init(){
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_home, container, false);
@@ -61,7 +61,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     }
 
     /**
-     *
+     * gets called when the the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -82,7 +82,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     }
 
     /**
-     *
+     * refreshes the beacon list when app is resumed and bluetooth is enabled
      */
     @Override
     public void onResume() {
@@ -96,7 +96,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     }
 
     /**
-     *
+     * scan for beacons is stopped when app is closed
      */
     @SuppressLint("NewApi")
     @Override
@@ -113,7 +113,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     }
 
     /**
-     *
+     * when the fragment loads, the user is asked if bluetooth should be enabled
      * @param requestCode
      * @param resultCode
      * @param data
@@ -134,7 +134,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     }
 
     /**
-     *
+     * starts the scan for beacons
      */
     public void findBeacon(){
         main.getBleScanner().bleSearchResponse = this;
@@ -146,10 +146,6 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         }
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
@@ -157,9 +153,9 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
     }
 
     /**
-     *
-     * @param device
-     * @param rssi
+     * if beacons are found they are shown in a list with a fitting icon
+     * @param device the beacon
+     * @param rssi the signal strength of the beacon
      */
     @Override
     public void beaconFound(BluetoothDevice device, int rssi) {

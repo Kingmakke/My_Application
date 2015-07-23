@@ -1,7 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication.common;
 
 /**
- *
+ * this class defines how a course class looks like
  */
 public class Course {
     private int id;
@@ -9,48 +9,48 @@ public class Course {
     private String description;
 
     /**
-     *
-     * @return
+     * returns the id
+     * @return id
      */
     public int getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * sets the id
+     * @param id course id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * returns the name
+     * @return name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
+     * sets the name
+     * @param name course name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
+     * returns the description
+     * @return description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     *
-     * @param description
+     * sets the description
+     * @param description course description
      */
     public void setDescription(String description) {
         this.description = description;

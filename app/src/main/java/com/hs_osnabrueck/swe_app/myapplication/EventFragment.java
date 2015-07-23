@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Event Fragment
  */
 public class EventFragment extends Fragment {
 
@@ -28,7 +28,7 @@ public class EventFragment extends Fragment {
     public EventFragment() {}
 
     /**
-     *
+     * defines how the fragment looks. Events are shown in a listView, ordered by date
      */
     public void initEvent(){
         rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_veranstaltungen, container, false);
@@ -76,10 +76,6 @@ public class EventFragment extends Fragment {
         });
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
@@ -87,7 +83,7 @@ public class EventFragment extends Fragment {
     }
 
     /**
-     *
+     * gets called when the the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState

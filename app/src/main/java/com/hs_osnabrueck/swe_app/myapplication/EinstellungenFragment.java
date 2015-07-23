@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- *
+ * Settings Fragment
  */
 public class EinstellungenFragment extends Fragment {
 
@@ -40,7 +40,7 @@ public class EinstellungenFragment extends Fragment {
     public EinstellungenFragment() {}
 
     /**
-     *
+     * defines how the settings fragment looks like, including toggle for background search
      */
     public void init() {
 
@@ -59,6 +59,13 @@ public class EinstellungenFragment extends Fragment {
         divider3 = (View)rootView.findViewById(R.id.divider3);
 
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * defines the spinners and saves the institute and course when the site is left
+             * @param parent
+             * @param view
+             * @param position 0 for Hochschule, 1 for Uni, 2 for Studieninteressierte
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 60, getResources().getDisplayMetrics());
@@ -205,11 +212,11 @@ public class EinstellungenFragment extends Fragment {
     }
 
     /**
-     *
+     * gets called when the the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return the view
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -225,7 +232,7 @@ public class EinstellungenFragment extends Fragment {
     }
 
     /**
-     *
+     * gets called when the the fragment loads
      */
     @Override
     public void onStart() {
@@ -234,7 +241,7 @@ public class EinstellungenFragment extends Fragment {
     }
 
     /**
-     *
+     * saves the institute and course when the app is minimized
      */
     @Override
     public void onPause() {
@@ -243,10 +250,6 @@ public class EinstellungenFragment extends Fragment {
         main.setCourse(course.getSelectedItem().toString());
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
@@ -254,7 +257,7 @@ public class EinstellungenFragment extends Fragment {
     }
 
     /**
-     *
+     * reads the state of the toggleButton when fragment is loaded and shows the toggleButton in its actual state
      * @param requestCode
      * @param resultCode
      * @param data

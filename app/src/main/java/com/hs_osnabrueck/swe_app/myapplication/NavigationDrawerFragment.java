@@ -25,7 +25,7 @@ import com.hs_osnabrueck.swe_app.myapplication.common.NavItem;
 import java.util.ArrayList;
 
 /**
- *
+ * NavigationDrawer Fragment
  */
 public class NavigationDrawerFragment extends Fragment {
 
@@ -87,18 +87,17 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     *
+     * Indicate that this fragment would like to influence the set of actions in the action bar.
      * @param savedInstanceState
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
     }
 
     /**
-     *
+     * adds navigation items to the menu list
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -219,8 +218,8 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     *
-     * @param position
+     * mark the menu entry as selected
+     * @param position of the desired fragment
      */
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
@@ -235,10 +234,6 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -250,9 +245,6 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -270,13 +262,12 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     *
+     * Forward the new configuration the drawer toggle component.
      * @param newConfig
      */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Forward the new configuration the drawer toggle component.
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
@@ -318,8 +309,8 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     *
-     * @return
+     * returns the DrawerListView
+     * @return mDrawerListView
      */
     public ListView getmDrawerListView() {
         return mDrawerListView;

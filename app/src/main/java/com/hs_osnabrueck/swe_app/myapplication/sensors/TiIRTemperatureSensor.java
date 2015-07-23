@@ -1,7 +1,7 @@
 package com.hs_osnabrueck.swe_app.myapplication.sensors;
 
 /**
- *
+ * SensorTag Temperature class
  */
 public class TiIRTemperatureSensor {
 
@@ -10,24 +10,24 @@ public class TiIRTemperatureSensor {
     private static final String UUID_CONFIG = "f000aa02-0451-4000-b000-000000000000";
 
     /**
-     *
-     * @return
+     * getter for the Config UUID
+     * @return UUID_CONFIG
      */
     public static String getUUID_CONFIG() {
         return UUID_CONFIG;
     }
 
     /**
-     *
-     * @return
+     * getter for the Data UUID
+     * @return UUID_DATA
      */
     public static String getUUID_DATA() {
         return UUID_DATA;
     }
 
     /**
-     *
-     * @return
+     * getter for the Service UUID
+     * @return UUID_SERVICE
      */
     public static String getUUID_SERVICE() {
         return UUID_SERVICE;

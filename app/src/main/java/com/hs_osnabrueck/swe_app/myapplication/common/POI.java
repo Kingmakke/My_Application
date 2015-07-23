@@ -3,7 +3,7 @@ package com.hs_osnabrueck.swe_app.myapplication.common;
 import java.util.Vector;
 
 /**
- *
+ * this class defines how a Point of Interest looks like
  */
 public class POI {
 
@@ -19,14 +19,14 @@ public class POI {
     private Vector<Course> course;
 
     /**
-     *
-     * @param beaconId
-     * @param description
-     * @param gps_latitude
-     * @param gps_longitude
-     * @param id
-     * @param name
-     * @param institut
+     * Point of Interest constructor
+     * @param beaconId POI beaconID
+     * @param description POI description
+     * @param gps_latitude POI latitude
+     * @param gps_longitude POI longitude
+     * @param id POI id
+     * @param name POI name
+     * @param institut POI institut
      */
     public POI(String beaconId, String description, double gps_latitude, double gps_longitude, int id, String name, String institut) {
         this.beaconId = beaconId;
@@ -39,17 +39,17 @@ public class POI {
     }
 
     /**
-     *
-     * @param beaconId
-     * @param course
-     * @param description
-     * @param gps_latitude
-     * @param gps_longitude
-     * @param id
-     * @param imageLinks
-     * @param name
-     * @param webLinks
-     * @param institut
+     * Point of Interest constructor
+     * @param beaconId POI beaconID
+     * @param course POI course
+     * @param description POI description
+     * @param gps_latitude POI latitude
+     * @param gps_longitude POI longitude
+     * @param id POI id
+     * @param imageLinks POI imagelinks
+     * @param name POI name
+     * @param webLinks POI weblinks
+     * @param institut POI institut
      */
     public POI(String beaconId, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks, String institut) {
         this.beaconId = beaconId;
@@ -65,160 +65,160 @@ public class POI {
     }
 
     /**
-     *
-     * @return
+     * returns the id
+     * @return id
      */
     public int getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * sets the id
+     * @param id POI id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * returns the name
+     * @return name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
+     * sets the name
+     * @param name POI name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
+     * returns the description
+     * @return description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     *
-     * @param description
+     * sets the description
+     * @param description POI description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     *
-     * @return
+     * returns the latitude
+     * @return latitude
      */
     public double getGps_latitude() {
         return gps_latitude;
     }
 
     /**
-     *
-     * @param gps_latitude
+     * sets the latitude
+     * @param gps_latitude POI latitude
      */
     public void setGps_latitude(double gps_latitude) {
         this.gps_latitude = gps_latitude;
     }
 
     /**
-     *
-     * @return
+     * returns the longitude
+     * @return longitude
      */
     public double getGps_longitude() {
         return gps_longitude;
     }
 
     /**
-     *
-     * @param gps_longitude
+     * sets the longitude
+     * @param gps_longitude POI longitude
      */
     public void setGps_longitude(double gps_longitude) {
         this.gps_longitude = gps_longitude;
     }
 
     /**
-     *
-     * @return
+     * returns the imagelinks
+     * @return imagelinks
      */
     public Vector<String> getImageLinks() {
         return imageLinks;
     }
 
     /**
-     *
-     * @param imageLinks
+     * sets the imagelinks
+     * @param imageLinks POI imagelinks
      */
     public void setImageLinks(Vector<String> imageLinks) {
         this.imageLinks = imageLinks;
     }
 
     /**
-     *
-     * @return
+     * returns the weblinks
+     * @return weblinks
      */
     public Vector<String> getWebLinks() {
         return webLinks;
     }
 
     /**
-     *
-     * @param webLinks
+     * sets the weblinks
+     * @param webLinks POI weblinks
      */
     public void setWebLinks(Vector<String> webLinks) {
         this.webLinks = webLinks;
     }
 
     /**
-     *
-     * @return
+     * returns the beaconID
+     * @return beaconID
      */
     public String getBeaconId() {
         return beaconId;
     }
 
     /**
-     *
-     * @param beaconId
+     * sets the beaconID
+     * @param beaconId POI beaconID
      */
     public void setBeaconId(String beaconId) {
         this.beaconId = beaconId;
     }
 
     /**
-     *
-     * @return
+     * returns the course
+     * @return course
      */
     public Vector<Course> getCourse() {
         return course;
     }
 
     /**
-     *
-     * @param course
+     * sets the course
+     * @param course POI course
      */
     public void setCourse(Vector<Course> course) {
         this.course = course;
     }
 
     /**
-     *
-     * @return
+     * returns the institut
+     * @return institut
      */
     public String getInstitut() {
         return institut;
     }
 
     /**
-     *
-     * @param institut
+     * sets the institut
+     * @param institut POI institut
      */
     public void setInstitut(String institut) {
         this.institut = institut;

@@ -7,12 +7,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 /**
- *
+ * StartActivity class, defines whether FirstActivity or MainActivity is called
  */
 public class StartActivity extends Activity {
 
     /**
-     *
+     * gets called when the App loads
      * @param savedInstanceState
      */
     @Override

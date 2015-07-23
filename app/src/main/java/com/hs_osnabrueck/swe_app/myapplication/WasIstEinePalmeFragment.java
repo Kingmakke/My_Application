@@ -16,7 +16,7 @@ import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
 /**
- *
+ * Fragment of the palm
  */
 public class WasIstEinePalmeFragment extends Fragment {
 
@@ -38,7 +38,7 @@ public class WasIstEinePalmeFragment extends Fragment {
     public WasIstEinePalmeFragment() {}
 
     /**
-     *
+     * defines what is shown on the site
      */
     public void init(){
         rootView = inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_wiep, container, false);
@@ -63,7 +63,7 @@ public class WasIstEinePalmeFragment extends Fragment {
     }
 
     /**
-     *
+     * gets called when the the fragment loads
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -83,10 +83,6 @@ public class WasIstEinePalmeFragment extends Fragment {
         return rootView;
     }
 
-    /**
-     *
-     * @param activity
-     */
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach(activity);
