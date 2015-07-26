@@ -109,7 +109,7 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
      * @param pos
      * @param convertView
      * @param parent
-     * @return
+     * @return convertView
      */
     @Override
     public View getView(int pos, View convertView, ViewGroup parent){

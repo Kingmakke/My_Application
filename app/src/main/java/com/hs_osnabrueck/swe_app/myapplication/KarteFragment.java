@@ -189,7 +189,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return rootView
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -282,11 +282,6 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.karte, menu);
     }
 
-    /**
-     *  jumps back to the university when button in Actionbar is clicked
-     * @param item
-     * @return
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleConnect;
-import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
+import com.hs_osnabrueck.swe_app.myapplication.interfaces.AsyncResponse;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpPut;
 
 import org.json.JSONObject;
@@ -37,7 +37,7 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return rootView
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

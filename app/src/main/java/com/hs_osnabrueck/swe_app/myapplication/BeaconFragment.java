@@ -29,7 +29,6 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
 
     private MainActivity main;
     private View rootView;
-    //private Button scan;
     private TextView noDevice;
     private ListView deviceList;
     private LayoutInflater inflater;
@@ -65,7 +64,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return rootView
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -169,7 +168,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
                 update = true;
                 continue;
             }
-            if(main.getBeacons().get(i).getCounter() > 10){
+            if(main.getBeacons().get(i).getCounter() > 20){
                 main.getBeacons().remove(i);
                 i--;
                 continue;

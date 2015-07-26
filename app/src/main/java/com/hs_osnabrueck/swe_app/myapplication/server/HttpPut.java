@@ -2,6 +2,8 @@ package com.hs_osnabrueck.swe_app.myapplication.server;
 
 import android.os.AsyncTask;
 
+import com.hs_osnabrueck.swe_app.myapplication.interfaces.AsyncResponse;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +42,7 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     /**
      * is called when the AsyncTask starts
      * @param urls
-     * @return
+     * @return jsonObject
      */
     @Override
     protected JSONObject doInBackground(String... urls) {

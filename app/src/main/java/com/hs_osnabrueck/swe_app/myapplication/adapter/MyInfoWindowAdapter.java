@@ -2,7 +2,6 @@ package com.hs_osnabrueck.swe_app.myapplication.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -32,14 +31,11 @@ public class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
     /**
      *
      * @param marker
-     * @return
+     * @return view
      */
     @Override
     public View getInfoContents(final Marker marker) {
         View view = inflater.inflate(R.layout.info_window_layout, null);
-        ImageView image = (ImageView)view.findViewById(R.id.info_window_image);
-        //image.setImageURI(Uri.parse("https://www.hs-osnabrueck.de/uploads/pics/Haste-2013.jpg"));
-
         TextView tv1 = (TextView)view.findViewById(R.id.info_window_title);
         tv1.setText(marker.getTitle());
         TextView tv2 = (TextView)view.findViewById(R.id.info_window_description);

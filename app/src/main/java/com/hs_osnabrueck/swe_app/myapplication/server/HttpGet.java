@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 
 import com.hs_osnabrueck.swe_app.myapplication.R;
+import com.hs_osnabrueck.swe_app.myapplication.interfaces.AsyncResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,7 +86,7 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
     /**
      * if everything is okay, data is called from the server
      * @param url
-     * @return
+     * @return jsonObject
      */
     public JSONObject requestServer(String url){
 

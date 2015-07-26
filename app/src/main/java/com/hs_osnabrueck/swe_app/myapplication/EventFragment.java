@@ -87,7 +87,7 @@ public class EventFragment extends Fragment {
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return rootView
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

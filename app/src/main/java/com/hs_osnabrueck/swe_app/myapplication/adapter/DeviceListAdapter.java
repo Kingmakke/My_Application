@@ -106,15 +106,15 @@ public class DeviceListAdapter extends BaseAdapter {
         if (name.equals("SensorTag")) {
             iv.setImageResource(R.drawable.sensortag);
             bv.setVisibility(View.VISIBLE);
-        }else if(name.contains("estimote")) {
+        }else if(name.equals("estimote")) {
             iv.setImageResource(R.drawable.estimote);
             bv.setVisibility(View.INVISIBLE);
         }else if(name.equals("CC2650 SensorTag")){
             iv.setImageResource(R.drawable.sensortag2);
             bv.setVisibility(View.INVISIBLE);
-        /*}else if(device.getUuids().toString().equals(UART_UUID)){
+        }else if(device.getName().toString().equals("Spark")){
             iv.setImageResource(R.drawable.core);
-            bv.setVisibility(View.INVISIBLE);*/
+            bv.setVisibility(View.VISIBLE);
         }else {
             iv.setImageResource(R.drawable.unknown);
             bv.setVisibility(View.INVISIBLE);

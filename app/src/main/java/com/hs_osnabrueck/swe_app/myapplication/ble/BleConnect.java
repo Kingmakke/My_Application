@@ -23,10 +23,8 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.Point3D;
 import com.hs_osnabrueck.swe_app.myapplication.sensors.Sensor;
-import com.hs_osnabrueck.swe_app.myapplication.sensors.TiAccelerometerSensor;
-import com.hs_osnabrueck.swe_app.myapplication.sensors.TiHumiditySensor;
-import com.hs_osnabrueck.swe_app.myapplication.sensors.TiIRTemperatureSensor;
-import com.hs_osnabrueck.swe_app.myapplication.sensors.TiPressureSensor;
+import com.hs_osnabrueck.swe_app.myapplication.sensors.SensorTagGatt;
+import com.hs_osnabrueck.swe_app.myapplication.sensors.Spark;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -43,11 +41,9 @@ public class BleConnect{
     private List<BluetoothGattCharacteristic> data = new ArrayList<>();
     private String temperatur, iR_Temperature, humidity, pressure_1, pressure_2, acc_1, acc_2, acc_3;
     private boolean calibrated = false;
-    public static UUID UART_UUID = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
-    public static UUID TX_UUID = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
-    public static UUID RX_UUID = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+
     // UUID for the BTLE client characteristic which is necessary for notifications.
-    public static UUID CLIENT_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+
     private BluetoothGattCharacteristic tx;
     private BluetoothGattCharacteristic rx;
 
@@ -83,7 +79,7 @@ public class BleConnect{
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
             byte[] sensorData = characteristic.getValue();
-            if(characteristic.getUuid().toString().equals(TiIRTemperatureSensor.getUUID_DATA())){
+            if(characteristic.getUuid().equals(SensorTagGatt.UUID_IRT_DATA)){
                 Point3D p = Sensor.IR_TEMPERATURE.convert(sensorData);
                 temperatur = decimal.format(p.x);
                 iR_Temperature = decimal.format(p.y);
@@ -104,7 +100,7 @@ public class BleConnect{
                 gatt.setCharacteristicNotification(config.get(1), true);
                 config.get(1).setValue(value);
                 gatt.writeCharacteristic(config.get(1));
-            }else if(characteristic.getUuid().toString().equals(TiHumiditySensor.getUUID_DATA())){
+            }else if(characteristic.getUuid().equals(SensorTagGatt.UUID_HUM_DATA)){
                 Point3D p = Sensor.HUMIDITY.convert(sensorData);
                 humidity = decimal.format(p.x);
                 final float hum = (float)p.x;
@@ -145,7 +141,7 @@ public class BleConnect{
                 gatt.writeCharacteristic(config.get(2));
 
 
-            }else if(characteristic.getUuid().toString().equals(TiPressureSensor.getUUID_DATA())){
+            }else if(characteristic.getUuid().equals(SensorTagGatt.UUID_BAR_DATA)){
                 Point3D p = Sensor.BAROMETER.convert(sensorData);
                 //double h = (p.x - BarometerCalibrationCoefficients.INSTANCE.heightCalibration) / PA_PER_METER;
                 double h = p.x / PA_PER_METER;
@@ -167,7 +163,7 @@ public class BleConnect{
                 gatt.setCharacteristicNotification(config.get(3), true);
                 config.get(3).setValue(value);
                 gatt.writeCharacteristic(config.get(3));
-            }else if(characteristic.getUuid().toString().equals(TiAccelerometerSensor.getUUID_DATA())){
+            }else if(characteristic.getUuid().equals(SensorTagGatt.UUID_ACC_DATA)){
                 Point3D p = Sensor.ACCELEROMETER.convert(sensorData);
                 acc_1 = decimal.format(p.x);
                 acc_2 = decimal.format(p.y);
@@ -186,7 +182,7 @@ public class BleConnect{
                 gatt.setCharacteristicNotification(config.get(0), true);
                 config.get(0).setValue(value);
                 gatt.writeCharacteristic(config.get(0));
-            /*}else if(gatt.getDevice().getUuids().toString().equals(UART_UUID)){
+            }else if(gatt.getDevice().getName().toString().equals("Spark")){
 
                 humidity = characteristic.getStringValue(0);
                 final float hum = Float.valueOf(humidity);
@@ -218,7 +214,7 @@ public class BleConnect{
                     });
                 }catch(NullPointerException e){
                     gatt.disconnect();
-                }*/
+                }
             }else{
                 //TODO
             }
@@ -248,20 +244,20 @@ public class BleConnect{
         public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
             if (gatt.getDevice().getName().contains("SensorTag")){
                 sensorTag(gatt);
-            /*}else if(gatt.getDevice().getUuids().toString().equals(UART_UUID)){
-                tx = gatt.getService(UART_UUID).getCharacteristic(TX_UUID);
-                rx = gatt.getService(UART_UUID).getCharacteristic(RX_UUID);
+            }else if(gatt.getDevice().getName().toString().equals("Spark")){
+                tx = gatt.getService(Spark.UART_UUID).getCharacteristic(Spark.TX_UUID);
+                rx = gatt.getService(Spark.UART_UUID).getCharacteristic(Spark.RX_UUID);
                 // Setup notifications on RX characteristic changes (i.e. data received).
                 // First call setCharacteristicNotification to enable notification.
                 if (!gatt.setCharacteristicNotification(rx, true)) {
                 }
                 // Next update the RX characteristic's client descriptor to enable notifications.
-                if (rx.getDescriptor(CLIENT_UUID) != null) {
-                    BluetoothGattDescriptor desc = rx.getDescriptor(CLIENT_UUID);
+                if (rx.getDescriptor(Spark.CLIENT_UUID) != null) {
+                    BluetoothGattDescriptor desc = rx.getDescriptor(Spark.CLIENT_UUID);
                     desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                     if (!gatt.writeDescriptor(desc)) {
                     }
-                }*/
+                }
 
             }else{
                 //TODO
@@ -279,18 +275,18 @@ public class BleConnect{
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status){
             BluetoothGattDescriptor descriptor = null;
 
-            if(characteristic.getUuid().toString().equals(TiIRTemperatureSensor.getUUID_CONFIG())){
+            if(characteristic.getUuid().equals(SensorTagGatt.UUID_IRT_CONF)){
                 gatt.setCharacteristicNotification(data.get(0), true);
                 descriptor = data.get(0).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            }else if(characteristic.getUuid().toString().equals(TiHumiditySensor.getUUID_CONFIG())){
+            }else if(characteristic.getUuid().equals(SensorTagGatt.UUID_HUM_CONF)){
                 gatt.setCharacteristicNotification(data.get(1), true);
                 descriptor = data.get(1).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            }else if(characteristic.getUuid().toString().equals(TiPressureSensor.getUUID_CONFIG())){
+            }else if(characteristic.getUuid().equals(SensorTagGatt.UUID_BAR_CONF)){
                 gatt.setCharacteristicNotification(data.get(2), true);
                 descriptor = data.get(2).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            /*}else if(characteristic.getUuid().toString().equals(TiAccelerometerSensor.getUUID_CONFIG())){
+            }else if(characteristic.getUuid().equals(SensorTagGatt.UUID_ACC_CONF)){
                 gatt.setCharacteristicNotification(data.get(3), true);
-                descriptor = data.get(3).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));*/
+                descriptor = data.get(3).getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
             }else{
                 //TODO
             }
@@ -315,8 +311,8 @@ public class BleConnect{
         }else if(beacon.getBluetoothDevice().getName().contains("estimote")){
             beaconConnection = new BeaconConnection(fragment.getActivity().getBaseContext(), beacon.getId(), connectionCallback);
             estimote(beaconConnection);
-        /*}else if(beacon.getBluetoothDevice().getUuids().toString().equals(UART_UUID)){
-            bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);*/
+        }else if(beacon.getBluetoothDevice().getName().toString().equals("Spark")){
+            bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);
         }
     }
 
@@ -329,8 +325,8 @@ public class BleConnect{
             bluetoothGatt.disconnect();
         }else if(beacon.getBluetoothDevice().getName().contains("estimote")){
             beaconConnection.close();
-        /*}else if(beacon.getBluetoothDevice().getUuids().toString().equals(UART_UUID)){
-            bluetoothGatt.disconnect();*/
+        }else if(beacon.getBluetoothDevice().getName().toString().equals("Spark")){
+            bluetoothGatt.disconnect();
         }
     }
 
@@ -341,20 +337,20 @@ public class BleConnect{
      * @param gatt
      */
     private void sensorTag(BluetoothGatt gatt){
-        services.add(gatt.getService(UUID.fromString(TiIRTemperatureSensor.getUUID_SERVICE())));
-        services.add(gatt.getService(UUID.fromString(TiHumiditySensor.getUUID_SERVICE())));
-        services.add(gatt.getService(UUID.fromString(TiPressureSensor.getUUID_SERVICE())));
-        services.add(gatt.getService(UUID.fromString(TiAccelerometerSensor.getUUID_SERVICE())));
+        services.add(gatt.getService(SensorTagGatt.UUID_IRT_SERV));
+        services.add(gatt.getService(SensorTagGatt.UUID_HUM_SERV));
+        services.add(gatt.getService(SensorTagGatt.UUID_BAR_SERV));
+        services.add(gatt.getService(SensorTagGatt.UUID_ACC_SERV));
 
-        config.add(services.get(0).getCharacteristic(UUID.fromString(TiIRTemperatureSensor.getUUID_CONFIG())));
-        config.add(services.get(1).getCharacteristic(UUID.fromString(TiHumiditySensor.getUUID_CONFIG())));
-        config.add(services.get(2).getCharacteristic(UUID.fromString(TiPressureSensor.getUUID_CONFIG())));
-        config.add(services.get(3).getCharacteristic(UUID.fromString(TiAccelerometerSensor.getUUID_CONFIG())));
+        config.add(services.get(0).getCharacteristic(SensorTagGatt.UUID_IRT_CONF));
+        config.add(services.get(1).getCharacteristic(SensorTagGatt.UUID_HUM_CONF));
+        config.add(services.get(2).getCharacteristic(SensorTagGatt.UUID_BAR_CONF));
+        config.add(services.get(3).getCharacteristic(SensorTagGatt.UUID_ACC_CONF));
 
-        data.add(services.get(0).getCharacteristic(UUID.fromString(TiIRTemperatureSensor.getUUID_DATA())));
-        data.add(services.get(1).getCharacteristic(UUID.fromString(TiHumiditySensor.getUUID_DATA())));
-        data.add(services.get(2).getCharacteristic(UUID.fromString(TiPressureSensor.getUUID_DATA())));
-        data.add(services.get(3).getCharacteristic(UUID.fromString(TiAccelerometerSensor.getUUID_DATA())));
+        data.add(services.get(0).getCharacteristic(SensorTagGatt.UUID_IRT_DATA));
+        data.add(services.get(1).getCharacteristic(SensorTagGatt.UUID_HUM_DATA));
+        data.add(services.get(2).getCharacteristic(SensorTagGatt.UUID_BAR_DATA));
+        data.add(services.get(3).getCharacteristic(SensorTagGatt.UUID_ACC_DATA));
 
 
         gatt.setCharacteristicNotification(config.get(1), true);

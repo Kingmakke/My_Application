@@ -15,10 +15,9 @@ import android.support.v7.app.ActionBarActivity;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleScanner;
 import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
-import com.hs_osnabrueck.swe_app.myapplication.common.Building;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
-import com.hs_osnabrueck.swe_app.myapplication.server.AsyncResponse;
+import com.hs_osnabrueck.swe_app.myapplication.interfaces.AsyncResponse;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpGet;
 import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
 
@@ -38,13 +37,8 @@ public class MainActivity extends ActionBarActivity
     private Vector<Beacon> beacons = new Vector<>();
     private Vector<Event> eventliste = new Vector<>();
     private Vector<POI> poiliste = new Vector<>();
-    private Vector<Building> buildingliste = new Vector<>();
     private String urlAllPOI = "http://131.173.110.133:443/api/all/POIs";
     private String urlEvents = "http://131.173.110.133:443/api/events";
-    private String urlBuildings = "http://131.173.110.133:443/api/buildings/all";
-
-    private final static int REQUEST_ENABLE_BT = 1;
-    private final static int REQUEST_ENABLE_BT_SCAN = 1;
 
     private boolean backgroundScanning = false;
 
@@ -61,8 +55,6 @@ public class MainActivity extends ActionBarActivity
     private static final String NAME = "name";
     private static final String POIS = "pois";
     private static final String EVENTS = "feeds";
-    private static final String BUILDINGS = "buildings";
-    private static final String BUILDINGID = "buildingID";
     private static final String INSTITUT = "isBuildingBelongingTo";
 
     private Intent intent;
