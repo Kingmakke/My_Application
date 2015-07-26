@@ -67,7 +67,7 @@ public class PalmeFragment extends Fragment implements AsyncResponse{
                     HttpPut connectionEvents = new HttpPut();
                     connectionEvents.asyncResponse = PalmeFragment.this;
                     //TODO humidity.getText() liefert nicht nur den wert
-                    connectionEvents.execute(urlUpdate, main.getBeacon().getId(), humidity.getText().toString());
+                    connectionEvents.execute(urlUpdate, main.getBeacon().getBluetoothDevice().getAddress(), humidity.getText().toString());
                 }
             }
         });

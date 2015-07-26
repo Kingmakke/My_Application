@@ -61,22 +61,6 @@ public class Beacon {
     }
 
     /**
-     * returns the device id
-     * @return the bluetooth device address
-     */
-    public String getId() {
-        return bluetoothDevice.getAddress();
-    }
-
-    /**
-     * returns the device name
-     * @return the bluetooteh device name
-     */
-    public String getName() {
-        return bluetoothDevice.getName();
-    }
-
-    /**
      * gives the bluetooth device
      * @return the bluetooth device
      */

@@ -70,6 +70,7 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
             dialog();
         }else{
             asyncResponse.processFinish(result);
+
         }
 
     }
@@ -158,6 +159,7 @@ public class HttpGet extends AsyncTask<String, Void, JSONObject> {
                             System.exit(0);
                         }
                     });
+
 
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();

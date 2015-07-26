@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     private View rootView;
     private MainActivity main;
     private MarkerOptions markerOptions;
+    MyInfoWindowAdapter myInfoWindowAdapter;
 
     private LocationManager locationManager;
     final private double latitude_hs = 52.283127;
@@ -147,8 +149,9 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
         googleMap.setIndoorEnabled(true);
         googleMap.setBuildingsEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.setInfoWindowAdapter(new MyInfoWindowAdapter(inflater));
-        /*
+        myInfoWindowAdapter = new MyInfoWindowAdapter(inflater);
+        googleMap.setInfoWindowAdapter(myInfoWindowAdapter);
+
         googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
@@ -156,7 +159,7 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
                 longitude = location.getLongitude();
             }
         });
-        */
+
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             /**
              *
@@ -279,7 +282,8 @@ public class KarteFragment extends Fragment{//} implements LocationListener{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // TODO Auto-generated method stub
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.menu.karte, menu);
+        inflater.inflate(com.hs_osnabrueck
+                .swe_app.myapplication.R.menu.karte, menu);
     }
 
     @Override

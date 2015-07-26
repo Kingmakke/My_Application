@@ -58,6 +58,7 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private MainActivity main;
+    private MyDrawerAdapter myAdapter;
 
     ArrayList<NavItem> mNavItems = new ArrayList<>();
 
@@ -130,16 +131,12 @@ public class NavigationDrawerFragment extends Fragment {
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.WieBscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_about));
         mNavItems.add(new NavItem(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Einstellungsscreen), com.hs_osnabrueck.swe_app.myapplication.R.drawable.ic_action_settings));
 
-        MyDrawerAdapter myAdapter = new MyDrawerAdapter(getActionBar().getThemedContext(), mNavItems );
+        myAdapter = new MyDrawerAdapter(getActionBar().getThemedContext(), mNavItems );
         mDrawerListView.setAdapter(myAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
-/*
-    public boolean isDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
-    }
-*/
+
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
      *

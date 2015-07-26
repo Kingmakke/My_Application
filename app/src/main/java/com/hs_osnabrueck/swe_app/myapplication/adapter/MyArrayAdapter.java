@@ -21,12 +21,10 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     private final int TYPE_VERANSTALTUNG = 0;
     private final int TYPE_DATE = 1;
 
-    private int elevation = 5;
     int position = 0;
 
     private LayoutInflater inflater;
     private ArrayList<DoubleString> mData = new ArrayList<>();
-    private ArrayList<Float> translation = new ArrayList<>();
     final private List<Integer> datePos = new ArrayList<>();
 
     /**
@@ -42,10 +40,8 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     /**
      * adds a date
      * @param item
-     * @param translation
      */
-    public void addDate(String item, float translation){
-        this.translation.add(translation);
+    public void addDate(String item){
         mData.add(new DoubleString(item, ""));
         datePos.add(mData.size() - 1);
         notifyDataSetChanged();
@@ -55,9 +51,8 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
      * adds an event
      * @param item1
      * @param item2
-     * @param translation
      */
-    public void addVeranstaltung(String item1, String item2, float translation){
+    public void addVeranstaltung(String item1, String item2){
         mData.add(new DoubleString(item1, item2));
         notifyDataSetChanged();
     }
@@ -147,7 +142,7 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
      */
     private static class DoubleString{
 
-        public String first, second;
+        private String first, second;
 
         /**
          * DoubleString constructor

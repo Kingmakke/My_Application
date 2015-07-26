@@ -51,35 +51,4 @@ public class BleUtils {
 
         return STATUS_BLE_ENABLED;
     }
-
-    /*public static BleGattExecutor createExecutor(final BleExecutorListener listener) {
-        return new BleGattExecutor() {
-            @Override
-            public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-                super.onConnectionStateChange(gatt, status, newState);
-                listener.onConnectionStateChange(gatt, status, newState);
-            }
-
-            @Override
-            public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-                super.onServicesDiscovered(gatt, status);
-                listener.onServicesDiscovered(gatt, status);
-            }
-
-            @Override
-            public void onCharacteristicRead(BluetoothGatt gatt,
-                                             BluetoothGattCharacteristic characteristic,
-                                             int status) {
-                super.onCharacteristicRead(gatt, characteristic, status);
-                listener.onCharacteristicRead(gatt, characteristic, status);
-            }
-
-            @Override
-            public void onCharacteristicChanged(BluetoothGatt gatt,
-                                                BluetoothGattCharacteristic characteristic) {
-                super.onCharacteristicChanged(gatt, characteristic);
-                listener.onCharacteristicChanged(gatt, characteristic);
-            }
-        };
-    }*/
 }

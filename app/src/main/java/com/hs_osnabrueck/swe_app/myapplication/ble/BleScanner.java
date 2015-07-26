@@ -5,15 +5,9 @@ import android.bluetooth.BluetoothAdapter.LeScanCallback;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.hs_osnabrueck.swe_app.myapplication.MainActivity;
-import com.hs_osnabrueck.swe_app.myapplication.adapter.DeviceListAdapter;
-import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.interfaces.BleSearchResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,13 +15,8 @@ import java.util.List;
  */
 public class BleScanner{
 
-    private DeviceListAdapter adapter;
-    private List<Beacon> beaconList = new ArrayList<>();
-    private ListView deviceList;
-    private TextView noDevice;
     private LeScanCallback leScanCallback;
     private ScanCallback scanCallback;
-    private MainActivity main;
 
     public BleSearchResponse bleSearchResponse = null;
 
@@ -36,9 +25,6 @@ public class BleScanner{
      */
     @SuppressLint("NewApi")
     public BleScanner() {
-        this.deviceList = deviceList;
-        this.main = main;
-        this.noDevice = noDevice;
         this.leScanCallback = new LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {

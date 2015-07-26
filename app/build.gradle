@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.hs_osnabrueck.swe_app.myapplication"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
-        versionName "0.9.1"
+        versionName "1.0"
     }
 
     buildTypes {

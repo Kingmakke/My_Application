@@ -9,6 +9,18 @@ public class Course {
     private String description;
 
     /**
+     * Course constructor
+     * @param description
+     * @param id
+     * @param name
+     */
+    public Course(String description, int id, String name) {
+        this.description = description;
+        this.id = id;
+        this.name = name;
+    }
+
+    /**
      * returns the id
      * @return id
      */

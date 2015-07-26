@@ -39,32 +39,6 @@ public class POI {
     }
 
     /**
-     * Point of Interest constructor
-     * @param beaconId POI beaconID
-     * @param course POI course
-     * @param description POI description
-     * @param gps_latitude POI latitude
-     * @param gps_longitude POI longitude
-     * @param id POI id
-     * @param imageLinks POI imagelinks
-     * @param name POI name
-     * @param webLinks POI weblinks
-     * @param institut POI institut
-     */
-    public POI(String beaconId, Vector<Course> course, String description, double gps_latitude, double gps_longitude, int id, Vector<String> imageLinks, String name, Vector<String> webLinks, String institut) {
-        this.beaconId = beaconId;
-        this.course = course;
-        this.description = description;
-        this.gps_latitude = gps_latitude;
-        this.gps_longitude = gps_longitude;
-        this.id = id;
-        this.imageLinks = imageLinks;
-        this.name = name;
-        this.webLinks = webLinks;
-        this.institut = institut;
-    }
-
-    /**
      * returns the id
      * @return id
      */

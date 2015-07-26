@@ -123,6 +123,7 @@ public class BeaconFragment extends Fragment implements BleSearchResponse {
         if(requestCode == REQUEST_ENABLE_BT_SCAN && resultCode == Activity.RESULT_OK) {
             findBeacon();
         }else{
+
             Fragment fragment = new EventFragment();
             android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

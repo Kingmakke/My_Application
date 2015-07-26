@@ -18,7 +18,6 @@ import com.hs_osnabrueck.swe_app.myapplication.R;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * ListAdapter for Bluetooth devices
@@ -27,7 +26,6 @@ public class DeviceListAdapter extends BaseAdapter {
     private List<Beacon> devices;
     private LayoutInflater inflater;
     private MainActivity main;
-    public static UUID UART_UUID = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 
     /**
      * DeviceListAdapter class

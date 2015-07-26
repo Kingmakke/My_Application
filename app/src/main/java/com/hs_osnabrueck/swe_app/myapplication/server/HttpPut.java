@@ -35,8 +35,6 @@ public class HttpPut extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //dialog = new ProgressDialog(context,ProgressDialog.STYLE_SPINNER);
-        //dialog.show();
     }
 
     /**

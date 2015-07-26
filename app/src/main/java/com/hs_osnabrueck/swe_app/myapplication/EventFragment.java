@@ -24,29 +24,29 @@ public class EventFragment extends Fragment {
     private MainActivity main;
     private LayoutInflater inflater;
     private ViewGroup container;
+    private MyArrayAdapter listAdapter;
 
     public EventFragment() {}
 
     /**
      * defines how the fragment looks. Events are shown in a listView, ordered by date
      */
-    public void initEvent(){
+    public void init(){
         rootView =  inflater.inflate(com.hs_osnabrueck.swe_app.myapplication.R.layout.fragment_veranstaltungen, container, false);
 
-        MyArrayAdapter listAdapter = new MyArrayAdapter(rootView.getContext(), android.R.layout.simple_list_item_1);
+        listAdapter = new MyArrayAdapter(rootView.getContext(), android.R.layout.simple_list_item_1);
         final List<Integer> eventitems = new ArrayList<>();
         final List<Integer> dateitems = new ArrayList<>();
 
         for(int i = 0; i < main.getEventliste().size(); i++) {
             //if(!listAdapter.isEmpty()){
-            int size = dateitems.size();
             if(i == 0 || !main.getEventliste().elementAt(i-1).getDate().equals(main.getEventliste().elementAt(i).getDate())){
-                listAdapter.addDate(main.getEventliste().elementAt(i).getDate(), size * 5);
+                listAdapter.addDate(main.getEventliste().elementAt(i).getDate());
                 dateitems.add(listAdapter.getCount() - 1);
             }
 
             listAdapter.addVeranstaltung(main.getEventliste().elementAt(i).getTitle(),
-                    main.getEventliste().elementAt(i).getDescription(), size * 5);
+                    main.getEventliste().elementAt(i).getDescription());
             eventitems.add(listAdapter.getCount() - 1);
         }
         ListView veranstaltungsListView = (ListView)rootView.findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.veranstaltungsscreen_veranstaltungsliste);
@@ -87,7 +87,7 @@ public class EventFragment extends Fragment {
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return rootView
+     * @return rootViewEventFragment
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +99,7 @@ public class EventFragment extends Fragment {
 
         main.setPos(0);
 
-        initEvent();
+        init();
         return rootView;
     }
 

@@ -40,9 +40,6 @@ public class BleConnect{
     private List<BluetoothGattCharacteristic> config = new ArrayList<>();
     private List<BluetoothGattCharacteristic> data = new ArrayList<>();
     private String temperatur, iR_Temperature, humidity, pressure_1, pressure_2, acc_1, acc_2, acc_3;
-    private boolean calibrated = false;
-
-    // UUID for the BTLE client characteristic which is necessary for notifications.
 
     private BluetoothGattCharacteristic tx;
     private BluetoothGattCharacteristic rx;
@@ -309,7 +306,7 @@ public class BleConnect{
         if(beacon.getBluetoothDevice().getName().contains("SensorTag")){
             bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);
         }else if(beacon.getBluetoothDevice().getName().contains("estimote")){
-            beaconConnection = new BeaconConnection(fragment.getActivity().getBaseContext(), beacon.getId(), connectionCallback);
+            beaconConnection = new BeaconConnection(fragment.getActivity().getBaseContext(), beacon.getBluetoothDevice().getAddress(), connectionCallback);
             estimote(beaconConnection);
         }else if(beacon.getBluetoothDevice().getName().toString().equals("Spark")){
             bluetoothGatt = beacon.getBluetoothDevice().connectGatt(fragment.getActivity().getBaseContext(), false, bluetoothGattCallback);
@@ -363,7 +360,7 @@ public class BleConnect{
      * This method is called for estimote Beacons and sets the TextViews
      * @param connection
      */
-    private void estimote(final BeaconConnection connection) {
+    private void estimote(BeaconConnection connection) {
 
         fragment.getActivity().runOnUiThread(new Runnable() {
             @Override

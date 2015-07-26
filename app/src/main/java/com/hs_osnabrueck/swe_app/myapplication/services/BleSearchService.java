@@ -19,7 +19,6 @@ public class BleSearchService extends Service implements BleSearchResponse {
 
     private BleScanner scanner;
     private BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-    private Intent intent;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -29,7 +28,6 @@ public class BleSearchService extends Service implements BleSearchResponse {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
 
-        this.intent = intent;
         new Thread(new Runnable() {
             @Override
             public void run() {

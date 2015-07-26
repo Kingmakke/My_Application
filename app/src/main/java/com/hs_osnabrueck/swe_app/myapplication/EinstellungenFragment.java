@@ -35,7 +35,7 @@ public class EinstellungenFragment extends Fragment {
     private ArrayList<String> courseList = new ArrayList<>();
     private String version;
     private TextView ver;
-    private View divider1, divider2, divider3;
+    private View divider2;
 
     public EinstellungenFragment() {}
 
@@ -54,9 +54,9 @@ public class EinstellungenFragment extends Fragment {
 
         institut = (Spinner) rootView.findViewById(R.id.einstellungsscreen_institut);
 
-        divider1 = (View)rootView.findViewById(R.id.divider1);
+        //divider1 = (View)rootView.findViewById(R.id.divider1);
         divider2 = (View)rootView.findViewById(R.id.divider2);
-        divider3 = (View)rootView.findViewById(R.id.divider3);
+        //divider3 = (View)rootView.findViewById(R.id.divider3);
 
         institut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             /**

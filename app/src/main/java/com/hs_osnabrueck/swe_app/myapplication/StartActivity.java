@@ -11,6 +11,8 @@ import android.os.Bundle;
  */
 public class StartActivity extends Activity {
 
+    private SharedPreferences prefs;
+
     /**
      * gets called when the App loads
      * @param savedInstanceState
@@ -20,7 +22,7 @@ public class StartActivity extends Activity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        prefs = getPreferences(MODE_PRIVATE);
 
         Intent intent;
         if (prefs.getBoolean("condition",false)) {

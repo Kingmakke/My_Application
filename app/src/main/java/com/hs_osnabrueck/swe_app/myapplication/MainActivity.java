@@ -17,6 +17,7 @@ import com.hs_osnabrueck.swe_app.myapplication.ble.BleUtils;
 import com.hs_osnabrueck.swe_app.myapplication.common.Beacon;
 import com.hs_osnabrueck.swe_app.myapplication.common.Event;
 import com.hs_osnabrueck.swe_app.myapplication.common.POI;
+import com.hs_osnabrueck.swe_app.myapplication.common.StaticStrings;
 import com.hs_osnabrueck.swe_app.myapplication.interfaces.AsyncResponse;
 import com.hs_osnabrueck.swe_app.myapplication.server.HttpGet;
 import com.hs_osnabrueck.swe_app.myapplication.services.BleSearchService;
@@ -37,25 +38,10 @@ public class MainActivity extends ActionBarActivity
     private Vector<Beacon> beacons = new Vector<>();
     private Vector<Event> eventliste = new Vector<>();
     private Vector<POI> poiliste = new Vector<>();
-    private String urlAllPOI = "http://131.173.110.133:443/api/all/POIs";
+    private String urlAllPOIs = "http://131.173.110.133:443/api/all/POIs";
     private String urlEvents = "http://131.173.110.133:443/api/events";
 
     private boolean backgroundScanning = false;
-
-    private static final String TITLE = "title";
-    private static final String LINK = "link";
-    private static final String DESRCIPTION = "description";
-    private static final String CONTENT = "content";
-    private static final String CATEGORY = "category";
-    private static final String DATE = "pubDate";
-    private static final String LATITUDE = "latitude";
-    private static final String LONGITUDE = "longitude";
-    private static final String BEACONID = "beaconID";
-    private static final String POIID = "poiID";
-    private static final String NAME = "name";
-    private static final String POIS = "pois";
-    private static final String EVENTS = "feeds";
-    private static final String INSTITUT = "isBuildingBelongingTo";
 
     private Intent intent;
     private String institut;
@@ -89,7 +75,7 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(com.hs_osnabrueck.swe_app.myapplication.R.id.navigation_drawer, (DrawerLayout) findViewById(com.hs_osnabrueck.swe_app.myapplication.R.id.drawer_layout));
 
         HttpGet httpGetPOI = new HttpGet(this);
-        httpGetPOI.execute(urlAllPOI);
+        httpGetPOI.execute(urlAllPOIs);
         httpGetPOI.asyncResponse = this;
 
         HttpGet httpGetEvents = new HttpGet(this);
@@ -171,69 +157,7 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
-    /**
-     * returns the beacons
-     * @return beacons
-     */
-    public Vector<Beacon> getBeacons() {
-        return beacons;
-    }
 
-    /**
-     * add a beacon to the Beacons vector
-     * @param beacon
-     */
-    public void addBeacon(Beacon beacon) {
-        beacons.addElement(beacon);
-    }
-
-    /**
-     * sets the beacons vector
-     * @param beacons
-     */
-    public void setBeacons(Vector<Beacon> beacons) {
-        this.beacons = beacons;
-    }
-
-    /**
-     * returns the events vector
-     * @return eventliste
-     */
-    public Vector<Event> getEventliste() {
-        return eventliste;
-    }
-
-    /**
-     * add event to the events vector
-     * @param veranstaltung
-     */
-    public void addEvent(Event veranstaltung) {
-        eventliste.addElement(veranstaltung);
-    }
-
-    /**
-     * sets the events vector
-     * @param veranstaltungsliste
-     */
-    public void setEventliste(Vector<Event> veranstaltungsliste) {
-        this.eventliste = veranstaltungsliste;
-    }
-
-    /**
-     * returs the Points of Interest vector
-     * @return poiliste
-     */
-    public Vector<POI> getPoiliste() {
-        return poiliste;
-    }
-
-    /**
-     * sets the Points of Interest vector
-     * @param poiliste
-     */
-    public void setPoiliste(Vector<POI> poiliste) {
-        this.poiliste = poiliste;
-    }
 
     /**
      * adds POIs from the jsonArray from the HTTPGet to the poiliste
@@ -247,13 +171,13 @@ public class MainActivity extends ActionBarActivity
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 poiliste.add(new POI(
-                        jsonObject.getString(BEACONID),
-                        jsonObject.getString(DESRCIPTION),
-                        Double.valueOf(jsonObject.getString(LATITUDE)),
-                        Double.valueOf(jsonObject.getString(LONGITUDE)),
-                        Integer.valueOf(jsonObject.getString(POIID)),
-                        jsonObject.getString(NAME),
-                        jsonObject.getString(INSTITUT)
+                        jsonObject.getString(StaticStrings.BEACONID),
+                        jsonObject.getString(StaticStrings.DESRCIPTION),
+                        Double.valueOf(jsonObject.getString(StaticStrings.LATITUDE)),
+                        Double.valueOf(jsonObject.getString(StaticStrings.LONGITUDE)),
+                        Integer.valueOf(jsonObject.getString(StaticStrings.POIID)),
+                        jsonObject.getString(StaticStrings.NAME),
+                        jsonObject.getString(StaticStrings.INSTITUT)
                         )
                 );
             }
@@ -275,12 +199,12 @@ public class MainActivity extends ActionBarActivity
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 eventListeReverse.add(new Event(
-                                jsonObject.getString(CATEGORY),
-                                jsonObject.getString(DATE),
-                                jsonObject.getString(DESRCIPTION),
-                                jsonObject.getString(LINK),
-                                jsonObject.getString(TITLE),
-                                jsonObject.getString(CONTENT)
+                                jsonObject.getString(StaticStrings.CATEGORY),
+                                jsonObject.getString(StaticStrings.DATE),
+                                jsonObject.getString(StaticStrings.DESRCIPTION),
+                                jsonObject.getString(StaticStrings.LINK),
+                                jsonObject.getString(StaticStrings.TITLE),
+                                jsonObject.getString(StaticStrings.CONTENT)
                         )
                 );
             }
@@ -320,6 +244,126 @@ public class MainActivity extends ActionBarActivity
             restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
             fragmentTransaction.commit();
         }
+    }
+
+    /**
+     *
+     * @param output
+     */
+    @Override
+    public void processFinish(JSONObject output) {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+        try {
+            addEvents(output.getJSONArray(StaticStrings.EVENTS));
+            if(fragmentManager.findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.container).getTag().equals("0")){
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new EventFragment(), "0");
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
+                fragmentTransaction.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            addPOIs(output.getJSONArray(StaticStrings.POIS));
+            if(fragmentManager.findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.container).getTag().equals("1")){
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new KarteFragment(), "1");
+                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen));
+                fragmentTransaction.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * saves preferences in file and starts backgroundScanning (if enabled) if app is paused
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = getSharedPreferences("settings",MODE_PRIVATE).edit();
+        editor.putString("institut", institut);
+        editor.putString("course", course);
+        editor.putBoolean("scanning", backgroundScanning);
+        editor.commit();
+        if(backgroundScanning && btAdapter != null && bleScanner != null){
+            startService(intent);
+        }
+    }
+
+    /**
+     * loads preferences from file and stops backgroundScanning (if enabled) when app is resumed
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        institut = prefs.getString("institut", "Hochschule");
+        course = prefs.getString("course", "Medieninformatik");
+        backgroundScanning = prefs.getBoolean("scanning", false);
+        if(institut.equals(getResources().getStringArray(R.array.intitut_array)[0])){
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal)));
+        }else if(institut.equals(getResources().getStringArray(R.array.intitut_array)[1])){
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_uni)));
+        }else{
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_int)));
+        }
+        if(intent != null && btAdapter != null && btAdapter.isEnabled()){
+            stopService(intent);
+        }else{
+            backgroundScanning = false;
+        }
+    }
+
+    /**
+     * returns the beacons
+     * @return beacons
+     */
+    public Vector<Beacon> getBeacons() {
+        return beacons;
+    }
+
+    /**
+     * sets the beacons vector
+     * @param beacons
+     */
+    public void setBeacons(Vector<Beacon> beacons) {
+        this.beacons = beacons;
+    }
+
+    /**
+     * returns the events vector
+     * @return eventliste
+     */
+    public Vector<Event> getEventliste() {
+        return eventliste;
+    }
+
+    /**
+     * sets the events vector
+     * @param veranstaltungsliste
+     */
+    public void setEventliste(Vector<Event> veranstaltungsliste) {
+        this.eventliste = veranstaltungsliste;
+    }
+
+    /**
+     * returs the Points of Interest vector
+     * @return poiliste
+     */
+    public Vector<POI> getPoiliste() {
+        return poiliste;
+    }
+
+    /**
+     * sets the Points of Interest vector
+     * @param poiliste
+     */
+    public void setPoiliste(Vector<POI> poiliste) {
+        this.poiliste = poiliste;
     }
 
     /**
@@ -367,14 +411,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     * sets the BleScanner
-     * @param bleScanner
-     */
-    public void setBleScanner(BleScanner bleScanner) {
-        this.bleScanner = bleScanner;
-    }
-
-    /**
      * returns the Beacon
      * @return beacon
      */
@@ -388,22 +424,6 @@ public class MainActivity extends ActionBarActivity
      */
     public void setBeacon(Beacon beacon) {
         this.beacon = beacon;
-    }
-
-    /**
-     * returns the intent
-     * @return intent
-     */
-    public Intent getMyIntent() {
-        return intent;
-    }
-
-    /**
-     * sets the intent
-     * @param intent
-     */
-    public void setMyIntent(Intent intent) {
-        this.intent = intent;
     }
 
     /**
@@ -460,77 +480,5 @@ public class MainActivity extends ActionBarActivity
      */
     public NavigationDrawerFragment getmNavigationDrawerFragment() {
         return mNavigationDrawerFragment;
-    }
-
-    /**
-     *
-     * @param output
-     */
-    @Override
-    public void processFinish(JSONObject output) {
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-
-        try {
-            addEvents(output.getJSONArray(EVENTS));
-            if(fragmentManager.findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.container).getTag().equals("0")){
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new EventFragment(), "0");
-                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Versanstaltungsscreen));
-                fragmentTransaction.commit();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            addPOIs(output.getJSONArray(POIS));
-            if(fragmentManager.findFragmentById(com.hs_osnabrueck.swe_app.myapplication.R.id.container).getTag().equals("1")){
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(com.hs_osnabrueck.swe_app.myapplication.R.id.container, new KarteFragment(), "1");
-                restoreActionBar(getString(com.hs_osnabrueck.swe_app.myapplication.R.string.Kartenscreen));
-                fragmentTransaction.commit();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * saves preferences in file and starts backgroundScanning (if enabled) if app is paused
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SharedPreferences.Editor editor = getSharedPreferences("settings",MODE_PRIVATE).edit();
-        editor.putString("institut", institut);
-        editor.putString("course", course);
-        editor.putBoolean("scanning", backgroundScanning);
-        editor.commit();
-        if(backgroundScanning && btAdapter != null && bleScanner != null){
-            startService(intent);
-        }
-    }
-
-    /**
-     * loads preferences from file and stops backgroundScanning (if enabled) when app is resumed
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        institut = prefs.getString("institut", "Hochschule");
-        course = prefs.getString("course", "Medieninformatik");
-        backgroundScanning = prefs.getBoolean("scanning", false);
-        if(institut.equals(getResources().getStringArray(R.array.intitut_array)[0])){
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal)));
-        }else if(institut.equals(getResources().getStringArray(R.array.intitut_array)[1])){
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_uni)));
-        }else{
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(com.hs_osnabrueck.swe_app.myapplication.R.color.normal_int)));
-        }
-        if(intent != null && btAdapter != null && btAdapter.isEnabled()){
-            stopService(intent);
-        }else{
-            backgroundScanning = false;
-        }
     }
 }

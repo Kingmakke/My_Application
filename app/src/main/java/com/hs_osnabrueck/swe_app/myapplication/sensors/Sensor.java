@@ -148,19 +148,6 @@ public enum Sensor {
     }
   },
 
-  MAGNETOMETER(SensorTagGatt.UUID_MAG_SERV, SensorTagGatt.UUID_MAG_DATA, SensorTagGatt.UUID_MAG_CONF) {
-    @Override
-    public Point3D convert(final byte [] value) {
-      Point3D mcal = MagnetometerCalibrationCoefficients.INSTANCE.val;
-      // Multiply x and y with -1 so that the values correspond with the image in the app
-      float x = shortSignedAtOffset(value, 0) * (2000f / 65536f) * -1;
-      float y = shortSignedAtOffset(value, 2) * (2000f / 65536f) * -1;
-      float z = shortSignedAtOffset(value, 4) * (2000f / 65536f);
-      
-			return new Point3D(x - mcal.x, y - mcal.y, z - mcal.z);
-    }
-  },
-
   LUXOMETER(SensorTagGatt.UUID_OPT_SERV, SensorTagGatt.UUID_OPT_DATA, SensorTagGatt.UUID_OPT_CONF) {
     @Override
     public Point3D convert(final byte [] value) {
@@ -212,9 +199,8 @@ public enum Sensor {
     }
   };
 
-
   /**
-   * Gyroscope, Magnetometer, Barometer, IR temperature all store 16 bit two's complement values as LSB MSB, which cannot be directly parsed
+   * Gyroscope, Barometer, IR temperature all store 16 bit two's complement values as LSB MSB, which cannot be directly parsed
    * as getIntValue(FORMAT_SINT16, offset) because the bytes are stored as little-endian.
    * 
    * This function extracts these 16 bit two's complement values.
@@ -294,5 +280,5 @@ public enum Sensor {
     throw new RuntimeException("unable to find UUID.");
   }
   
-  public static final Sensor[] SENSOR_LIST = {IR_TEMPERATURE, ACCELEROMETER, MAGNETOMETER, LUXOMETER, GYROSCOPE, HUMIDITY, BAROMETER};
+  public static final Sensor[] SENSOR_LIST = {IR_TEMPERATURE, ACCELEROMETER, LUXOMETER, GYROSCOPE, HUMIDITY, BAROMETER};
 }
